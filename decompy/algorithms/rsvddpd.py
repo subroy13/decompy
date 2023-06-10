@@ -3,8 +3,9 @@ import numpy as np
 import warnings
 
 from ..utils.validations import check_real_matrix, is_decreasing
+from ..base import SVDResult
 
-class rSVDdpd:
+class RSVDDPD:
 
     def __init__(self, **kwargs) -> None:
         self.rank = kwargs.get("rank")
@@ -145,12 +146,4 @@ class rSVDdpd:
         if self.verbose:
             self.sanity_check(M, lambdas, (iterlist >= self.maxiter))
         
-        # TODO: Need to wrap into a common output class
-        return {
-            'U': initu,
-            'V': initv,
-            'S': lambdas,
-            'convergence': {
-                'iterations': iterlist
-            }
-        }
+        return SVDResult(initu, lambdas, initv, convergence = { 'iterations': iterlist })
