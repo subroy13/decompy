@@ -2,8 +2,8 @@ from typing import Union
 import numpy as np
 import warnings
 
-from ..utils.validations import check_real_matrix
-from ..base import SVDResult
+from ...utils.validations import check_real_matrix
+from ...base import SVDResult
 
 class PCP:
     """

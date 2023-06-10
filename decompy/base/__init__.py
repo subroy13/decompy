@@ -1,5 +1,7 @@
 from .svdresult import SVDResult
+from .pcaresult import PCAResult
 
 __all__ = [
-    "SVDResult"
+    "SVDResult",
+    "PCAResult"
 ]
