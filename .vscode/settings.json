@@ -1,5 +1,6 @@
 {
     "docify.commentService.programmingLanguage": "python",
     "docwriter.style": "Auto-detect",
-    "docwriter.progress.trackFunctions": true
+    "docwriter.progress.trackFunctions": true,
+    "python.analysis.typeCheckingMode": "off"
 }

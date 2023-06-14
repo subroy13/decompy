@@ -21,10 +21,10 @@ class OutlierPursuit:
             # U, S, V = lansvd(L, starting_K, 'T', epsilon, self.increaseK)
             # rank_out = min(S.shape)
         else:
-            U, S, V = np.linalg.svd(L)
+            U, S, Vh = np.linalg.svd(L)
             rank_out = 0
         S = np.where(S > epsilon, S - epsilon, np.where(S < -epsilon, S + epsilon, 0))
-        output = U @ np.diag(S) @ V.T
+        output = U @ np.diag(S) @ Vh
         return output, rank_out
         
 

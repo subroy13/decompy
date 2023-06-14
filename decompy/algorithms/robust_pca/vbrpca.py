@@ -2,7 +2,7 @@ import numpy as np
 
 from ...utils.validations import check_real_matrix
 from ...utils.constants import EPS
-from ...base import PCAResult
+from ...base import RankFactorizationResult
 
 
 class VBRPCA:
@@ -46,10 +46,12 @@ class VBRPCA:
         self.mode = kwargs.get("mode", "VB")   # there are 3 modes, VB, VB_app, and MAP
         assert self.mode in ["VB", "VB_app", "MAP"], "Mode must be one of following: 'VB', 'VB_app' and 'MAP'"
 
+        self.tol = kwargs.get("tol", 1e-5)  # the tolerance level for convergence
+
         
     def decompose(self, M: np.ndarray, rank: int = None):
         check_real_matrix(M)
-        Y = M.copy(deep = True)
+        Y = np.copy(M)
         m, n = Y.shape
         mn = m * n
         Y2sum = np.sum(Y**2)
@@ -58,7 +60,8 @@ class VBRPCA:
 
         # Initialize A, B, and E
         if self.initmethod == "ml":
-            U, s, V = np.linalg.svd(Y, full_matrices=False)
+            U, s, Vh = np.linalg.svd(Y, full_matrices=False)
+            V = Vh.T
             r = min(m, n) if rank is None else rank
             A = U[:, :r] @ np.diag(s[:r]**0.5)
             B = np.diag(s[:r]**0.5) @ V[:r, :].T
@@ -90,6 +93,12 @@ class VBRPCA:
     
         X = A @ B.T
         E = Y - X
+        metrics = {
+            'niter': 0,
+            'Econv': [],
+            'Xconv': [],
+            'converged': True
+        }
 
         # Iterations
         for it in range(1, self.maxiter + 1):
@@ -138,82 +147,67 @@ class VBRPCA:
                 # MacKay fixed point method
                 alphas = (1 - alphas * Sigma_E + self.a_alpha0 ) / (E**2 + EPS + self.b_alpha0)
 
-        
+            # Estimate gammas
+            if self.inference_flag == "standard":
+                gammas = (m + n + self.a_gamma0) / (np.diag(B.T @ B) + np.diag(A.T @ A) + m * np.diag(Sigma_A) + n * np.diag(Sigma_B) + self.b_gamma0)
+            elif self.inference_flag == "fixed point":
+                # MacKay fixed point method
+                gammas = ( m + n - m * np.diag(Sigma_A) - n*np.diag(Sigma_B) + self.a_gamma0) / (np.diag(B.T @ B) + np.diag(A.T @ A) + self.b_gamma0)
+            
+            # Estimate beta
+            if self.update_beta:
+                err = np.sum((Y - X - E)**2) + n * np.trace(A.T @ A @ Sigma_B) + m * np.trace(B.T @ B @ Sigma_A) + mn * np.trace(Sigma_A @ Sigma_B) + np.sum(Sigma_E)
+                beta = (mn + self.a_beta0) / (err + self.b_beta0)
 
+            # Prune irrelevant dimension
+            if self.dim_red:
+                max_gamma = np.min(gammas) * self.dim_red_thr
 
+                indices = gammas < max_gamma
+                if np.sum(indices) > 0:
+                    A = A[:, indices]
+                    B = B[:, indices]
+                    gammas = gammas[indices]
 
-def VBRPCA(Y, options=None):
-    # Variational Bayesian Robust Principal Component Analysis
-    # Author (a.k.a. person to blame): S. Derin Babacan
-    # Last updated: January 31, 2012
-        
-        # Update E
-        E = Y - A @ B.T
-        
-        # Update alphas
-        alphas = (1 / (2 * beta)) + (np.sqrt(E**2 + 4 * beta * np.ones((m, n)))) / (2 * beta)
-        
-        # Update beta
-        if UPDATE_BETA:
-            beta = (mn + a_beta0 - 1) / (Y2sum + b_beta0)
-        
-        # Update gammas
-        if options['mode'] == 'VB':
-            gammas = (a_gamma0 + 0.5) / (b_gamma0 + 0.5 * np.diag(B @ B.T + Sigma_B))
-        
-        # Update Sigma_E
-        if options['mode'] == 'VB':
-            Sigma_E = np.linalg.inv(np.diag(alphas.flatten()) + beta * B @ B.T)
-        
-        # Check convergence
-        diff_X = np.linalg.norm(X - old_X) / np.linalg.norm(old_X)
-        diff_E = np.linalg.norm(E - old_E) / np.linalg.norm(old_E)
-        diff = max(diff_X, diff_E)
-        
-        if verbose:
-            print('Iteration:', it, '   Difference:', diff)
-        
-        if diff < inf_flag:
-            break
-        
-        # Dimensionality reduction
-        if DIMRED and it % DIMRED_THR == 0:
-            X_red = A @ B.T
-            E_red = Y - X_red
-            Y = E_red
-            m, n = Y.shape
-            mn = m * n
-            Y2sum = np.sum(Y**2)
-            scale2 = Y2sum / mn
-            scale = np.sqrt(scale2)
-            if options['init'] == 'ml':
-                U, S, V = np.linalg.svd(Y, full_matrices=False)
-                if options['initial_rank'] == 'auto':
-                    r = min(m, n)
-                else:
-                    r = options['initial_rank']
-                A = U[:, :r] * np.sqrt(S[:r])
-                B = np.sqrt(S[:r]) * V[:r, :].T
-                Sigma_A = scale * np.eye(r)
-                Sigma_B = scale * np.eye(r)
-                gammas = scale * np.ones(r)
-                beta = 1 / scale2
-                Sigma_E = scale * np.ones((r, r))
-                alphas = np.ones((m, n)) * scale
-            elif options['init'] == 'rand':
-                r = min(m, n)
-                A = np.random.randn(m, r) * np.sqrt(scale)
-                B = np.random.randn(n, r) * np.sqrt(scale)
-                gammas = scale * np.ones(r)
-                Sigma_A = scale * np.eye(r)
-                Sigma_B = scale * np.eye(r)
-                E = np.random.randn(m, n) * np.sqrt(scale)
-                beta = 1 / scale2
-                Sigma_E = scale * np.ones((r, r))
-                alphas = np.ones((m, n)) * scale
-        
-    return X, E, A, B, alphas, beta, gammas, Sigma_A, Sigma_B, Sigma_E
+                    Sigma_A = Sigma_A[:, indices][indices, :]
+                    Sigma_B = Sigma_B[:, indices][indices, :]
 
+                    m, r = A.shape
+                    n, r = B.shape
+            
+            # Check for convergence and display progress
+            Xconv = np.linalg.norm(old_X - X, 'fro') / np.linalg.norm(old_X, 'fro')
+
+            if self.verbose:
+                Econv = np.linalg.norm(old_E - E, 'fro') / np.linalg.norm(old_E, 'fro')
+                metrics['Econv'].append(Econv)
+                metrics['Xconv'].append(Xconv)
+
+            if it > 5 and Xconv < self.tol:
+                break
+
+        metrics['niter'] = it
+        metrics['converged'] = (it < self.maxiter)   # whether maxit reach or converged
+
+        # return result
+        if self.verbose:
+            return RankFactorizationResult(
+                A = A,
+                B = B,
+                convergence = metrics,
+                gamma = gammas,
+                alpha = alphas,
+                beta = betas,
+                Sigma_A = Sigma_A,
+                Sigma_B = Sigma_B
+            )
+        else:
+            return RankFactorizationResult(
+                A = A,
+                B = B,
+                convergence = metrics
+            )
+                
 
         
 

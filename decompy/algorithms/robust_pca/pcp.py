@@ -22,7 +22,8 @@ class PCP:
         return np.sign(x) * np.maximum(np.abs(x) - threshold, 0)
     
     def threshold_nuclear(self, M, threshold):
-        U, s, V = np.linalg.svd(M)
+        U, s, Vh = np.linalg.svd(M, full_matrices=False)
+        V = Vh.T
         dd = self.threshold_l1(s, threshold)
         id = np.where(dd != 0)[0]
         s = dd[id]
@@ -50,6 +51,7 @@ class PCP:
         stats = []
         converged = False
 
+        residnorm = 0
         while not converged:
             niter += 1
             s, U, V, L = self.threshold_nuclear(X - S + Yimu, imu)

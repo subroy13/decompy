@@ -27,7 +27,7 @@ class RSVDDPD:
             warnings.warn("Singular values are not in sorted order")
 
 
-    def decompose(self, M: np.ndarray, rank: int = None, initu: Union[np.ndarray, None] = None, initv: Union[np.ndarray, None] = None):
+    def decompose(self, M: np.ndarray, rank: Union[int, None] = None, initu: Union[np.ndarray, None] = None, initv: Union[np.ndarray, None] = None):
         check_real_matrix(M)
         X = np.copy(M)   # create a copy of the matrix so you do not mutuate the existing one
         n, p = X.shape
@@ -142,8 +142,8 @@ class RSVDDPD:
         
         # Change the singular values as required
         lambdas = (scale_factor[1] - scale_factor[0]) * lambdas
-        initu = initu[:, :r]    # Subset only the required column upto the rank
-        initv = initv[:, :r]    
+        initu = initu[:, :rank]    # Subset only the required column upto the rank
+        initv = initv[:, :rank]    
 
         if self.verbose:
             self.sanity_check(M, lambdas, (iterlist >= self.maxiter))
