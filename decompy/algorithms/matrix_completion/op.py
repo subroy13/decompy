@@ -42,7 +42,7 @@ class OutlierPursuit:
         return output
     
 
-    def decompose(self, M: np.ndarray, lambd: float, Omega_mask: np.ndarray = None, initial_rank: int = None):
+    def decompose(self, M: np.ndarray, rank: int = None, lambd: float = None, Omega_mask: np.ndarray = None):
         check_real_matrix(M)
         X = np.copy(M)
         m, n = X.shape
@@ -52,10 +52,12 @@ class OutlierPursuit:
         # initialize the parameters
         if Omega_mask is None:
             Omega_mask = np.ones((m, n))
-        if initial_rank is None or initial_rank < 0:
+        if rank is None or rank < 0:
             initial_rank = np.ceil(min(m, n) * 0.1)
         else:
-            initial_rank = min(m, n, initial_rank)
+            initial_rank = min(m, n, rank)
+        if lambd is None:
+            lambd = 1/(min(m, n)**0.5)
 
         delta = 1e-5
         mu_temp = 0.99 * np.linalg.norm(X)

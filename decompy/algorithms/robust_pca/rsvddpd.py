@@ -8,7 +8,6 @@ from ...base import SVDResult
 class RSVDDPD:
 
     def __init__(self, **kwargs) -> None:
-        self.rank = kwargs.get("rank")
         self.alpha = kwargs.get("alpha", 0.5)  # the alpha in the robust minimum divergence
         assert self.alpha >= 0 and self.alpha <= 1, "alpha must be between 0 and 1"   # * Protect against absurd options
         self.tol = kwargs.get("tol", 1e-4)     # * Minimum tolerance level for the norm of X
@@ -28,13 +27,16 @@ class RSVDDPD:
             warnings.warn("Singular values are not in sorted order")
 
 
-    def decompose(self, M: np.ndarray, initu: Union[np.ndarray, None] = None, initv: Union[np.ndarray, None] = None):
+    def decompose(self, M: np.ndarray, rank: int = None, initu: Union[np.ndarray, None] = None, initv: Union[np.ndarray, None] = None):
         check_real_matrix(M)
         X = np.copy(M)   # create a copy of the matrix so you do not mutuate the existing one
         n, p = X.shape
 
         # Protect against absurd options
-        rank = max(1, min( self.rank, min(n, p) ))
+        if rank is not None:
+            rank = max(1, min( rank, min(n, p) ))
+        else:
+            rank = min(n, p)
 
         # initialize initU, initV
         initu = initu if initu is not None else np.random.random((n, rank))
