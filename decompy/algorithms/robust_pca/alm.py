@@ -3,7 +3,7 @@ import numpy as np
 from ...utils.validations import check_real_matrix
 from ...base import LSNResult
 
-class ALM:
+class AugmentedLagrangianMethod:
     """
         Reference: Robust principal component analysis based on low-rank and block-sparse matrix decomposition
             - Gongguo Tang; Arye Nehorai
@@ -23,7 +23,7 @@ class ALM:
         self.beta = kwargs.get("beta", 0.2)
         self.rho = kwargs.get("rho", 1.1)
 
-    def decompose(self, M: np.ndarray, rank: int = None, kappa: float = None, tau = float = None):
+    def decompose(self, M: np.ndarray, rank: int = None, kappa: float = None, tau: float = None):
         check_real_matrix(M)
         D = M.copy()
         n, p = D.shape
@@ -31,7 +31,7 @@ class ALM:
         # Initialization
         kappa = 1.1 if kappa is None else kappa
         tau = 0.61 if tau is None else tau
-        lamd = tau * kappa
+        lambd = tau * kappa
         eta = (1 - tau)* kappa
         mu = 30 / np.linalg.norm(np.sign(D))
 

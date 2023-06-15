@@ -5,7 +5,7 @@ import warnings
 from ...utils.validations import check_real_matrix
 from ...base import SVDResult
 
-class PCP:
+class PrincipalComponentPursuit:
     """
         Principal Component Pursuit Method for Robust PCA
 

@@ -14,7 +14,7 @@ class LSNResult:
         if S is not None:
             assert S.ndim == 2, "Mismatched shape"
         
-        m, n = L.shape[0]
+        m, n = L.shape
         if N is not None:
             assert N.shape[0] == m and N.shape[1] == n, "Mismatched shape"
         if S is not None:

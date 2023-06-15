@@ -5,7 +5,7 @@ from ...utils.constants import EPS
 from ...base import RankFactorizationResult
 
 
-class VBRPCA:
+class VariationalBayes:
 
     """
     Reference:

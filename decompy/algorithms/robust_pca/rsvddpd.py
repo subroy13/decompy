@@ -5,7 +5,7 @@ import warnings
 from ...utils.validations import check_real_matrix, is_decreasing
 from ...base import SVDResult
 
-class RSVDDPD:
+class DensityPowerDivergence:
 
     def __init__(self, **kwargs) -> None:
         self.alpha = kwargs.get("alpha", 0.5)  # the alpha in the robust minimum divergence

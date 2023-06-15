@@ -4,7 +4,7 @@ import numpy as np
 from ...utils.validations import check_real_matrix
 from ...base import LSNResult
 
-class ADM:
+class AlternatingDirectionMethod:
     """
         Sparse and low-rank matrix decomposition via alternating direction methods
         - Xiaoming Yuan, Junfeng Yang (Year 2009)
