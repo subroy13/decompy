@@ -3,13 +3,12 @@ import numpy as np
 
 class SVDResult:
     """
-        The SVDResult class contains methods for accessing and manipulating the results of a singular value
-        decomposition, including singular values and vectors, convergence metrics, cumulative variance, and
-        estimated rank.
+        The SVDResult class is a structure for holding the matrix decomposition
+        in form of singular value decomposition.
     """
 
     def __init__(self, U: np.ndarray, D: np.ndarray, V: np.ndarray, **kwargs) -> None:
-        '''This function initializes an object with three input arrays and optional keyword arguments.
+        '''This function initializes an output SVDReslt object with three input arrays and optional metrics.
         
         Parameters
         ----------
@@ -22,7 +21,7 @@ class SVDResult:
         of a singular value decomposition (SVD) and is used to reconstruct the original matrix.
         
         '''
-        assert len(D.shape) == 1 and len(U.shape) == 2 and len(V.shape) == 2, "Mismatched shape in outputted singular values"
+        assert D.ndim == 1 and U.ndim == 2 and V.ndim == 2, "Mismatched shape in outputted singular values"
         assert D.shape[0] == U.shape[1] and D.shape[0] == V.shape[1], "Mismatched shape in outputted singular values and vectors"
         self.U = U
         self.D = D
