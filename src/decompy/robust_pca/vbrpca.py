@@ -1,8 +1,8 @@
 import numpy as np
 
-from ...utils.validations import check_real_matrix
-from ...utils.constants import EPS
-from ...base import RankFactorizationResult
+from ..utils.validations import check_real_matrix
+from ..utils.constants import EPS
+from ..base import RankFactorizationResult
 
 
 class VariationalBayes:

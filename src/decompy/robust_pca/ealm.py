@@ -1,7 +1,7 @@
 import numpy as np
 
-from ...utils.validations import check_real_matrix
-from ...base import LSNResult
+from ..utils.validations import check_real_matrix
+from ..base import LSNResult
 
 class ExactAugmentedLagrangianMethod:
     """
