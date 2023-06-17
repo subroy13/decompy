@@ -1,7 +1,7 @@
 import numpy as np
 
 from ...utils.validations import check_real_matrix, check_binary_matrix
-
+from ...base import LSNResult
 
 class OutlierPursuit:
     """
@@ -110,8 +110,13 @@ class OutlierPursuit:
                 t_temp0 = t_new
                 mu_temp = mu_new
     
-        L = L_new
-        C = C_new
-        return L, C
+        return LSNResult(
+            L = L_new,
+            S = C_new,
+            convergence = {
+                'niter': niter,
+                'converged': (niter < self.maxiter)
+            }
+        )
 
 
