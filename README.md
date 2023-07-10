@@ -27,23 +27,42 @@ Here's a simple example demonstrating how to use decompy for data decomposition:
 
 ```python
 import numpy as np
-import decompy
+from decompy.robust_svd import DensityPowerDivergence
 
 # Load your data
-data = np.arange(100).reshape(20,5)
+data = np.arange(100).reshape(20,5).astype(np.float64)
 
 # Perform data decomposition
-algo = decompy.robust_svd.DensityPowerDivergence(alpha = 0.5)
-result = algo.decompose(data, method='sparse')
+algo = DensityPowerDivergence(alpha = 0.5)
+result = algo.decompose(data)
 
 # Access the decomposed components
-U, V = result.get_singular_vectors(type = "both")
-S = result.get_singular_values()
+U, V = result.singular_vectors(type = "both")
+S = result.singular_values()
 low_rank_component = U @ S @ V.T
 sparse_component = data - low_rank_component
+
+print(low_rank_component)
+print(sparse_component)
+```
+
+While the singular values are about 573 and 7.11 for this case (check the `S` variable), it can get highly affected if you use the simple SVD and change a single entry of the `data` matrix.
+
+```
+s2 = np.linalg.svd(data, compute_uv = False)
+print(np.round(s2, 2))    # estimated by usual SVD
+print(np.diag(np.round(S, 2)))    # estimated by robust SVD
+
+
+data[1, 1] = 10000  # just change a single entry
+s3 = np.linalg.svd(data, compute_uv = False)
+print(np.round(s3, 2))   # usual SVD shoots up
+s4 = algo.decompose(data).singular_values()
+print(np.diag(np.round(s4, 2)))
 ```
 
 You can find more example notebooks in [examples]() folder. For more detailed usage instructions, please refer to the [documentation]().
+
 
 ## Contributing
 
