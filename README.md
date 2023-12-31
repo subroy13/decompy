@@ -4,6 +4,7 @@
 * Robust PCA or SVD based methods
 * Matrix completion methods
 * Robust matrix or tensor factorization methods.
+* Matrix rank estimation methods.
 
 
 ## Features

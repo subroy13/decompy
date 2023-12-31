@@ -3,6 +3,7 @@ import numpy as np
 import warnings
 
 from ..utils.validations import check_real_matrix, is_decreasing
+from ..utils.constants import EPS
 from ..base import SVDResult
 
 class DensityPowerDivergence:
@@ -15,6 +16,11 @@ class DensityPowerDivergence:
         self.maxiter = kwargs.get("maxiter", 1e2)  # * Maximum number of iterations per singular value
         self.inneriter = kwargs.get("inneriter", 5)   # * Number of inner fixed point iteration
         self.verbose = kwargs.get("verbose", False)
+        self.method = kwargs.get("method", "v2")   # * The method of regression
+        assert self.method in ["v1", "v2"] 
+        self.initmethod = kwargs.get("initmethod", "random")   # the method of vector initialization
+        assert self.initmethod in ["random", "tsvd"]
+
 
     def sanity_check(self, X: np.ndarray, lambdas: np.ndarray, maxit_reached: np.ndarray):
         """
@@ -26,25 +32,9 @@ class DensityPowerDivergence:
         if not is_decreasing(lambdas):
             warnings.warn("Singular values are not in sorted order")
 
-
-    def decompose(self, M: np.ndarray, rank: Union[int, None] = None, initu: Union[np.ndarray, None] = None, initv: Union[np.ndarray, None] = None):
-        check_real_matrix(M)
-        X = np.copy(M)   # create a copy of the matrix so you do not mutuate the existing one
+    def __decompose_v1(self, M: np.ndarray, rank: int, initu: np.ndarray, initv: np.ndarray):
+        X = np.copy(M)
         n, p = X.shape
-
-        # Protect against absurd options
-        if rank is not None:
-            rank = max(1, min( rank, min(n, p) ))
-        else:
-            rank = min(n, p)
-
-        # initialize initU, initV
-        initu = initu if initu is not None else np.random.random((n, rank))
-        initv = initv if initv is not None else np.random.random((p, rank))
-        assert initu.shape[0] == n and initv.shape[0] == p and initu.shape[1] == rank and initv.shape[1] == rank, "Invalid initialization value"
-        for i in range(rank):
-            initu[:, i] = initu[:, i] / np.linalg.norm(initu[:, i])
-            initv[:, i] = initv[:, i] / np.linalg.norm(initv[:, i])
         lambdas = np.zeros(rank)
         iterlist = np.zeros(rank)
 
@@ -144,6 +134,106 @@ class DensityPowerDivergence:
         lambdas = (scale_factor[1] - scale_factor[0]) * lambdas
         initu = initu[:, :rank]    # Subset only the required column upto the rank
         initv = initv[:, :rank]    
+    
+        return (lambdas, initu, initv, iterlist)
+
+
+    def __decompose_v2(self, M: np.ndarray, rank: int, U: np.ndarray, V: np.ndarray):
+        X = np.copy(M)
+        n, p = X.shape
+
+        # normalize entries for better numerical precision
+        scale_factor = np.quantile(X, [0.25, 0.75])
+        X /= (scale_factor[1] - scale_factor[0])
+
+        niter = 0
+        sigs = np.ones(rank)  # (r, )
+        sigma = np.var(X) ** 0.5  # sigma
+
+        while True:
+            # step 1: estimate V based on U
+            newsigs = sigs
+            for _ in range(self.inneriter):
+                ermat = X - U @ np.diag(newsigs) @ V.T   # (n, p)
+                wmat = np.exp(-self.alpha * ermat**2 / (2 * (sigma **2) ))   # (n, p)
+                for j in range(p):
+                    V[j,:] = np.linalg.solve(U.T @ np.diag(wmat[:, j] + EPS) @ U, U.T @ np.diag(wmat[:, j]) @ X[:, j])   # (r, )
+
+                # perform QR decomposition for gram schimdt
+                V, R = np.linalg.qr(V)
+                newsigs = np.absolute(np.diag(R))
+
+            # step 2: estimate U based on V
+            for _ in range(self.inneriter):
+                ermat = X - U @ np.diag(newsigs) @ V.T   # (n, p)
+                wmat = np.exp(-self.alpha * ermat**2 / (2 * (sigma **2) ))   # (n, p)
+                for i in range(n):
+                    U[i, :] = np.linalg.solve(V.T @ np.diag(wmat[i, :] + EPS) @ V, V.T @ np.diag(wmat[i, :]) @ X[i, :] )  # (r, )
+                # perform QR decomposition for gram schimdt
+                U, R = np.linalg.qr(U)
+                newsigs = np.absolute(np.diag(R))
+
+            # step 3: check convergence
+            err = np.linalg.norm(sigs - newsigs) / np.linalg.norm(sigs)
+            niter += 1
+            if err < self.tol or niter >= self.maxiter:
+                break
+            else:
+                sigs = newsigs
+        
+        # Change the singular values as required
+        sigs = (scale_factor[1] - scale_factor[0]) * sigs
+        return (sigs, U, V, niter)
+
+    
+    def get_initialized_U_V(self, M: np.ndarray, rank):
+        X = np.copy(M)
+        n, p = X.shape
+        if self.initmethod == "random":
+            initu = np.random.random((n, rank))
+            initv = np.random.random((p, rank))
+            
+            # make it orthogonalized
+            initu, _ = np.linalg.qr(initu)
+            initv, _ = np.linalg.qr(initv)
+        else:
+            quants = np.quantile(X, q = [0.25, 0.75])
+            X[X < quants[0]] = quants[0]
+            X[X > quants[1]] = quants[1]
+            U, _, Vt = np.linalg.svd(X)
+            initu, initv = U, Vt.T
+        return (initu, initv)
+
+
+
+    def decompose(self, M: np.ndarray, rank: Union[int, None] = None, initu: Union[np.ndarray, None] = None, initv: Union[np.ndarray, None] = None):
+        check_real_matrix(M)
+        n, p = M.shape
+
+        # Protect against absurd options
+        if rank is not None:
+            rank = max(1, min( rank, min(n, p) ))
+        else:
+            rank = min(n, p)
+
+        # initialize initU, initV
+        if initu is None or initv is None:
+            initu, initv = self.get_initialized_U_V(M, rank)
+        else:
+            # both are present
+            assert initu.shape[0] == n and initv.shape[0] == p and initu.shape[1] == rank and initv.shape[1] == rank, "Invalid initialization value"        
+        
+        if self.method == "v1":
+            lambdas, initu, initv, iterlist = self.__decompose_v1(M, rank, initu, initv)
+        else:
+            lambdas, initu, initv, iterlist = self.__decompose_v2(M, rank, initu, initv)
+
+        
+        idx = lambdas.argsort()[::-1]   # sort the singular values in decreasing order
+        lambdas = lambdas[idx]
+        initu = initu[:, idx]
+        initv = initv[:, idx]   # rearrage the singular values in the same order
+
 
         if self.verbose:
             self.sanity_check(M, lambdas, (iterlist >= self.maxiter))
