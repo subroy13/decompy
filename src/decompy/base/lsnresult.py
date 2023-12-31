@@ -9,7 +9,7 @@ class LSNResult:
     """
 
     def __init__(self, L: np.ndarray, S: np.ndarray = None, N: np.ndarray = None, **kwargs) -> None:
-        '''This is a constructor function that initializes the low rank matrix, sparse matrix, noise
+        """This is a constructor function that initializes the low rank matrix, sparse matrix, noise
         perturbation matrix, and metrics in the LSNResult class
         
         Parameters
@@ -23,7 +23,7 @@ class LSNResult:
             The noise perturbation matrix, which is an optional parameter. If provided, it should be a 2D numpy
         array with the same shape as the low rank matrix L.
         
-        '''
+        """
         assert L.ndim == 2, "Mismatched shape"
         if N is not None:
             assert N.ndim == 2, "Mismatched shape"

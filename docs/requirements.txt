@@ -1,3 +1,0 @@
-myst-nb
-autoapi
-sphinx-autoapi

@@ -6,10 +6,27 @@ from scipy.stats import t
 from ..utils.rootmethods import roots_quartic
 
 def rW(kappa, m):
-    """
-        Wood (1994) simulation of auxilliary W variable 
-        - (https://www.tandfonline.com/doi/abs/10.1080/03610919408813161)
-    """
+    '''The function rW is a simulation of the auxilliary W variable based on the Wood (1994) method, which
+    generates a random variable W with a specified shape parameter kappa and degrees of freedom m.
+    
+    Parameters
+    ----------
+    kappa
+        The parameter `kappa` represents the shape parameter of the Wood distribution. It controls the
+    skewness of the distribution. A higher value of `kappa` results in a more skewed distribution.
+    m
+        The parameter `m` represents the degrees of freedom in the Wood (1994) simulation. It determines
+    the shape of the beta distribution used to generate the random variable `Z`.
+    
+    Returns
+    -------
+        The function rW returns the value of the auxilliary variable W, which is calculated using the Wood
+    (1994) simulation method.
+    
+    References
+    -------
+    - https://www.tandfonline.com/doi/abs/10.1080/03610919408813161    
+    '''
     b = (-2.0 * kappa + np.sqrt(4*(kappa**2) + (m-1)**2)) / (m-1)
     x0 = (1-b)/(1+b)
     c = kappa * x0 + (m-1) * np.log(1-x0**2)
@@ -25,9 +42,21 @@ def rW(kappa, m):
 
 
 def rmf_vector(kmu: np.array):
-    """
-        Simulate a random normal vector from the von Mises-Fisher distribution as described in Wood(1994).
-    """
+    '''The `rmf_vector` function generates a random normal vector from the von Mises-Fisher distribution
+    given a mean direction.
+    
+    Parameters
+    ----------
+    kmu : np.array
+        The parameter `kmu` is a numpy array representing the mean direction of the von Mises-Fisher
+    distribution. It is a vector of shape `(m,)`, where `m` is the dimensionality of the distribution.
+    
+    Returns
+    -------
+        The function `rmf_vector` returns a random normal vector sampled from the von Mises-Fisher
+    distribution.
+    
+    '''
     kappa = np.linalg.norm(kmu)  # scalar
     mu = kmu / kappa  # (m,)
     m = kmu.shape[0]
@@ -49,9 +78,21 @@ def rmf_vector(kmu: np.array):
 
 
 def rmf_matrix(M: np.array):
-    """
-        Simulate a random orthonormal matrix from the von Mises-Fisher distribution.
-    """
+    '''The `rmf_matrix` function simulates a random orthonormal matrix from the von Mises-Fisher
+    distribution using a rejection sampling method.
+    
+    Parameters
+    ----------
+    M : np.array
+        The parameter `M` is a numpy array representing a matrix. The shape of `M` is `(m, R)`, where `m`
+    is the number of rows and `R` is the number of columns of the matrix.
+    
+    Returns
+    -------
+        The function `rmf_matrix` returns a simulated random orthonormal matrix from the von Mises-Fisher
+    distribution.
+    
+    '''
     if M.shape[1] == 1:
         return rmf_vector(M.reshape(-1)).reshape(-1, 1)  # this is a vector
     else:
@@ -90,6 +131,25 @@ def rmf_matrix(M: np.array):
     return X
 
 def ln2moment(mu, s2, lmax):
+    '''The `ln2moment` function calculates the logarithmic moments of a log-normal distribution given the
+    mean, variance, and maximum order.
+    
+    Parameters
+    ----------
+    mu
+        The parameter `mu` represents the mean of the log-normal distribution.
+    s2
+        The parameter `s2` represents the variance of the log-normal distribution.
+    lmax
+        The parameter `lmax` represents the maximum value of `l` in the calculation. It determines the
+    number of logarithmic moments that will be calculated.
+    
+    Returns
+    -------
+        The function `ln2moment` returns an array `l2mom` containing the logarithmic moments up to a given
+    maximum value `lmax`.
+    
+    '''
     mu = np.abs(mu)
     l2mom = np.zeros(lmax + 1)
     lmom = np.zeros(lmax * 2 + 1)
@@ -103,11 +163,35 @@ def ln2moment(mu, s2, lmax):
     return l2mom
 
 def rXL(mu, sigma, l, nu = 1):
-    """
-        Simulate XL random variable
-        - Reference: https://www.jstor.org/stable/27639896
-    """
+    '''The `rXL` function is used to simulate a random variable following the XL (Extreme Lognormal)
+    distribution.
+    
+    Parameters
+    ----------
+    mu
+        The parameter `mu` represents the mean of the XL random variable. It is a measure of the central
+    tendency of the distribution.
+    sigma
+        The parameter `sigma` represents the standard deviation of the XL random variable. It measures the
+    spread or variability of the distribution.
+    l
+        The parameter "l" represents the shape parameter of the XL random variable. It determines the shape
+    of the distribution and affects the tail behavior. A higher value of "l" results in heavier tails.
+    nu, optional
+        The parameter `nu` represents the degrees of freedom for the t-distribution. It determines the
+    shape of the distribution and affects the tails of the distribution. Higher values of `nu` result in
+    heavier tails and a distribution that resembles a normal distribution. Lower values of `nu` result
+    in lighter tails
+    
+    Returns
+    -------
+        The function `rXL` returns a simulated value from the XL (Extreme Lognormal) random variable
+    distribution.
 
+    References
+    -------
+    - https://www.jstor.org/stable/27639896
+    '''
     def ldxl(x, mu, sigma, l, ln2m):
         return l*np.log(x**2) - np.log(sigma) - 0.5*np.log(2*np.pi) - 0.5*((x - mu)/sigma)**2 - ln2m
     

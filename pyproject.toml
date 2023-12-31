@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0", "numpy>=1.23"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,13 +7,21 @@ name = "decompy"
 version = "0.2.0"
 authors = [{ name = "Subhrajyoty Roy", email = "subhrajyotyroy@gmail.com" }]
 description = "A python package containing several robust algorithms for matrix decomposition, rank estimation and relevant analysis."
-readme = "README.md"
-requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+    "numpy>=1.23",
+    "tqdm",
+    "scipy"
+]
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+readme = "README.md"
 
 [project.urls]
 "Homepage" = "https://github.com/subroy13/decompy"
+Repository = "https://github.com/subroy13/decompy.git"
 "Bug Tracker" = "https://github.com/subroy13/decompy/issues"
+Changelog = "https://github.com/subroy13/decompy/blob/master/CHANGELOG.md"
