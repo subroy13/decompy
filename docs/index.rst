@@ -11,6 +11,9 @@ Welcome to decompy's documentation!
    :caption: Contents:
 
    decompy
+   CHANGELOG
+   CONTRIBUTING
+   README
 
 Indices and tables
 ==================

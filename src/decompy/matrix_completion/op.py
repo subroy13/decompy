@@ -5,7 +5,7 @@ from ..base import LSNResult
 
 class OutlierPursuit:
     """
-        Robust PCA via Outlier Pursuit
+        Matrix Completion via Outlier Pursuit
         References: https://guppy.mpe.nus.edu.sg/~mpexuh/papers/OutlierPursuit-TIT.pdf
     """
 

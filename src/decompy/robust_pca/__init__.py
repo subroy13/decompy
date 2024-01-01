@@ -3,8 +3,8 @@ from .alm import AugmentedLagrangianMethod
 from .ealm import ExactAugmentedLagrangianMethod
 from .ialm import InexactAugmentedLagrangianMethod
 from .pcp import PrincipalComponentPursuit
-from ..robust_svd.rsvddpd import DensityPowerDivergence
 from .vbrpca import VariationalBayes
+from .mest import MEstimation
 
 __all__ = [
     "AlternatingDirectionMethod",
@@ -12,5 +12,6 @@ __all__ = [
     "ExactAugmentedLagrangianMethod",
     "InexactAugmentedLagrangianMethod",
     "PrincipalComponentPursuit",
-    "VariationalBayes"
+    "VariationalBayes",
+    "MEstimation"
 ]

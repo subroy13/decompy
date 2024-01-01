@@ -2,7 +2,8 @@
     "docify.commentService.programmingLanguage": "python",
     "docwriter.style": "NumPy",
     "docwriter.progress.trackFunctions": true,
-    "python.analysis.typeCheckingMode": "off",
+    "python.analysis.typeCheckingMode": "basic",
     "docwriter.hotkey.mac": "⌘ + .",
-    "docwriter.progress.trackClasses": true
+    "docwriter.progress.trackClasses": true,
+    "python.analysis.autoImportCompletions": true
 }
