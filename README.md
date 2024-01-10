@@ -84,7 +84,7 @@ This project is licensed under the [BSD 3-Clause License](LICENSE).
 
 3. Exact Augmented Lagrangian Method [(Lin, Chen and Ma, 2010)](https://arxiv.org/abs/1009.5055) - `robust_pca/ealm.py`
 
-4. Inexact Augmented Lagrangian Method - `robust_pca/ialm.py`
+4. Inexact Augmented Lagrangian Method [(Lin et al. 2009)](http://arxiv.org/abs/1009.5055)  [website](http://perception.csl.illinois.edu/matrix-rank/sample_code.html) - `robust_pca/ialm.py`
 
 5. Principal Component Pursuit (PCP) Method [(Candes et al. 2009)](https://arxiv.org/abs/0912.3599) - `robust_pca/pcp.py`
 
@@ -92,10 +92,16 @@ This project is licensed under the [BSD 3-Clause License](LICENSE).
 
 7. Robust PCA using Variational Bayes method [(Babacan et al 2012)](https://ieeexplore.ieee.org/document/6194350) - `robust_pca/vbrpca.py`
 
+8. Robust PCA using Fast PCP Method [(Rodriguez and Wohlberg, 2013)](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6738015) - `robust_pca/fpcp.py`
+
+
+
 
 ## Robust SVD
 
 1. Robust SVD using Density Power Divergence (rSVDdpd) Algorithm [(Roy et al, 2023)](https://arxiv.org/abs/2109.10680) - `robust_svd/rsvddpd.py`
+
+2. SVT: Singular Value Thresholding [(Cai et al. 2008)](http://arxiv.org/abs/0810.3286)  [website](http://perception.csl.illinois.edu/matrix-rank/sample_code.html)
 
 
 
