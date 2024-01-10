@@ -2,26 +2,29 @@ from typing import Literal
 import numpy as np
 
 class PCAResult:
-    """
-        The PCAResult class is a structure for holding the matrix decomposition
-        in form of location and the principal components.
-    """
+    '''
+    The PCAResult class is a structure for holding the matrix decomposition in form of location and the principal components.
+
+    Parameters
+    ----------
+    loc : np.ndarray
+        a numpy array representing the location of a point in space
+    eval : np.ndarray
+        A 1-dimensional numpy array representing the eigenvalues of a matrix.
+    evec : np.ndarray
+        `evec` is a 2D numpy array representing the eigenvectors of a matrix. Each column of the array represents an eigenvector.
+
+    Attributes
+    ----------
+    metrics : dict
+        a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm
+        
+    '''
 
 
     def __init__(self, loc: np.ndarray, eval: np.ndarray, evec: np.ndarray, **kwargs) -> None:
         '''This is a constructor function that initializes the PCAResult object with given numpy arrays
         and optional keyword arguments.
-        
-        Parameters
-        ----------
-        loc : np.ndarray
-            a numpy array representing the location of a point in space
-        eval : np.ndarray
-            A 1-dimensional numpy array representing the eigenvalues of a matrix.
-        evec : np.ndarray
-            `evec` is a 2D numpy array representing the eigenvectors of a matrix. Each column of the array
-        represents an eigenvector.
-        
         '''
         assert len(loc.shape) == 1 and len(eval.shape) == 1 and len(evec.shape) == 2, "Mismatched shape"
         assert loc.shape[0] >= eval.shape[0] and eval.shape[0] == evec.shape[1], "Mismatched shape"

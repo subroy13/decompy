@@ -6,9 +6,12 @@ from ..base import PCAResult
 class MEstimation:
 
     """
-        References:
-            De la Torre, F. and Black, M. J., Robust principal component analysis for computer vision. Int. Conf. on Computer Vision 2001, Vancouver. 
-            De la Torre, F. and Black, M. J., A Framework for Robust Subspace Learning. In preparation.
+    Robust PCA using Classical M-estimation method
+
+    Notes
+    -----
+    [1] F. De la Torre and M. J. Black, "Robust principal component analysis for computer vision," Proceedings Eighth IEEE International Conference on Computer Vision. ICCV 2001, Vancouver, BC, Canada, 2001, pp. 362-369 vol.1, doi: 10.1109/ICCV.2001.937541.
+
     """
     def __init__(self, **kwargs) -> None:
         self.maxiter = kwargs.get("maxiter", 300)

@@ -8,10 +8,12 @@ from ..base import RankFactorizationResult
 class VariationalBayes:
 
     """
-    Reference:
-        S. D. Babacan, M. Luessi, R. Molina, and A. K. Katsaggelos, 
-        "Sparse Bayesian Methods for Low-Rank Matrix Estimation," 
-        IEEE Transactions on Signal Processing, 2012.
+    Robust PCA using Variational Bayesian method
+    
+    Notes
+    -----
+    [1] S. D. Babacan, M. Luessi, R. Molina and A. K. Katsaggelos, "Sparse Bayesian Methods for Low-Rank Matrix Estimation," in IEEE Transactions on Signal Processing, vol. 60, no. 8, pp. 3964-3977, Aug. 2012, doi: 10.1109/TSP.2012.2197748.
+    
     """
 
     def __init__(self, **kwargs) -> None:

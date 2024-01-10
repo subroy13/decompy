@@ -3,23 +3,27 @@ import numpy as np
 
 class RankFactorizationResult:
     """
-        The RankFactorizationResult class is a structure for holding the matrix decomposition
-        in form of rank factorization.
+    The RankFactorizationResult class is a structure for holding the matrix decomposition
+    in form of rank factorization.
+
+    Parameters
+    ----------
+    A : np.ndarray
+        A is a numpy ndarray representing a matrix with 2 dimensions. It is the first of the rank factorized pair
+    B : np.ndarray
+        The parameter B is a numpy ndarray representing a matrix. The assert statements in the code ensure
+    that B has two dimensions and that its second dimension matches the second dimension of the matrix
+    A. 
+
+    Attributes
+    ----------
+    metrics : dict
+        a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm
+
     """
 
     def __init__(self, A: np.ndarray, B: np.ndarray, **kwargs):
-        '''This function initializes a RankFactorizationResult with two numpy arrays A and B, and some optional metrics.
-        
-        Parameters
-        ----------
-        A : np.ndarray
-            A is a numpy ndarray representing a matrix with 2 dimensions. It is one of the inputs to the
-        constructor of a class.
-        B : np.ndarray
-            The parameter B is a numpy ndarray representing a matrix. The assert statements in the code ensure
-        that B has two dimensions and that its second dimension matches the second dimension of the matrix
-        A. The code then assigns the parameter B to the instance variable self.B.
-        
+        '''This function initializes a RankFactorizationResult with two numpy arrays A and B, and some optional metrics.      
         '''
         assert A.ndim == 2 and B.ndim == 2, "Mismatched shape"
         assert A.shape[1] == B.shape[1], "Mismatched shape"

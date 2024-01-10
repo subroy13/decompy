@@ -2,27 +2,30 @@ from typing import Literal
 import numpy as np
 
 class LSNResult:
-    """
-        The LSNResult class is a structure for holding the matrix decomposition
-        in form of a low rank matrix L, a sparse matrix S and a small perturbation noise
-        matrix N.
-    """
+    '''
+    The LSNResult class is a structure for holding the matrix decomposition in form of a low rank matrix L, a sparse matrix S and a small perturbation noise matrix N.
+
+    Parameters
+    ----------
+    L : np.ndarray
+        a numpy ndarray representing the low rank matrix
+    S : np.ndarray
+        a sparse matrix that represents the sparse component of a given matrix. This is an optional parameter. If provided, it should be a 2D numpy
+    array with the same shape as the low rank matrix L.
+    N : np.ndarray
+        The noise perturbation matrix, which is an optional parameter. If provided, it should be a 2D numpy
+    array with the same shape as the low rank matrix L.
+
+    Attributes
+    ----------
+    metrics : dict
+        a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm
+
+    '''
 
     def __init__(self, L: np.ndarray, S: np.ndarray = None, N: np.ndarray = None, **kwargs) -> None:
         """This is a constructor function that initializes the low rank matrix, sparse matrix, noise
         perturbation matrix, and metrics in the LSNResult class
-        
-        Parameters
-        ----------
-        L : np.ndarray
-            a numpy ndarray representing the low rank matrix
-        S : np.ndarray
-            a sparse matrix that represents the sparse component of a given matrix. This is an optional parameter. If provided, it should be a 2D numpy
-        array with the same shape as the low rank matrix L.
-        N : np.ndarray
-            The noise perturbation matrix, which is an optional parameter. If provided, it should be a 2D numpy
-        array with the same shape as the low rank matrix L.
-        
         """
         assert L.ndim == 2, "Mismatched shape"
         if N is not None:

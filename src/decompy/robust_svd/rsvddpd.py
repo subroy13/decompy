@@ -7,6 +7,14 @@ from ..utils.constants import EPS
 from ..base import SVDResult
 
 class DensityPowerDivergence:
+    """
+    Robust SVD using Density Power Divergence based Alternating Regression Method
+
+    Notes
+    -----
+    [1] Roy, Subhrajyoty, Ayanendranath Basu, and Abhik Ghosh. "A New Robust Scalable Singular Value Decomposition Algorithm for Video Surveillance Background Modelling." arXiv preprint arXiv:2109.10680 (2021).
+    
+    """
 
     def __init__(self, **kwargs) -> None:
         self.alpha = kwargs.get("alpha", 0.5)  # the alpha in the robust minimum divergence
@@ -186,7 +194,21 @@ class DensityPowerDivergence:
         return (sigs, U, V, niter)
 
     
-    def get_initialized_U_V(self, M: np.ndarray, rank):
+    def _get_initialized_U_V(self, M: np.ndarray, rank):
+        '''The function `_get_initialized_U_V` initializes matrices U and V (orthogonal left and right singular matrices) based on the given matrix M and for a specified rank.
+        
+        Parameters
+        ----------
+        M : np.ndarray
+            M is a numpy array representing a matrix.
+        rank
+            The "rank" parameter represents the desired rank of the factorization. In matrix factorization, the rank refers to the number of latent factors used to approximate the original matrix. It determines the complexity and accuracy of the factorization.
+        
+        Returns
+        -------
+            a tuple containing the initialized U and V matrices.
+        
+        '''
         X = np.copy(M)
         n, p = X.shape
         if self.initmethod == "random":
@@ -218,7 +240,7 @@ class DensityPowerDivergence:
 
         # initialize initU, initV
         if initu is None or initv is None:
-            initu, initv = self.get_initialized_U_V(M, rank)
+            initu, initv = self._get_initialized_U_V(M, rank)
         else:
             # both are present
             assert initu.shape[0] == n and initv.shape[0] == p and initu.shape[1] == rank and initv.shape[1] == rank, "Invalid initialization value"        

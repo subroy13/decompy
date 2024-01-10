@@ -3,23 +3,27 @@ import numpy as np
 
 class SVDResult:
     """
-        The SVDResult class is a structure for holding the matrix decomposition
-        in form of singular value decomposition.
+    The SVDResult class is a structure for holding the matrix decomposition in form of singular value decomposition.
+
+    Parameters
+    ----------
+    U : np.ndarray
+        a numpy array representing the left singular vectors of a matrix
+    D : np.ndarray
+        A 1-dimensional numpy array containing the singular values of a matrix.
+    V : np.ndarray
+        V is a 2D numpy array representing the right singular vectors of a matrix. It is part of the output
+    of a singular value decomposition (SVD) and is used to reconstruct the original matrix.
+
+    Attributes
+    ----------
+    metrics : dict
+        a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm
+
     """
 
     def __init__(self, U: np.ndarray, D: np.ndarray, V: np.ndarray, **kwargs) -> None:
         '''This function initializes an output SVDReslt object with three input arrays and optional metrics.
-        
-        Parameters
-        ----------
-        U : np.ndarray
-            a numpy array representing the left singular vectors of a matrix
-        D : np.ndarray
-            A 1-dimensional numpy array containing the singular values of a matrix.
-        V : np.ndarray
-            V is a 2D numpy array representing the right singular vectors of a matrix. It is part of the output
-        of a singular value decomposition (SVD) and is used to reconstruct the original matrix.
-        
         '''
         assert D.ndim == 1 and U.ndim == 2 and V.ndim == 2, "Mismatched shape in outputted singular values"
         assert D.shape[0] == U.shape[1] and D.shape[0] == V.shape[1], "Mismatched shape in outputted singular values and vectors"

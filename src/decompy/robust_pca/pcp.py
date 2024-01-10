@@ -7,10 +7,12 @@ from ..base import SVDResult
 
 class PrincipalComponentPursuit:
     """
-        Principal Component Pursuit Method for Robust PCA
+    Robust PCA using Principal Component Pursuit Method
 
-        Reference:
-            - https://github.com/cran/rpca/blob/master/R/robustpca.R
+    Notes
+    -----
+    [1] Candès, Emmanuel J., et al. "Robust principal component analysis?." Journal of the ACM (JACM) 58.3 (2011): 1-37.
+
     """
 
     def __init__(self, **kwargs) -> None:

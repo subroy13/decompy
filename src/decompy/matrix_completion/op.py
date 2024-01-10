@@ -5,16 +5,19 @@ from ..base import LSNResult
 
 class OutlierPursuit:
     """
-        Matrix Completion via Outlier Pursuit
-        References: https://guppy.mpe.nus.edu.sg/~mpexuh/papers/OutlierPursuit-TIT.pdf
-    """
+    Matrix completion algorithm via Outlier Pursuit
+    
+    Notes
+    -----
+    [1] H. Xu, C. Caramanis and S. Sanghavi, "Robust PCA via Outlier Pursuit," in IEEE Transactions on Information Theory, vol. 58, no. 5, pp. 3047-3064, May 2012, doi: 10.1109/TIT.2011.2173156.
 
+    """
     def __init__(self, **kwargs):
         self.full_svd = kwargs.get("full_svd", True)
         self.increaseK = kwargs.get("increaseK", 10)
         self.maxiter = kwargs.get("maxiter", 1e3)
 
-    def iterate_L(self, L, epsilon, starting_K):
+    def _iterate_L(self, L, epsilon, starting_K):
         if not self.full_svd:
             pass
             # TODO: implement lansvd()
@@ -28,7 +31,7 @@ class OutlierPursuit:
         return output, rank_out
         
 
-    def iterate_C(self, C, epsilon):
+    def _iterate_C(self, C, epsilon):
         m, n = C.shape
         output = np.zeros_like(C)
         for i in range(n):
@@ -87,10 +90,10 @@ class OutlierPursuit:
             M_difference = (YL + YC - M) * Omega_mask
             
             GL = YL - 0.5 * M_difference
-            L_new, rank_L  = self.iterate_L(GL, mu_temp/2, rank_L + 1)
+            L_new, rank_L  = self._iterate_L(GL, mu_temp/2, rank_L + 1)
 
             GC = YC - 0.5 * M_difference
-            C_new = self.iterate_C(GC, mu_temp * lambd / 2)
+            C_new = self._iterate_C(GC, mu_temp * lambd / 2)
 
             t_new = (1 + np.sqrt(4 * t_temp0 ** 2 + 1)) / 2
             mu_new = max(eta * mu_temp, mu_bar)

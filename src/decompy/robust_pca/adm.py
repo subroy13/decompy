@@ -6,9 +6,12 @@ from ..base import LSNResult
 
 class AlternatingDirectionMethod:
     """
-        Sparse and low-rank matrix decomposition via alternating direction methods
-        - Xiaoming Yuan, Junfeng Yang (Year 2009)
-        - Link: https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.400.8797    
+    Sparse and low-rank matrix decomposition using Alternating Direction Methods
+
+    Notes
+    -----
+    [1] Yuan, Xiaoming, and Junfeng Yang. "Sparse and low-rank matrix decomposition via alternating direction methods." preprint 12.2 (2009).
+    
     """
     
     def __init__(self, **kwargs) -> None:

@@ -5,9 +5,12 @@ from ..base import LSNResult
 
 class ExactAugmentedLagrangianMethod:
     """
-        Reference: Augmented Lagrange multiplier method for Robust PCA.
-            - Minming Chen, October 2009. Questions? v-minmch@microsoft.com
-            - Arvind Ganesh (abalasu2@illinois.edu)
+    Robust PCA using Exact Augmented Lagrangian Multiplier Method
+
+    Notes
+    -----
+    [1] Lin, Zhouchen, Minming Chen, and Yi Ma. "The augmented lagrange multiplier method for exact recovery of corrupted low-rank matrices." arXiv preprint arXiv:1009.5055 (2010).
+
     """
     def __init__(self, **kwargs) -> None:
         self.tol = kwargs.get("tol", 1e-7)

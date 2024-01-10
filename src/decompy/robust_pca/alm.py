@@ -5,9 +5,12 @@ from ..base import LSNResult
 
 class AugmentedLagrangianMethod:
     """
-        Reference: Robust principal component analysis based on low-rank and block-sparse matrix decomposition
-            - Gongguo Tang; Arye Nehorai
-            - Link: https://ieeexplore.ieee.org/document/5766144
+    Robust PCA using Augmented Lagrangian Method
+
+    Notes
+    -----
+    [1] Gongguo Tang and A. Nehorai, "Robust principal component analysis based on low-rank and block-sparse matrix decomposition," 2011 45th Annual Conference on Information Sciences and Systems, Baltimore, MD, USA, 2011, pp. 1-5, doi: 10.1109/CISS.2011.5766144.
+    
     """
 
     def __init__(self, **kwargs) -> None:
