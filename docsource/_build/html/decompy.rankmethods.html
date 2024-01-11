@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>decompy.rankmethods package &#8212; decompy 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=601dbdee" />
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="decompy.utils package" href="decompy.utils.html" />
+    <link rel="prev" title="decompy.matrix_factorization package" href="decompy.matrix_factorization.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="decompy.utils.html" title="decompy.utils package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="decompy.matrix_factorization.html" title="decompy.matrix_factorization package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">decompy 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="decompy.html" accesskey="U">decompy package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">decompy.rankmethods package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="decompy-rankmethods-package">
+<h1>decompy.rankmethods package<a class="headerlink" href="#decompy-rankmethods-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-decompy.rankmethods.bayes">
+<span id="decompy-rankmethods-bayes-module"></span><h2>decompy.rankmethods.bayes module<a class="headerlink" href="#module-decompy.rankmethods.bayes" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.bayes.rank_hoffbayes">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.bayes.</span></span><span class="sig-name descname"><span class="pre">rank_hoffbayes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gibbstype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fixed'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.bayes.rank_hoffbayes" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using Bayesian method
+- Reference: <a class="reference external" href="https://www.jstor.org/stable/27639896">https://www.jstor.org/stable/27639896</a></p>
+</dd></dl>
+
+</section>
+<section id="module-decompy.rankmethods.cvrank">
+<span id="decompy-rankmethods-cvrank-module"></span><h2>decompy.rankmethods.cvrank module<a class="headerlink" href="#module-decompy.rankmethods.cvrank" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.cvrank.rank_bcv">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.cvrank.</span></span><span class="sig-name descname"><span class="pre">rank_bcv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cvs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MSE'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.cvrank.rank_bcv" title="Link to this definition">¶</a></dt>
+<dd><p>”
+Rank estimation using Bi-cross validation technique
+Reference - <a class="reference external" href="https://doi.org/10.1214/08-AOAS227">https://doi.org/10.1214/08-AOAS227</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.cvrank.rank_gabriel">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.cvrank.</span></span><span class="sig-name descname"><span class="pre">rank_gabriel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cvs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MSE'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.cvrank.rank_gabriel" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using Gabriel style cross validation
+- <a class="reference external" href="http://www.numdam.org/item/JSFS_2002__143_3-4_5_0/">http://www.numdam.org/item/JSFS_2002__143_3-4_5_0/</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.cvrank.rank_separate_rowcol">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.cvrank.</span></span><span class="sig-name descname"><span class="pre">rank_separate_rowcol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cvs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MSE'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.cvrank.rank_separate_rowcol" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using separate Row and Column deletion
+- <a class="reference external" href="https://www.jstor.org/stable/1267581">https://www.jstor.org/stable/1267581</a></p>
+</dd></dl>
+
+</section>
+<section id="module-decompy.rankmethods.penalized">
+<span id="decompy-rankmethods-penalized-module"></span><h2>decompy.rankmethods.penalized module<a class="headerlink" href="#module-decompy.rankmethods.penalized" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.penalized.rank_DIC">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.penalized.</span></span><span class="sig-name descname"><span class="pre">rank_DIC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.penalized.rank_DIC" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using divergence information criterion
+Reference:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://doi.org/10.1080/03610926.2017.1307405">https://doi.org/10.1080/03610926.2017.1307405</a></p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.penalized.rank_bai_ng">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.penalized.</span></span><span class="sig-name descname"><span class="pre">rank_bai_ng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criterion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'PC1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.penalized.rank_bai_ng" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using information criterion by Bai and Ng.
+Reference - <a class="reference external" href="https://doi.org/10.1111/1468-0262.00273">https://doi.org/10.1111/1468-0262.00273</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.penalized.rank_classical_ic">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.penalized.</span></span><span class="sig-name descname"><span class="pre">rank_classical_ic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criterion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'AIC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.penalized.rank_classical_ic" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using classical criterion:
+AIC - Akaike’s Information Criteria (<a class="reference external" href="https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15">https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15</a>)
+BIC - Bayesian Information Criteria</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.penalized.rank_elbow">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.penalized.</span></span><span class="sig-name descname"><span class="pre">rank_elbow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxrank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.penalized.rank_elbow" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using Elbow Method</p>
+</dd></dl>
+
+</section>
+<section id="module-decompy.rankmethods">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-decompy.rankmethods" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.rank_DIC">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.</span></span><span class="sig-name descname"><span class="pre">rank_DIC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.rank_DIC" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using divergence information criterion
+Reference:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://doi.org/10.1080/03610926.2017.1307405">https://doi.org/10.1080/03610926.2017.1307405</a></p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.rank_bai_ng">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.</span></span><span class="sig-name descname"><span class="pre">rank_bai_ng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criterion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'PC1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.rank_bai_ng" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using information criterion by Bai and Ng.
+Reference - <a class="reference external" href="https://doi.org/10.1111/1468-0262.00273">https://doi.org/10.1111/1468-0262.00273</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.rank_bcv">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.</span></span><span class="sig-name descname"><span class="pre">rank_bcv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cvs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MSE'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.rank_bcv" title="Link to this definition">¶</a></dt>
+<dd><p>”
+Rank estimation using Bi-cross validation technique
+Reference - <a class="reference external" href="https://doi.org/10.1214/08-AOAS227">https://doi.org/10.1214/08-AOAS227</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.rank_classical_ic">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.</span></span><span class="sig-name descname"><span class="pre">rank_classical_ic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criterion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'AIC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.rank_classical_ic" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using classical criterion:
+AIC - Akaike’s Information Criteria (<a class="reference external" href="https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15">https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15</a>)
+BIC - Bayesian Information Criteria</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.rank_elbow">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.</span></span><span class="sig-name descname"><span class="pre">rank_elbow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxrank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.rank_elbow" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using Elbow Method</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.rank_gabriel">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.</span></span><span class="sig-name descname"><span class="pre">rank_gabriel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cvs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MSE'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.rank_gabriel" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using Gabriel style cross validation
+- <a class="reference external" href="http://www.numdam.org/item/JSFS_2002__143_3-4_5_0/">http://www.numdam.org/item/JSFS_2002__143_3-4_5_0/</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.rank_hoffbayes">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.</span></span><span class="sig-name descname"><span class="pre">rank_hoffbayes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gibbstype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fixed'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.rank_hoffbayes" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using Bayesian method
+- Reference: <a class="reference external" href="https://www.jstor.org/stable/27639896">https://www.jstor.org/stable/27639896</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="decompy.rankmethods.rank_separate_rowcol">
+<span class="sig-prename descclassname"><span class="pre">decompy.rankmethods.</span></span><span class="sig-name descname"><span class="pre">rank_separate_rowcol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">svdfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cvs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MSE'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.rankmethods.rank_separate_rowcol" title="Link to this definition">¶</a></dt>
+<dd><p>Rank estimation using separate Row and Column deletion
+- <a class="reference external" href="https://www.jstor.org/stable/1267581">https://www.jstor.org/stable/1267581</a></p>
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">decompy.rankmethods package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-decompy.rankmethods.bayes">decompy.rankmethods.bayes module</a><ul>
+<li><a class="reference internal" href="#decompy.rankmethods.bayes.rank_hoffbayes"><code class="docutils literal notranslate"><span class="pre">rank_hoffbayes()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.rankmethods.cvrank">decompy.rankmethods.cvrank module</a><ul>
+<li><a class="reference internal" href="#decompy.rankmethods.cvrank.rank_bcv"><code class="docutils literal notranslate"><span class="pre">rank_bcv()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.cvrank.rank_gabriel"><code class="docutils literal notranslate"><span class="pre">rank_gabriel()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.cvrank.rank_separate_rowcol"><code class="docutils literal notranslate"><span class="pre">rank_separate_rowcol()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.rankmethods.penalized">decompy.rankmethods.penalized module</a><ul>
+<li><a class="reference internal" href="#decompy.rankmethods.penalized.rank_DIC"><code class="docutils literal notranslate"><span class="pre">rank_DIC()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.penalized.rank_bai_ng"><code class="docutils literal notranslate"><span class="pre">rank_bai_ng()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.penalized.rank_classical_ic"><code class="docutils literal notranslate"><span class="pre">rank_classical_ic()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.penalized.rank_elbow"><code class="docutils literal notranslate"><span class="pre">rank_elbow()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.rankmethods">Module contents</a><ul>
+<li><a class="reference internal" href="#decompy.rankmethods.rank_DIC"><code class="docutils literal notranslate"><span class="pre">rank_DIC()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.rank_bai_ng"><code class="docutils literal notranslate"><span class="pre">rank_bai_ng()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.rank_bcv"><code class="docutils literal notranslate"><span class="pre">rank_bcv()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.rank_classical_ic"><code class="docutils literal notranslate"><span class="pre">rank_classical_ic()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.rank_elbow"><code class="docutils literal notranslate"><span class="pre">rank_elbow()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.rank_gabriel"><code class="docutils literal notranslate"><span class="pre">rank_gabriel()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.rank_hoffbayes"><code class="docutils literal notranslate"><span class="pre">rank_hoffbayes()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.rankmethods.rank_separate_rowcol"><code class="docutils literal notranslate"><span class="pre">rank_separate_rowcol()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="decompy.matrix_factorization.html"
+                          title="previous chapter">decompy.matrix_factorization package</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="decompy.utils.html"
+                          title="next chapter">decompy.utils package</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/decompy.rankmethods.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="decompy.utils.html" title="decompy.utils package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="decompy.matrix_factorization.html" title="decompy.matrix_factorization package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">decompy 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="decompy.html" >decompy package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">decompy.rankmethods package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Subhrajyoty Roy.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+  </body>
+</html>

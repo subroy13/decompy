@@ -22,17 +22,17 @@ if args.action == 'build':
         subprocess.Popen('python3 -m build', cwd = project_root, shell = True).wait()
 elif args.action == 'document':
     print(f"Creating documentation for {project_name} for version {project_version}")
-    subprocess.Popen('sphinx-apidoc -o docconfigs/ -d 3 ./src', cwd = os.path.join(project_root), shell= True).wait()
+    subprocess.Popen('sphinx-apidoc -o docsource/ -d 3 ./src', cwd = os.path.join(project_root), shell= True).wait()
     for fname in ['README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'LICENSE']:
-        shutil.copy(fname, os.path.join('docconfigs', fname))
-    subprocess.Popen('make clean', cwd = os.path.join(project_root, 'docconfigs'), shell = True).wait()
-    subprocess.Popen('make html', cwd = os.path.join(project_root, 'docconfigs'), shell = True).wait()
+        shutil.copy(fname, os.path.join('docsource', fname))
+    subprocess.Popen('make clean', cwd = os.path.join(project_root, 'docsource'), shell = True).wait()
+    subprocess.Popen('make html', cwd = os.path.join(project_root, 'docsource'), shell = True).wait()
 
-    # copy all the files from docconfigs to docs
+    # copy all the files from docsource to docs
     if os.path.exists(os.path.join(project_root, 'docs')) and os.path.isdir(os.path.join(project_root, 'docs')):
         shutil.rmtree(os.path.join(project_root, 'docs'))
     # copy html files
-    shutil.copytree(os.path.join(project_root, 'docconfigs', '_build', 'html'), os.path.join(project_root, 'docs'))
+    shutil.copytree(os.path.join(project_root, 'docsource', '_build', 'html'), os.path.join(project_root, 'docs'))
 
     # server the server
     subprocess.Popen('python -m http.server', cwd = os.path.join(project_root, 'docs'), shell = True).wait()
