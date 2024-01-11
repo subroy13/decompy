@@ -10,6 +10,8 @@ temporary/
 temporary/*
 
 docconfigs/_build
+.vscode
+
 
 ###########################################
 #       NODE IGNORE 
