@@ -9,6 +9,8 @@ temp/*
 temporary/
 temporary/*
 
+docconfigs/_build
+
 ###########################################
 #       NODE IGNORE 
 ###########################################

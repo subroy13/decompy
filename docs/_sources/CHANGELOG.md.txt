@@ -9,6 +9,3 @@
 - Added matrix rank estimation methods (check `src/decompy/rankmethods`)
 - Added mutiple rank estimation version of rSVDdpd algorithm
 
-## v1.0.0 (11/01/2023)
-
-- Modified the folder structure of the decomposition algorithms.

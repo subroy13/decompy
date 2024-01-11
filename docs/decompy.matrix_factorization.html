@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>decompy.matrix_factorization package &#8212; decompy 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=601dbdee" />
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="decompy.rankmethods package" href="decompy.rankmethods.html" />
+    <link rel="prev" title="decompy.interfaces package" href="decompy.interfaces.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="decompy.rankmethods.html" title="decompy.rankmethods package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="decompy.interfaces.html" title="decompy.interfaces package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">decompy 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="decompy.html" accesskey="U">decompy package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">decompy.matrix_factorization package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="decompy-matrix-factorization-package">
+<h1>decompy.matrix_factorization package<a class="headerlink" href="#decompy-matrix-factorization-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-decompy.matrix_factorization.adm">
+<span id="decompy-matrix-factorization-adm-module"></span><h2>decompy.matrix_factorization.adm module<a class="headerlink" href="#module-decompy.matrix_factorization.adm" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.adm.AlternatingDirectionMethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.adm.</span></span><span class="sig-name descname"><span class="pre">AlternatingDirectionMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.adm.AlternatingDirectionMethod" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Sparse and low-rank matrix decomposition using Alternating Direction Methods</p>
+<p class="rubric">Notes</p>
+<p>[1] Yuan, Xiaoming, and Junfeng Yang. “Sparse and low-rank matrix decomposition via alternating direction methods.” preprint 12.2 (2009).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.adm.AlternatingDirectionMethod.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initA</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initB</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initLambda</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.adm.AlternatingDirectionMethod.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-decompy.matrix_factorization.alm">
+<span id="decompy-matrix-factorization-alm-module"></span><h2>decompy.matrix_factorization.alm module<a class="headerlink" href="#module-decompy.matrix_factorization.alm" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.alm.AugmentedLagrangianMethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.alm.</span></span><span class="sig-name descname"><span class="pre">AugmentedLagrangianMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.alm.AugmentedLagrangianMethod" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Augmented Lagrangian Method</p>
+<p class="rubric">Notes</p>
+<p>[1] Gongguo Tang and A. Nehorai, “Robust principal component analysis based on low-rank and block-sparse matrix decomposition,” 2011 45th Annual Conference on Information Sciences and Systems, Baltimore, MD, USA, 2011, pp. 1-5, doi: 10.1109/CISS.2011.5766144.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.alm.AugmentedLagrangianMethod.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.alm.AugmentedLagrangianMethod.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-decompy.matrix_factorization.ealm">
+<span id="decompy-matrix-factorization-ealm-module"></span><h2>decompy.matrix_factorization.ealm module<a class="headerlink" href="#module-decompy.matrix_factorization.ealm" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.ealm.ExactAugmentedLagrangianMethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.ealm.</span></span><span class="sig-name descname"><span class="pre">ExactAugmentedLagrangianMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.ealm.ExactAugmentedLagrangianMethod" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Exact Augmented Lagrangian Multiplier Method</p>
+<p class="rubric">Notes</p>
+<p>[1] Lin, Zhouchen, Minming Chen, and Yi Ma. “The augmented lagrange multiplier method for exact recovery of corrupted low-rank matrices.” arXiv preprint arXiv:1009.5055 (2010).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.ealm.ExactAugmentedLagrangianMethod.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.ealm.ExactAugmentedLagrangianMethod.decompose" title="Link to this definition">¶</a></dt>
+<dd><p>lambda is the weight on sparse error term in the cost function</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-decompy.matrix_factorization.fpcp">
+<span id="decompy-matrix-factorization-fpcp-module"></span><h2>decompy.matrix_factorization.fpcp module<a class="headerlink" href="#module-decompy.matrix_factorization.fpcp" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.fpcp.FastPrincipalComponentPursuit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.fpcp.</span></span><span class="sig-name descname"><span class="pre">FastPrincipalComponentPursuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.fpcp.FastPrincipalComponentPursuit" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Fast PCP Method</p>
+<p class="rubric">Notes</p>
+<p>[1] [Rodriguez and Wohlberg, 2013](<a class="reference external" href="http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6738015">http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6738015</a>)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.fpcp.FastPrincipalComponentPursuit.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initrank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdaval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdafactor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.fpcp.FastPrincipalComponentPursuit.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-decompy.matrix_factorization.ialm">
+<span id="decompy-matrix-factorization-ialm-module"></span><h2>decompy.matrix_factorization.ialm module<a class="headerlink" href="#module-decompy.matrix_factorization.ialm" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.ialm.InexactAugmentedLagrangianMethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.ialm.</span></span><span class="sig-name descname"><span class="pre">InexactAugmentedLagrangianMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.ialm.InexactAugmentedLagrangianMethod" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>TODO:</p>
+<dl class="simple">
+<dt>Reference: Augmented Lagrange multiplier method for Robust PCA - Inexact method</dt><dd><ul class="simple">
+<li><p>Minming Chen, October 2009. Questions? <a class="reference external" href="mailto:v-minmch&#37;&#52;&#48;microsoft&#46;com">v-minmch<span>&#64;</span>microsoft<span>&#46;</span>com</a></p></li>
+<li><p>Arvind Ganesh (<a class="reference external" href="mailto:abalasu2&#37;&#52;&#48;illinois&#46;edu">abalasu2<span>&#64;</span>illinois<span>&#46;</span>edu</a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.ialm.InexactAugmentedLagrangianMethod.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.ialm.InexactAugmentedLagrangianMethod.decompose" title="Link to this definition">¶</a></dt>
+<dd><p>lambda is the weight on sparse error term in the cost function</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-decompy.matrix_factorization.mest">
+<span id="decompy-matrix-factorization-mest-module"></span><h2>decompy.matrix_factorization.mest module<a class="headerlink" href="#module-decompy.matrix_factorization.mest" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.mest.MEstimation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.mest.</span></span><span class="sig-name descname"><span class="pre">MEstimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.mest.MEstimation" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Classical M-estimation method</p>
+<p class="rubric">Notes</p>
+<p>[1] F. De la Torre and M. J. Black, “Robust principal component analysis for computer vision,” Proceedings Eighth IEEE International Conference on Computer Vision. ICCV 2001, Vancouver, BC, Canada, 2001, pp. 362-369 vol.1, doi: 10.1109/ICCV.2001.937541.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.mest.MEstimation.compute_scale_statistics">
+<span class="sig-name descname"><span class="pre">compute_scale_statistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ini_rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.mest.MEstimation.compute_scale_statistics" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.mest.MEstimation.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.mest.MEstimation.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-decompy.matrix_factorization.op">
+<span id="decompy-matrix-factorization-op-module"></span><h2>decompy.matrix_factorization.op module<a class="headerlink" href="#module-decompy.matrix_factorization.op" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.op.OutlierPursuit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.op.</span></span><span class="sig-name descname"><span class="pre">OutlierPursuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.op.OutlierPursuit" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Matrix completion algorithm via Outlier Pursuit</p>
+<p class="rubric">Notes</p>
+<p>[1] H. Xu, C. Caramanis and S. Sanghavi, “Robust PCA via Outlier Pursuit,” in IEEE Transactions on Information Theory, vol. 58, no. 5, pp. 3047-3064, May 2012, doi: 10.1109/TIT.2011.2173156.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.op.OutlierPursuit.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Omega_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.op.OutlierPursuit.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-decompy.matrix_factorization.pcp">
+<span id="decompy-matrix-factorization-pcp-module"></span><h2>decompy.matrix_factorization.pcp module<a class="headerlink" href="#module-decompy.matrix_factorization.pcp" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.pcp.PrincipalComponentPursuit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.pcp.</span></span><span class="sig-name descname"><span class="pre">PrincipalComponentPursuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.pcp.PrincipalComponentPursuit" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Principal Component Pursuit Method</p>
+<p class="rubric">Notes</p>
+<p>[1] Candès, Emmanuel J., et al. “Robust principal component analysis?.” Journal of the ACM (JACM) 58.3 (2011): 1-37.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.pcp.PrincipalComponentPursuit.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdaval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">muval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.pcp.PrincipalComponentPursuit.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.pcp.PrincipalComponentPursuit.threshold_l1">
+<span class="sig-name descname"><span class="pre">threshold_l1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.pcp.PrincipalComponentPursuit.threshold_l1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.pcp.PrincipalComponentPursuit.threshold_nuclear">
+<span class="sig-name descname"><span class="pre">threshold_nuclear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.pcp.PrincipalComponentPursuit.threshold_nuclear" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-decompy.matrix_factorization.rsvddpd">
+<span id="decompy-matrix-factorization-rsvddpd-module"></span><h2>decompy.matrix_factorization.rsvddpd module<a class="headerlink" href="#module-decompy.matrix_factorization.rsvddpd" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.rsvddpd.RobustSVDDensityPowerDivergence">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.rsvddpd.</span></span><span class="sig-name descname"><span class="pre">RobustSVDDensityPowerDivergence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.rsvddpd.RobustSVDDensityPowerDivergence" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust SVD using Density Power Divergence based Alternating Regression Method</p>
+<p class="rubric">Notes</p>
+<p>[1] Roy, Subhrajyoty, Ayanendranath Basu, and Abhik Ghosh. “A New Robust Scalable Singular Value Decomposition Algorithm for Video Surveillance Background Modelling.” arXiv preprint arXiv:2109.10680 (2021).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.rsvddpd.RobustSVDDensityPowerDivergence.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.rsvddpd.RobustSVDDensityPowerDivergence.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.rsvddpd.RobustSVDDensityPowerDivergence.sanity_check">
+<span class="sig-name descname"><span class="pre">sanity_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxit_reached</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.rsvddpd.RobustSVDDensityPowerDivergence.sanity_check" title="Link to this definition">¶</a></dt>
+<dd><p>Does some simple sanity check on the output</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-decompy.matrix_factorization.svt">
+<span id="decompy-matrix-factorization-svt-module"></span><h2>decompy.matrix_factorization.svt module<a class="headerlink" href="#module-decompy.matrix_factorization.svt" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.svt.SingularValueThresholding">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.svt.</span></span><span class="sig-name descname"><span class="pre">SingularValueThresholding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.svt.SingularValueThresholding" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust SVD using Density Power Divergence based Alternating Regression Method</p>
+<p class="rubric">Notes</p>
+<p>[1] Roy, Subhrajyoty, Ayanendranath Basu, and Abhik Ghosh. “A New Robust Scalable Singular Value Decomposition Algorithm for Video Surveillance Background Modelling.” arXiv preprint arXiv:2109.10680 (2021).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.svt.SingularValueThresholding.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdaval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.svt.SingularValueThresholding.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-decompy.matrix_factorization.vbrpca">
+<span id="decompy-matrix-factorization-vbrpca-module"></span><h2>decompy.matrix_factorization.vbrpca module<a class="headerlink" href="#module-decompy.matrix_factorization.vbrpca" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.vbrpca.VariationalBayes">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.vbrpca.</span></span><span class="sig-name descname"><span class="pre">VariationalBayes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.vbrpca.VariationalBayes" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Variational Bayesian method</p>
+<p class="rubric">Notes</p>
+<p>[1] S. D. Babacan, M. Luessi, R. Molina and A. K. Katsaggelos, “Sparse Bayesian Methods for Low-Rank Matrix Estimation,” in IEEE Transactions on Signal Processing, vol. 60, no. 8, pp. 3964-3977, Aug. 2012, doi: 10.1109/TSP.2012.2197748.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.vbrpca.VariationalBayes.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.vbrpca.VariationalBayes.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-decompy.matrix_factorization">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-decompy.matrix_factorization" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.AlternatingDirectionMethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.</span></span><span class="sig-name descname"><span class="pre">AlternatingDirectionMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.AlternatingDirectionMethod" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Sparse and low-rank matrix decomposition using Alternating Direction Methods</p>
+<p class="rubric">Notes</p>
+<p>[1] Yuan, Xiaoming, and Junfeng Yang. “Sparse and low-rank matrix decomposition via alternating direction methods.” preprint 12.2 (2009).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.AlternatingDirectionMethod.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initA</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initB</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initLambda</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.AlternatingDirectionMethod.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.AugmentedLagrangianMethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.</span></span><span class="sig-name descname"><span class="pre">AugmentedLagrangianMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.AugmentedLagrangianMethod" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Augmented Lagrangian Method</p>
+<p class="rubric">Notes</p>
+<p>[1] Gongguo Tang and A. Nehorai, “Robust principal component analysis based on low-rank and block-sparse matrix decomposition,” 2011 45th Annual Conference on Information Sciences and Systems, Baltimore, MD, USA, 2011, pp. 1-5, doi: 10.1109/CISS.2011.5766144.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.AugmentedLagrangianMethod.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.AugmentedLagrangianMethod.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.ExactAugmentedLagrangianMethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.</span></span><span class="sig-name descname"><span class="pre">ExactAugmentedLagrangianMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.ExactAugmentedLagrangianMethod" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Exact Augmented Lagrangian Multiplier Method</p>
+<p class="rubric">Notes</p>
+<p>[1] Lin, Zhouchen, Minming Chen, and Yi Ma. “The augmented lagrange multiplier method for exact recovery of corrupted low-rank matrices.” arXiv preprint arXiv:1009.5055 (2010).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.ExactAugmentedLagrangianMethod.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.ExactAugmentedLagrangianMethod.decompose" title="Link to this definition">¶</a></dt>
+<dd><p>lambda is the weight on sparse error term in the cost function</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.FastPrincipalComponentPursuit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.</span></span><span class="sig-name descname"><span class="pre">FastPrincipalComponentPursuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.FastPrincipalComponentPursuit" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Fast PCP Method</p>
+<p class="rubric">Notes</p>
+<p>[1] [Rodriguez and Wohlberg, 2013](<a class="reference external" href="http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6738015">http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6738015</a>)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.FastPrincipalComponentPursuit.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initrank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdaval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdafactor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.FastPrincipalComponentPursuit.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.InexactAugmentedLagrangianMethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.</span></span><span class="sig-name descname"><span class="pre">InexactAugmentedLagrangianMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.InexactAugmentedLagrangianMethod" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>TODO:</p>
+<dl class="simple">
+<dt>Reference: Augmented Lagrange multiplier method for Robust PCA - Inexact method</dt><dd><ul class="simple">
+<li><p>Minming Chen, October 2009. Questions? <a class="reference external" href="mailto:v-minmch&#37;&#52;&#48;microsoft&#46;com">v-minmch<span>&#64;</span>microsoft<span>&#46;</span>com</a></p></li>
+<li><p>Arvind Ganesh (<a class="reference external" href="mailto:abalasu2&#37;&#52;&#48;illinois&#46;edu">abalasu2<span>&#64;</span>illinois<span>&#46;</span>edu</a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.InexactAugmentedLagrangianMethod.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.InexactAugmentedLagrangianMethod.decompose" title="Link to this definition">¶</a></dt>
+<dd><p>lambda is the weight on sparse error term in the cost function</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.MEstimation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.</span></span><span class="sig-name descname"><span class="pre">MEstimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.MEstimation" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Classical M-estimation method</p>
+<p class="rubric">Notes</p>
+<p>[1] F. De la Torre and M. J. Black, “Robust principal component analysis for computer vision,” Proceedings Eighth IEEE International Conference on Computer Vision. ICCV 2001, Vancouver, BC, Canada, 2001, pp. 362-369 vol.1, doi: 10.1109/ICCV.2001.937541.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.MEstimation.compute_scale_statistics">
+<span class="sig-name descname"><span class="pre">compute_scale_statistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ini_rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.MEstimation.compute_scale_statistics" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.MEstimation.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.MEstimation.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.OutlierPursuit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.</span></span><span class="sig-name descname"><span class="pre">OutlierPursuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.OutlierPursuit" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Matrix completion algorithm via Outlier Pursuit</p>
+<p class="rubric">Notes</p>
+<p>[1] H. Xu, C. Caramanis and S. Sanghavi, “Robust PCA via Outlier Pursuit,” in IEEE Transactions on Information Theory, vol. 58, no. 5, pp. 3047-3064, May 2012, doi: 10.1109/TIT.2011.2173156.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.OutlierPursuit.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Omega_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.OutlierPursuit.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.PrincipalComponentPursuit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.</span></span><span class="sig-name descname"><span class="pre">PrincipalComponentPursuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.PrincipalComponentPursuit" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Principal Component Pursuit Method</p>
+<p class="rubric">Notes</p>
+<p>[1] Candès, Emmanuel J., et al. “Robust principal component analysis?.” Journal of the ACM (JACM) 58.3 (2011): 1-37.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.PrincipalComponentPursuit.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdaval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">muval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.PrincipalComponentPursuit.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.PrincipalComponentPursuit.threshold_l1">
+<span class="sig-name descname"><span class="pre">threshold_l1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.PrincipalComponentPursuit.threshold_l1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.PrincipalComponentPursuit.threshold_nuclear">
+<span class="sig-name descname"><span class="pre">threshold_nuclear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.PrincipalComponentPursuit.threshold_nuclear" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.RobustSVDDensityPowerDivergence">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.</span></span><span class="sig-name descname"><span class="pre">RobustSVDDensityPowerDivergence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.RobustSVDDensityPowerDivergence" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust SVD using Density Power Divergence based Alternating Regression Method</p>
+<p class="rubric">Notes</p>
+<p>[1] Roy, Subhrajyoty, Ayanendranath Basu, and Abhik Ghosh. “A New Robust Scalable Singular Value Decomposition Algorithm for Video Surveillance Background Modelling.” arXiv preprint arXiv:2109.10680 (2021).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.RobustSVDDensityPowerDivergence.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.RobustSVDDensityPowerDivergence.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.RobustSVDDensityPowerDivergence.sanity_check">
+<span class="sig-name descname"><span class="pre">sanity_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxit_reached</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.RobustSVDDensityPowerDivergence.sanity_check" title="Link to this definition">¶</a></dt>
+<dd><p>Does some simple sanity check on the output</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.VariationalBayes">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.matrix_factorization.</span></span><span class="sig-name descname"><span class="pre">VariationalBayes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.VariationalBayes" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Robust PCA using Variational Bayesian method</p>
+<p class="rubric">Notes</p>
+<p>[1] S. D. Babacan, M. Luessi, R. Molina and A. K. Katsaggelos, “Sparse Bayesian Methods for Low-Rank Matrix Estimation,” in IEEE Transactions on Signal Processing, vol. 60, no. 8, pp. 3964-3977, Aug. 2012, doi: 10.1109/TSP.2012.2197748.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="decompy.matrix_factorization.VariationalBayes.decompose">
+<span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.matrix_factorization.VariationalBayes.decompose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">decompy.matrix_factorization package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization.adm">decompy.matrix_factorization.adm module</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.adm.AlternatingDirectionMethod"><code class="docutils literal notranslate"><span class="pre">AlternatingDirectionMethod</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.adm.AlternatingDirectionMethod.decompose"><code class="docutils literal notranslate"><span class="pre">AlternatingDirectionMethod.decompose()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization.alm">decompy.matrix_factorization.alm module</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.alm.AugmentedLagrangianMethod"><code class="docutils literal notranslate"><span class="pre">AugmentedLagrangianMethod</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.alm.AugmentedLagrangianMethod.decompose"><code class="docutils literal notranslate"><span class="pre">AugmentedLagrangianMethod.decompose()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization.ealm">decompy.matrix_factorization.ealm module</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.ealm.ExactAugmentedLagrangianMethod"><code class="docutils literal notranslate"><span class="pre">ExactAugmentedLagrangianMethod</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.ealm.ExactAugmentedLagrangianMethod.decompose"><code class="docutils literal notranslate"><span class="pre">ExactAugmentedLagrangianMethod.decompose()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization.fpcp">decompy.matrix_factorization.fpcp module</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.fpcp.FastPrincipalComponentPursuit"><code class="docutils literal notranslate"><span class="pre">FastPrincipalComponentPursuit</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.fpcp.FastPrincipalComponentPursuit.decompose"><code class="docutils literal notranslate"><span class="pre">FastPrincipalComponentPursuit.decompose()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization.ialm">decompy.matrix_factorization.ialm module</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.ialm.InexactAugmentedLagrangianMethod"><code class="docutils literal notranslate"><span class="pre">InexactAugmentedLagrangianMethod</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.ialm.InexactAugmentedLagrangianMethod.decompose"><code class="docutils literal notranslate"><span class="pre">InexactAugmentedLagrangianMethod.decompose()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization.mest">decompy.matrix_factorization.mest module</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.mest.MEstimation"><code class="docutils literal notranslate"><span class="pre">MEstimation</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.mest.MEstimation.compute_scale_statistics"><code class="docutils literal notranslate"><span class="pre">MEstimation.compute_scale_statistics()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.mest.MEstimation.decompose"><code class="docutils literal notranslate"><span class="pre">MEstimation.decompose()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization.op">decompy.matrix_factorization.op module</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.op.OutlierPursuit"><code class="docutils literal notranslate"><span class="pre">OutlierPursuit</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.op.OutlierPursuit.decompose"><code class="docutils literal notranslate"><span class="pre">OutlierPursuit.decompose()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization.pcp">decompy.matrix_factorization.pcp module</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.pcp.PrincipalComponentPursuit"><code class="docutils literal notranslate"><span class="pre">PrincipalComponentPursuit</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.pcp.PrincipalComponentPursuit.decompose"><code class="docutils literal notranslate"><span class="pre">PrincipalComponentPursuit.decompose()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.pcp.PrincipalComponentPursuit.threshold_l1"><code class="docutils literal notranslate"><span class="pre">PrincipalComponentPursuit.threshold_l1()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.pcp.PrincipalComponentPursuit.threshold_nuclear"><code class="docutils literal notranslate"><span class="pre">PrincipalComponentPursuit.threshold_nuclear()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization.rsvddpd">decompy.matrix_factorization.rsvddpd module</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.rsvddpd.RobustSVDDensityPowerDivergence"><code class="docutils literal notranslate"><span class="pre">RobustSVDDensityPowerDivergence</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.rsvddpd.RobustSVDDensityPowerDivergence.decompose"><code class="docutils literal notranslate"><span class="pre">RobustSVDDensityPowerDivergence.decompose()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.rsvddpd.RobustSVDDensityPowerDivergence.sanity_check"><code class="docutils literal notranslate"><span class="pre">RobustSVDDensityPowerDivergence.sanity_check()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization.svt">decompy.matrix_factorization.svt module</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.svt.SingularValueThresholding"><code class="docutils literal notranslate"><span class="pre">SingularValueThresholding</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.svt.SingularValueThresholding.decompose"><code class="docutils literal notranslate"><span class="pre">SingularValueThresholding.decompose()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization.vbrpca">decompy.matrix_factorization.vbrpca module</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.vbrpca.VariationalBayes"><code class="docutils literal notranslate"><span class="pre">VariationalBayes</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.vbrpca.VariationalBayes.decompose"><code class="docutils literal notranslate"><span class="pre">VariationalBayes.decompose()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-decompy.matrix_factorization">Module contents</a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.AlternatingDirectionMethod"><code class="docutils literal notranslate"><span class="pre">AlternatingDirectionMethod</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.AlternatingDirectionMethod.decompose"><code class="docutils literal notranslate"><span class="pre">AlternatingDirectionMethod.decompose()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.AugmentedLagrangianMethod"><code class="docutils literal notranslate"><span class="pre">AugmentedLagrangianMethod</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.AugmentedLagrangianMethod.decompose"><code class="docutils literal notranslate"><span class="pre">AugmentedLagrangianMethod.decompose()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.ExactAugmentedLagrangianMethod"><code class="docutils literal notranslate"><span class="pre">ExactAugmentedLagrangianMethod</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.ExactAugmentedLagrangianMethod.decompose"><code class="docutils literal notranslate"><span class="pre">ExactAugmentedLagrangianMethod.decompose()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.FastPrincipalComponentPursuit"><code class="docutils literal notranslate"><span class="pre">FastPrincipalComponentPursuit</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.FastPrincipalComponentPursuit.decompose"><code class="docutils literal notranslate"><span class="pre">FastPrincipalComponentPursuit.decompose()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.InexactAugmentedLagrangianMethod"><code class="docutils literal notranslate"><span class="pre">InexactAugmentedLagrangianMethod</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.InexactAugmentedLagrangianMethod.decompose"><code class="docutils literal notranslate"><span class="pre">InexactAugmentedLagrangianMethod.decompose()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.MEstimation"><code class="docutils literal notranslate"><span class="pre">MEstimation</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.MEstimation.compute_scale_statistics"><code class="docutils literal notranslate"><span class="pre">MEstimation.compute_scale_statistics()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.MEstimation.decompose"><code class="docutils literal notranslate"><span class="pre">MEstimation.decompose()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.OutlierPursuit"><code class="docutils literal notranslate"><span class="pre">OutlierPursuit</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.OutlierPursuit.decompose"><code class="docutils literal notranslate"><span class="pre">OutlierPursuit.decompose()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.PrincipalComponentPursuit"><code class="docutils literal notranslate"><span class="pre">PrincipalComponentPursuit</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.PrincipalComponentPursuit.decompose"><code class="docutils literal notranslate"><span class="pre">PrincipalComponentPursuit.decompose()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.PrincipalComponentPursuit.threshold_l1"><code class="docutils literal notranslate"><span class="pre">PrincipalComponentPursuit.threshold_l1()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.PrincipalComponentPursuit.threshold_nuclear"><code class="docutils literal notranslate"><span class="pre">PrincipalComponentPursuit.threshold_nuclear()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.RobustSVDDensityPowerDivergence"><code class="docutils literal notranslate"><span class="pre">RobustSVDDensityPowerDivergence</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.RobustSVDDensityPowerDivergence.decompose"><code class="docutils literal notranslate"><span class="pre">RobustSVDDensityPowerDivergence.decompose()</span></code></a></li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.RobustSVDDensityPowerDivergence.sanity_check"><code class="docutils literal notranslate"><span class="pre">RobustSVDDensityPowerDivergence.sanity_check()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decompy.matrix_factorization.VariationalBayes"><code class="docutils literal notranslate"><span class="pre">VariationalBayes</span></code></a><ul>
+<li><a class="reference internal" href="#decompy.matrix_factorization.VariationalBayes.decompose"><code class="docutils literal notranslate"><span class="pre">VariationalBayes.decompose()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="decompy.interfaces.html"
+                          title="previous chapter">decompy.interfaces package</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="decompy.rankmethods.html"
+                          title="next chapter">decompy.rankmethods package</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/decompy.matrix_factorization.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="decompy.rankmethods.html" title="decompy.rankmethods package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="decompy.interfaces.html" title="decompy.interfaces package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">decompy 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="decompy.html" >decompy package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">decompy.matrix_factorization package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Subhrajyoty Roy.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+  </body>
+</html>
