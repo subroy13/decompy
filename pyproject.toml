@@ -4,8 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "decompy"
-version = "1.0.0"
-authors = [{ name = "Subhrajyoty Roy", email = "subhrajyotyroy@gmail.com" }]
+authors = [
+    { name = "Subhrajyoty Roy", email = "subhrajyotyroy@gmail.com" }
+]
 description = "A python package containing several robust algorithms for matrix decomposition, rank estimation and relevant analysis."
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -19,6 +20,10 @@ dependencies = [
 requires-python = ">=3.9"
 license = {file = "LICENSE"}
 readme = "README.md"
+dynamic = ["version"]
+
+[tool.setuptools.dynamic]
+version = {attr = "decompy.__version__"}
 
 [project.urls]
 "Homepage" = "https://github.com/subroy13/decompy"

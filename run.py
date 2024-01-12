@@ -5,7 +5,6 @@ import shutil
 
 project_conf = toml.load('./pyproject.toml')
 project_name = project_conf.get('project', {}).get('name')
-project_version = project_conf.get('project', {}).get('version')
 project_root = os.path.abspath('.')
 
 parser = argparse.ArgumentParser(
@@ -16,12 +15,10 @@ parser.add_argument('action', choices=['build', 'document', 'deploy', 'test'])
 args = parser.parse_args()
 
 if args.action == 'build':
-    x = input(f"Found {project_name} version {project_version} in pyproject.toml. Is that the latest version? [y/n]: ")
-    if x == "y" or x == 'Y':
-        print(f"Building {project_name} for version {project_version}")
-        subprocess.Popen('python3 -m build', cwd = project_root, shell = True).wait()
+    print(f"Building {project_name}")
+    subprocess.Popen('python -m build', cwd = project_root, shell = True).wait()
 elif args.action == 'document':
-    print(f"Creating documentation for {project_name} for version {project_version}")
+    print(f"Creating documentation for {project_name}")
     subprocess.Popen('sphinx-apidoc -o docsource/ -d 3 ./src', cwd = os.path.join(project_root), shell= True).wait()
     for fname in ['README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'LICENSE']:
         shutil.copy(fname, os.path.join('docsource', fname))
