@@ -12,7 +12,7 @@ Then to build the project use,
 
 Run a check using `twine` using `twine check dist/*`.
 
-Finally, upload to `pypi` using `twine upload ./dist`
+Finally, upload to `pypi` using `twine upload dist/*`
 
 To generate documentation, use 
 1. Use the `mintlify AI doc generator` to generate docstring from code using explainer AI. Use `numpy` type documentation.

@@ -14,13 +14,19 @@ parser = argparse.ArgumentParser(
 parser.add_argument('action', choices=['build', 'document', 'deploy', 'test'])
 args = parser.parse_args()
 
-if args.action == 'build':
+
+def build_action():
     print(f"Building {project_name}")
+    #remove existing dist folder
+    if os.path.exists(os.path.join(project_root, 'dist')) and os.path.isdir(os.path.join(project_root, 'dist')):
+        shutil.rmtree(os.path.join(project_root, 'dist'))
+    os.mkdir(os.path.join(project_root, 'dist'))
     try:
         subprocess.Popen('python3 -m build', cwd = project_root, shell = True).wait()
     except Exception as e:
         subprocess.Popen('python -m build', cwd = project_root, shell = True).wait()
-elif args.action == 'document':
+
+def document_action():
     print(f"Creating documentation for {project_name}")
     subprocess.Popen('sphinx-apidoc -o docsource/ -d 3 ./src', cwd = os.path.join(project_root), shell= True).wait()
     for fname in ['README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'LICENSE']:
@@ -40,7 +46,20 @@ elif args.action == 'document':
     except Exception as e:
         subprocess.Popen('python -m http.server', cwd = os.path.join(project_root, 'docs'), shell = True).wait()
 
+def deploy_action():
+    print(f"Deploying to PyPI")
+    subprocess.Popen('twine check dist/*', cwd = project_root, shell = True).wait()
+    subprocess.Popen('twine upload dist/* --verbose', cwd = project_root, shell = True).wait()
+    
+
+if args.action == 'build':
+    build_action()
+elif args.action == 'document':
+    document_action()
 elif args.action == 'test':
     print(f"No test found")
+elif args.action == 'deploy':
+    build_action()
+    deploy_action()
 else:
     raise ValueError("Invalid action")
