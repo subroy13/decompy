@@ -1,11 +1,12 @@
 # decompy
 
-`decompy` is a Python package containing several robust algorithms for matrix decomposition and analysis. The types of algorithms includes
-* Robust PCA or SVD based methods
+`decompy` is a Python package containing several robust algorithms for matrix decomposition and analysis. The types of algorithms include
+* Robust PCA or SVD-based methods
 * Matrix completion methods
 * Robust matrix or tensor factorization methods.
 * Matrix rank estimation methods.
 
+The latest version of `decompy` is **1.0.0**.
 
 ## Features
 
@@ -62,7 +63,7 @@ s4 = algo.decompose(data).singular_values()
 print(np.diag(np.round(s4, 2)))
 ```
 
-You can find more example notebooks in **examples** folder. For more detailed usage instructions, please refer to the **documentation**.
+You can find more example notebooks in the **examples** folder. For more detailed usage instructions, please refer to the **documentation**.
 
 
 ## Contributing

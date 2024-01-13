@@ -16,7 +16,10 @@ args = parser.parse_args()
 
 if args.action == 'build':
     print(f"Building {project_name}")
-    subprocess.Popen('python -m build', cwd = project_root, shell = True).wait()
+    try:
+        subprocess.Popen('python3 -m build', cwd = project_root, shell = True).wait()
+    except Exception as e:
+        subprocess.Popen('python -m build', cwd = project_root, shell = True).wait()
 elif args.action == 'document':
     print(f"Creating documentation for {project_name}")
     subprocess.Popen('sphinx-apidoc -o docsource/ -d 3 ./src', cwd = os.path.join(project_root), shell= True).wait()
@@ -32,8 +35,10 @@ elif args.action == 'document':
     shutil.copytree(os.path.join(project_root, 'docsource', '_build', 'html'), os.path.join(project_root, 'docs'))
 
     # server the server
-    subprocess.Popen('python -m http.server', cwd = os.path.join(project_root, 'docs'), shell = True).wait()
-
+    try:
+        subprocess.Popen('python3 -m http.server', cwd = os.path.join(project_root, 'docs'), shell = True).wait()
+    except Exception as e:
+        subprocess.Popen('python -m http.server', cwd = os.path.join(project_root, 'docs'), shell = True).wait()
 
 elif args.action == 'test':
     print(f"No test found")

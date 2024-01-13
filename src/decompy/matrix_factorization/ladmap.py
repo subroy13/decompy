@@ -9,7 +9,7 @@ class LinearizedADMAdaptivePenalty:
         Linearized Alternating Direction Method with Adaptive Penalty
 
         It aims to solve the LRR problem
-        min |Z|_*+lambda*|E|_2,1  s.t., X = XZ+E, where lambda 
+        min |Z|_*+lambda*|E|_2,1  s.t., X = XZ+E, where lambda is a penalty parameter.
 
         Notes
         ------
@@ -52,7 +52,6 @@ class LinearizedADMAdaptivePenalty:
 
         X = M.copy()  # make a copy of matrix so that we dont modify
         d, n = X.shape
-        p0 = np.ones(n)
         
         normfX = np.linalg.norm(X, 'fro')
         norm2X = np.linalg.norm(X, ord=2)
