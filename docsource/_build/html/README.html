@@ -1,16 +1,20 @@
+
 <!DOCTYPE html>
 
-<html lang="en" data-content_root="./">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>decompy &#8212; decompy 1.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=601dbdee" />
-    <script src="_static/documentation_options.js?v=8d563738"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Contributing to decompy" href="CONTRIBUTING.html" /> 
@@ -38,16 +42,17 @@
           <div class="body" role="main">
             
   <section id="decompy">
-<h1>decompy<a class="headerlink" href="#decompy" title="Link to this heading">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">decompy</span></code> is a Python package containing several robust algorithms for matrix decomposition and analysis. The types of algorithms includes</p>
+<h1>decompy<a class="headerlink" href="#decompy" title="Permalink to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">decompy</span></code> is a Python package containing several robust algorithms for matrix decomposition and analysis. The types of algorithms include</p>
 <ul class="simple">
-<li><p>Robust PCA or SVD based methods</p></li>
+<li><p>Robust PCA or SVD-based methods</p></li>
 <li><p>Matrix completion methods</p></li>
 <li><p>Robust matrix or tensor factorization methods.</p></li>
 <li><p>Matrix rank estimation methods.</p></li>
 </ul>
+<p>The latest version of <code class="docutils literal notranslate"><span class="pre">decompy</span></code> is <strong>1.0.0</strong>.</p>
 <section id="features">
-<h2>Features<a class="headerlink" href="#features" title="Link to this heading">¶</a></h2>
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Data decomposition using various methods</p></li>
 <li><p>Support for sparse decomposition, low-rank approximation, and more</p></li>
@@ -56,14 +61,14 @@
 </ul>
 </section>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
 <p>You can install <code class="docutils literal notranslate"><span class="pre">decompy</span></code> using pip:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>decompy
 </pre></div>
 </div>
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
 <p>Here’s a simple example demonstrating how to use decompy for data decomposition:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">decompy.matrix_factorization</span> <span class="kn">import</span> <span class="n">RobustSVDDensityPowerDivergence</span>
@@ -98,20 +103,20 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">s4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
 </pre></div>
 </div>
-<p>You can find more example notebooks in <strong>examples</strong> folder. For more detailed usage instructions, please refer to the <strong>documentation</strong>.</p>
+<p>You can find more example notebooks in the <strong>examples</strong> folder. For more detailed usage instructions, please refer to the <strong>documentation</strong>.</p>
 </section>
 <section id="contributing">
-<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h2>
-<p>Contributions are welcome! If you find any issues or have suggestions for improvements, please create an issue or submit a pull request on the GitHub repository. For contributing developers, please refer to <a class="reference internal" href="CONTRIBUTING.html"><span class="std std-doc">CONTRIBUTING.md</span></a> file.</p>
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading">¶</a></h2>
+<p>Contributions are welcome! If you find any issues or have suggestions for improvements, please create an issue or submit a pull request on the GitHub repository. For contributing developers, please refer to <a class="reference internal" href="CONTRIBUTING.html"><span class="doc std std-doc">CONTRIBUTING.md</span></a> file.</p>
 </section>
 <section id="license">
-<h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
 <p>This project is licensed under the <a class="reference download internal" download="" href="_downloads/9879d6db96fd29134fc802214163b95a/LICENSE"><span class="xref download myst">BSD 3-Clause License</span></a>.</p>
 </section>
 <section id="list-of-algorithms-available-in-the-decompy-library">
-<h2>List of Algorithms available in the <code class="docutils literal notranslate"><span class="pre">decompy</span></code> library<a class="headerlink" href="#list-of-algorithms-available-in-the-decompy-library" title="Link to this heading">¶</a></h2>
+<h2>List of Algorithms available in the <code class="docutils literal notranslate"><span class="pre">decompy</span></code> library<a class="headerlink" href="#list-of-algorithms-available-in-the-decompy-library" title="Permalink to this heading">¶</a></h2>
 <section id="matrix-factorization-methods">
-<h3>Matrix Factorization Methods<a class="headerlink" href="#matrix-factorization-methods" title="Link to this heading">¶</a></h3>
+<h3>Matrix Factorization Methods<a class="headerlink" href="#matrix-factorization-methods" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Alternating Direction Method <a class="reference external" href="https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.400.8797">(Yuan and Yang, 2009)</a> - <code class="docutils literal notranslate"><span class="pre">matrix_factorization/adm.py</span></code></p></li>
 <li><p>Augmented Lagrangian Method <a class="reference external" href="https://ieeexplore.ieee.org/document/5766144">(Tang and Nehorai)</a> - <code class="docutils literal notranslate"><span class="pre">matrix_factorization/alm.py</span></code></p></li>
@@ -128,9 +133,9 @@
 </section>
 </section>
 <section id="rank-estimation-methods">
-<h2>Rank Estimation Methods<a class="headerlink" href="#rank-estimation-methods" title="Link to this heading">¶</a></h2>
+<h2>Rank Estimation Methods<a class="headerlink" href="#rank-estimation-methods" title="Permalink to this heading">¶</a></h2>
 <section id="penalization-criterion-rankmethods-penalized-py">
-<h3>Penalization Criterion (<code class="docutils literal notranslate"><span class="pre">rankmethods/penalized.py</span></code>)<a class="headerlink" href="#penalization-criterion-rankmethods-penalized-py" title="Link to this heading">¶</a></h3>
+<h3>Penalization Criterion (<code class="docutils literal notranslate"><span class="pre">rankmethods/penalized.py</span></code>)<a class="headerlink" href="#penalization-criterion-rankmethods-penalized-py" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Elbow method</p></li>
 <li><p>Akaike’s Information Criterion (AIC) - https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15</p></li>
@@ -140,7 +145,7 @@
 </ol>
 </section>
 <section id="cross-validation-approaches-rankmethods-cvrank-py">
-<h3>Cross Validation Approaches (<code class="docutils literal notranslate"><span class="pre">rankmethods/cvrank.py</span></code>)<a class="headerlink" href="#cross-validation-approaches-rankmethods-cvrank-py" title="Link to this heading">¶</a></h3>
+<h3>Cross Validation Approaches (<code class="docutils literal notranslate"><span class="pre">rankmethods/cvrank.py</span></code>)<a class="headerlink" href="#cross-validation-approaches-rankmethods-cvrank-py" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Gabriel style Cross validation - http://www.numdam.org/item/JSFS_2002__143_3-4_5_0/</p></li>
 <li><p>Wold style cross validation separate row and column deletion - https://www.jstor.org/stable/1267581</p></li>
@@ -148,7 +153,7 @@
 </ol>
 </section>
 <section id="bayesian-approaches-rankmethods-bayes-py">
-<h3>Bayesian Approaches (<code class="docutils literal notranslate"><span class="pre">rankmethods/bayes.py</span></code>)<a class="headerlink" href="#bayesian-approaches-rankmethods-bayes-py" title="Link to this heading">¶</a></h3>
+<h3>Bayesian Approaches (<code class="docutils literal notranslate"><span class="pre">rankmethods/bayes.py</span></code>)<a class="headerlink" href="#bayesian-approaches-rankmethods-bayes-py" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Bayesian rank estimation method by Hoffman - https://www.jstor.org/stable/27639896</p></li>
 </ol>
@@ -230,8 +235,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2024, Subhrajyoty Roy.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+        &#169; Copyright 2024, Subhrajyoty Roy.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>
