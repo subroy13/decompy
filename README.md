@@ -85,6 +85,8 @@ This project is licensed under the [BSD 3-Clause License](LICENSE).
 
 * AS-RPCA: Active Subspace: Towards Scalable Low-Rank Learning [(Liu and Yan, 2012)](http://dl.acm.org/citation.cfm?id=2421487) - `matrix_factorization/asrpca.py`
 
+* Dual RPCA [(Lin et al. 2009)](http://arxiv.org/abs/1009.5055) - `matrix_factorization/dual.py`
+
 * Exact Augmented Lagrangian Method [(Lin, Chen and Ma, 2010)](https://arxiv.org/abs/1009.5055) - `matrix_factorization/ealm.py`
 
 * Robust PCA using Fast PCP Method [(Rodriguez and Wohlberg, 2013)](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6738015) - `matrix_factorization/fpcp.py`
@@ -102,6 +104,8 @@ This project is licensed under the [BSD 3-Clause License](LICENSE).
 * Robust SVD using Density Power Divergence (rSVDdpd) Algorithm [(Roy et al, 2023)](https://arxiv.org/abs/2109.10680) - `matrix_factorization/rsvddpd.py`
 
 * SVT: Singular Value Thresholding [(Cai et al. 2008)](http://arxiv.org/abs/0810.3286) [website](http://perception.csl.illinois.edu/matrix-rank/sample_code.html) - `matrix_factorization/svt.py`
+
+* Symmetric Alternating Direction Augmented Lagrangian Method (SADAL) [(Goldfarb et al. 2010)](http://arxiv.org/abs/0912.4571) - `matrix_factorization/sadal.py`
 
 * Robust PCA using Variational Bayes method [(Babacan et al 2012)](https://ieeexplore.ieee.org/document/6194350) - `matrix_factorization/vbrpca.py`
 
