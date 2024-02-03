@@ -55,6 +55,7 @@ class OutlierPursuit:
         # initialize the parameters
         if Omega_mask is None:
             Omega_mask = np.ones((m, n))
+        check_binary_matrix(Omega_mask)
         if rank is None or rank < 0:
             initial_rank = np.ceil(min(m, n) * 0.1)
         else:
