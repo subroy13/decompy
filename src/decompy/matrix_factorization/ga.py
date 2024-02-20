@@ -22,6 +22,8 @@ class GrassmannAverage:
     def __init__(self, **kwargs):
         self.eps = kwargs.get("eps", 1e-10)
         self.em_iter = kwargs.get("em_iter", 3)
+        self.trim_percent = kwargs.get("trim_percent", 0)
+        assert self.trim_percent > 0 and self.trim_percent < 0.5, "trim_percent must be in (0, 0.5)"
 
     def _reorth(self, Q: np.ndarray, r: int, normr: Union[float, None] = None, index = None, alpha = 0.5, method = 0):
         """
@@ -115,8 +117,13 @@ class GrassmannAverage:
                 # compute angles and flip
                 dot_signs = np.sign(X @ mu)   # (N, )
 
-                # compute weighted grassmann mean
-                mu = X.T @ dot_signs  # (D, 1)
+                # compute weighted grassmann mean / trimmed mean
+                if self.trim_percent > 0:
+                    weighted_product = X * dot_signs[:, np.newaxis]  # Element-wise multiplication with broadcasting
+                    mu = np.mean(np.percentile(weighted_product, self.trim_percent, axis=0), axis=0)  # Compute trimmed mean
+                else:
+                    mu = X.T @ dot_signs  # (D, 1)
+                mu = mu.reshape(-1)  # (D, )
                 mu /= np.linalg.norm(mu)
 
                 # check for convergence

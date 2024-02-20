@@ -95,6 +95,8 @@ Currently, there are **17** matrix factorization methods available in `decompy`,
 
 * Grassmann Average [(Hauberg et al. 2014)](http://files.is.tue.mpg.de/black/papers/RGA2014.pdf) [website](http://ps.is.tuebingen.mpg.de/project/Robust_PCA) - `matrix_factorization/ga.py`
 
+* Trimmed Grassmann Average [(Hauberg et al. 2014)](http://files.is.tue.mpg.de/black/papers/RGA2014.pdf) [website](http://ps.is.tuebingen.mpg.de/project/Robust_PCA) - `matrix_factorization/ga.py` (with `trim_percent` value more than 0)
+
 * Inexact Augmented Lagrangian Method [(Lin et al. 2009)](http://arxiv.org/abs/1009.5055)  [website](http://perception.csl.illinois.edu/matrix-rank/sample_code.html) - `matrix_factorization/ialm.py`
 
 * L1 Filtering [(Liu et al. 2011)](http://arxiv.org/abs/1108.5359) - `matrix_factorization/l1f.py`
@@ -116,6 +118,11 @@ Currently, there are **17** matrix factorization methods available in `decompy`,
 * Symmetric Alternating Direction Augmented Lagrangian Method (SADAL) [(Goldfarb et al. 2010)](http://arxiv.org/abs/0912.4571) - `matrix_factorization/sadal.py`
 
 * Robust PCA using Variational Bayes method [(Babacan et al 2012)](https://ieeexplore.ieee.org/document/6194350) - `matrix_factorization/vbrpca.py`
+
+
+---
+
+* MoG-RPCA: Mixture of Gaussians RPCA [(Zhao et al. 2014)](http://jmlr.org/proceedings/papers/v32/zhao14.pdf) [website](http://www.cs.cmu.edu/~deyum/index.htm)
 
 
 ### Methods to be added (Coming soon)
