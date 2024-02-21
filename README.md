@@ -79,7 +79,7 @@ This project is licensed under the [BSD 3-Clause License](LICENSE).
 
 ### Matrix Factorization Methods
 
-Currently, there are **17** matrix factorization methods available in `decompy`, as follows:
+Currently, there are **20** matrix factorization methods available in `decompy`, as follows:
 
 * Alternating Direction Method [(Yuan and Yang, 2009)](https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.400.8797) - `matrix_factorization/adm.py`
 
@@ -105,6 +105,8 @@ Currently, there are **17** matrix factorization methods available in `decompy`,
 
 * Robust PCA using M-estimation [(De la Torre and Black, 2001)](https://ieeexplore.ieee.org/document/937541) [website](http://users.salleurl.edu/~ftorre/papers/rpca2.html) - `matrix_factorization/mest.py`
 
+* MoG-RPCA: Mixture of Gaussians RPCA [(Zhao et al. 2014)](http://jmlr.org/proceedings/papers/v32/zhao14.pdf) [website](http://www.cs.cmu.edu/~deyum/index.htm) - `matrix_factorization/mog.py`
+
 * Outlier Pursuit [Xu et al, 2011](https://guppy.mpe.nus.edu.sg/~mpexuh/papers/OutlierPursuit-TIT.pdf) - `matrix_factorization/op.py`
 
 * Principal Component Pursuit (PCP) Method [(Candes et al. 2009)](https://arxiv.org/abs/0912.3599) - `matrix_factorization/pcp.py`
@@ -119,10 +121,6 @@ Currently, there are **17** matrix factorization methods available in `decompy`,
 
 * Robust PCA using Variational Bayes method [(Babacan et al 2012)](https://ieeexplore.ieee.org/document/6194350) - `matrix_factorization/vbrpca.py`
 
-
----
-
-* MoG-RPCA: Mixture of Gaussians RPCA [(Zhao et al. 2014)](http://jmlr.org/proceedings/papers/v32/zhao14.pdf) [website](http://www.cs.cmu.edu/~deyum/index.htm)
 
 
 ### Methods to be added (Coming soon)
