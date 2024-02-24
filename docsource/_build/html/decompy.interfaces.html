@@ -1,20 +1,16 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>decompy.interfaces package &#8212; decompy 1.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=601dbdee" />
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="decompy.matrix_factorization package" href="decompy.matrix_factorization.html" />
@@ -47,15 +43,15 @@
           <div class="body" role="main">
             
   <section id="decompy-interfaces-package">
-<h1>decompy.interfaces package<a class="headerlink" href="#decompy-interfaces-package" title="Permalink to this heading">¶</a></h1>
+<h1>decompy.interfaces package<a class="headerlink" href="#decompy-interfaces-package" title="Link to this heading">¶</a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
 <section id="module-decompy.interfaces.lsnresult">
-<span id="decompy-interfaces-lsnresult-module"></span><h2>decompy.interfaces.lsnresult module<a class="headerlink" href="#module-decompy.interfaces.lsnresult" title="Permalink to this heading">¶</a></h2>
+<span id="decompy-interfaces-lsnresult-module"></span><h2>decompy.interfaces.lsnresult module<a class="headerlink" href="#module-decompy.interfaces.lsnresult" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="decompy.interfaces.lsnresult.LSNResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.lsnresult.</span></span><span class="sig-name descname"><span class="pre">LSNResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.lsnresult.</span></span><span class="sig-name descname"><span class="pre">LSNResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The LSNResult class is a structure for holding the matrix decomposition in form of a low rank matrix L, a sparse matrix S and a small perturbation noise matrix N.</p>
 <dl class="field-list simple">
@@ -71,7 +67,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decompy.interfaces.lsnresult.LSNResult.metrics">
-<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.metrics" title="Link to this definition">¶</a></dt>
 <dd><p>a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -82,7 +78,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.lsnresult.LSNResult.convergence_metrics">
-<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.convergence_metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.convergence_metrics" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns the convergence metrics from a dictionary called “metrics”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -94,7 +90,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.lsnresult.LSNResult.cumulative_variance">
-<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.cumulative_variance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.cumulative_variance" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the cumulative variance of singular values and returns either the cumulative
 sum or proportion based on the specified type.</p>
 <dl class="field-list simple">
@@ -122,7 +118,7 @@ one of these two options, a ValueError is raised. The function</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.lsnresult.LSNResult.estimated_rank">
-<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.estimated_rank" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.estimated_rank" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the estimated rank of a matrix based on its singular values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -144,7 +140,7 @@ representing the estimated rank.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.lsnresult.LSNResult.singular_values">
-<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.singular_values" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.singular_values" title="Link to this definition">¶</a></dt>
 <dd><p>This function computes the singular values of a matrix and returns them either as a diagonal matrix
 or a 1D array.</p>
 <dl class="field-list simple">
@@ -169,7 +165,7 @@ If <cite>as_matrix</cite> is set to <cite>False</cite>, it returns a 1D array wi
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.lsnresult.LSNResult.singular_vectors">
-<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.singular_vectors" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.lsnresult.LSNResult.singular_vectors" title="Link to this definition">¶</a></dt>
 <dd><p>The function returns the left, right, or both singular vectors of a given matrix using the SVD
 method in numpy.</p>
 <dl class="field-list simple">
@@ -196,10 +192,10 @@ singular vectors (matrix U), if <cite>type</cite> is “right”, the function r
 
 </section>
 <section id="module-decompy.interfaces.pcaresult">
-<span id="decompy-interfaces-pcaresult-module"></span><h2>decompy.interfaces.pcaresult module<a class="headerlink" href="#module-decompy.interfaces.pcaresult" title="Permalink to this heading">¶</a></h2>
+<span id="decompy-interfaces-pcaresult-module"></span><h2>decompy.interfaces.pcaresult module<a class="headerlink" href="#module-decompy.interfaces.pcaresult" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="decompy.interfaces.pcaresult.PCAResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.pcaresult.</span></span><span class="sig-name descname"><span class="pre">PCAResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.pcaresult.</span></span><span class="sig-name descname"><span class="pre">PCAResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The PCAResult class is a structure for holding the matrix decomposition in form of location and the principal components.</p>
 <dl class="field-list simple">
@@ -213,7 +209,7 @@ singular vectors (matrix U), if <cite>type</cite> is “right”, the function r
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decompy.interfaces.pcaresult.PCAResult.metrics">
-<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.metrics" title="Link to this definition">¶</a></dt>
 <dd><p>a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -224,7 +220,7 @@ singular vectors (matrix U), if <cite>type</cite> is “right”, the function r
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.pcaresult.PCAResult.convergence_metrics">
-<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.convergence_metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.convergence_metrics" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns the convergence metrics from a dictionary called “metrics”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -236,7 +232,7 @@ singular vectors (matrix U), if <cite>type</cite> is “right”, the function r
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.pcaresult.PCAResult.cumulative_variance">
-<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.cumulative_variance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.cumulative_variance" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the cumulative variance of eigenvalues and returns either the cumulative sum
 of squared eigenvalues or the proportion of the cumulative sum of squared eigenvalues.</p>
 <dl class="field-list simple">
@@ -263,7 +259,7 @@ squared eigenvalues divided by the sum of all squared eigenvalues.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.pcaresult.PCAResult.eigen_values">
-<span class="sig-name descname"><span class="pre">eigen_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.eigen_values" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">eigen_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.eigen_values" title="Link to this definition">¶</a></dt>
 <dd><p>The function returns either the diagonal matrix of eigenvalues or the number of eigenvalues of a
 given matrix.</p>
 <dl class="field-list simple">
@@ -289,7 +285,7 @@ given matrix.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.pcaresult.PCAResult.eigen_vectors">
-<span class="sig-name descname"><span class="pre">eigen_vectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.eigen_vectors" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">eigen_vectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.eigen_vectors" title="Link to this definition">¶</a></dt>
 <dd><p>The function returns the eigenvectors of the PCAResult.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -300,7 +296,7 @@ given matrix.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.pcaresult.PCAResult.estimated_rank">
-<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.estimated_rank" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.estimated_rank" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the estimated rank of a matrix based on its eigenvalues.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -321,7 +317,7 @@ given matrix.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.pcaresult.PCAResult.location">
-<span class="sig-name descname"><span class="pre">location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.location" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.pcaresult.PCAResult.location" title="Link to this definition">¶</a></dt>
 <dd><p>The function returns a flattened version of the “loc” attribute of the PCAResult.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -335,10 +331,10 @@ given matrix.</p>
 
 </section>
 <section id="module-decompy.interfaces.rankfactorresult">
-<span id="decompy-interfaces-rankfactorresult-module"></span><h2>decompy.interfaces.rankfactorresult module<a class="headerlink" href="#module-decompy.interfaces.rankfactorresult" title="Permalink to this heading">¶</a></h2>
+<span id="decompy-interfaces-rankfactorresult-module"></span><h2>decompy.interfaces.rankfactorresult module<a class="headerlink" href="#module-decompy.interfaces.rankfactorresult" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="decompy.interfaces.rankfactorresult.RankFactorizationResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.rankfactorresult.</span></span><span class="sig-name descname"><span class="pre">RankFactorizationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.rankfactorresult.</span></span><span class="sig-name descname"><span class="pre">RankFactorizationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The RankFactorizationResult class is a structure for holding the matrix decomposition
 in form of rank factorization.</p>
@@ -354,7 +350,7 @@ in form of rank factorization.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decompy.interfaces.rankfactorresult.RankFactorizationResult.metrics">
-<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.metrics" title="Link to this definition">¶</a></dt>
 <dd><p>a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -365,7 +361,7 @@ in form of rank factorization.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.rankfactorresult.RankFactorizationResult.convergence_metrics">
-<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.convergence_metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.convergence_metrics" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns the convergence metrics from a dictionary called “metrics”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -377,7 +373,7 @@ in form of rank factorization.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.rankfactorresult.RankFactorizationResult.cumulative_variance">
-<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.cumulative_variance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.cumulative_variance" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the cumulative variance of a matrix’s singular values and returns either the
 cumulative sum or proportion of the singular values based on the specified type.</p>
 <dl class="field-list simple">
@@ -401,7 +397,7 @@ values</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.rankfactorresult.RankFactorizationResult.estimated_rank">
-<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.estimated_rank" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.estimated_rank" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns the rank of the result matrix decomposition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -412,7 +408,7 @@ values</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.rankfactorresult.RankFactorizationResult.singular_values">
-<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.singular_values" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.singular_values" title="Link to this definition">¶</a></dt>
 <dd><p>This function computes the singular values of a matrix product and returns them either as a diagonal
 matrix or a list.</p>
 <dl class="field-list simple">
@@ -436,7 +432,7 @@ function. The function returns either a diagonal matrix of singular values (if <
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.rankfactorresult.RankFactorizationResult.singular_vectors">
-<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.singular_vectors" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.rankfactorresult.RankFactorizationResult.singular_vectors" title="Link to this definition">¶</a></dt>
 <dd><p>The function computes the singular vectors of a matrix product and returns either the left, right,
 or both singular vectors depending on the specified type.</p>
 <dl class="field-list simple">
@@ -460,10 +456,10 @@ one of the valid options (“left”, “right”, “both”), a <cite>ValueErr
 
 </section>
 <section id="module-decompy.interfaces.svdresult">
-<span id="decompy-interfaces-svdresult-module"></span><h2>decompy.interfaces.svdresult module<a class="headerlink" href="#module-decompy.interfaces.svdresult" title="Permalink to this heading">¶</a></h2>
+<span id="decompy-interfaces-svdresult-module"></span><h2>decompy.interfaces.svdresult module<a class="headerlink" href="#module-decompy.interfaces.svdresult" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="decompy.interfaces.svdresult.SVDResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.svdresult.</span></span><span class="sig-name descname"><span class="pre">SVDResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.svdresult.</span></span><span class="sig-name descname"><span class="pre">SVDResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The SVDResult class is a structure for holding the matrix decomposition in form of singular value decomposition.</p>
 <dl class="field-list simple">
@@ -478,7 +474,7 @@ one of the valid options (“left”, “right”, “both”), a <cite>ValueErr
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decompy.interfaces.svdresult.SVDResult.metrics">
-<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.metrics" title="Link to this definition">¶</a></dt>
 <dd><p>a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -489,7 +485,7 @@ one of the valid options (“left”, “right”, “both”), a <cite>ValueErr
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.svdresult.SVDResult.convergence_metrics">
-<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.convergence_metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.convergence_metrics" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns the convergence metrics from a dictionary called “metrics”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -501,7 +497,7 @@ one of the valid options (“left”, “right”, “both”), a <cite>ValueErr
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.svdresult.SVDResult.cumulative_variance">
-<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.cumulative_variance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.cumulative_variance" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the cumulative variance of singular values and returns either the cumulative
 sum or proportion based on the specified type.</p>
 <dl class="field-list simple">
@@ -527,7 +523,7 @@ one of these two options, a ValueError is raised.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.svdresult.SVDResult.estimated_rank">
-<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.estimated_rank" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.estimated_rank" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the estimated rank of a matrix based on its singular values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -549,7 +545,7 @@ returns an integer value representing the estimated rank of the matrix.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.svdresult.SVDResult.singular_values">
-<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.singular_values" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.singular_values" title="Link to this definition">¶</a></dt>
 <dd><p>The function returns the singular values of a matrix either as a diagonal matrix or as a flattened
 array.</p>
 <dl class="field-list simple">
@@ -573,7 +569,7 @@ array.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.svdresult.SVDResult.singular_vectors">
-<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.singular_vectors" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.svdresult.SVDResult.singular_vectors" title="Link to this definition">¶</a></dt>
 <dd><p>The function <cite>singular_vectors</cite> returns the left, right, or both singular vectors of a matrix
 depending on the input type.</p>
 <dl class="field-list simple">
@@ -596,10 +592,10 @@ if <cite>type</cite> is set to “both”. If <cite>type</cite> is set to any ot
 
 </section>
 <section id="module-decompy.interfaces">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-decompy.interfaces" title="Permalink to this heading">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-decompy.interfaces" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="decompy.interfaces.LSNResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.</span></span><span class="sig-name descname"><span class="pre">LSNResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.</span></span><span class="sig-name descname"><span class="pre">LSNResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The LSNResult class is a structure for holding the matrix decomposition in form of a low rank matrix L, a sparse matrix S and a small perturbation noise matrix N.</p>
 <dl class="field-list simple">
@@ -615,7 +611,7 @@ if <cite>type</cite> is set to “both”. If <cite>type</cite> is set to any ot
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decompy.interfaces.LSNResult.metrics">
-<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.LSNResult.metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.LSNResult.metrics" title="Link to this definition">¶</a></dt>
 <dd><p>a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -626,7 +622,7 @@ if <cite>type</cite> is set to “both”. If <cite>type</cite> is set to any ot
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.LSNResult.convergence_metrics">
-<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult.convergence_metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult.convergence_metrics" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns the convergence metrics from a dictionary called “metrics”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -638,7 +634,7 @@ if <cite>type</cite> is set to “both”. If <cite>type</cite> is set to any ot
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.LSNResult.cumulative_variance">
-<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult.cumulative_variance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult.cumulative_variance" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the cumulative variance of singular values and returns either the cumulative
 sum or proportion based on the specified type.</p>
 <dl class="field-list simple">
@@ -666,7 +662,7 @@ one of these two options, a ValueError is raised. The function</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.LSNResult.estimated_rank">
-<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult.estimated_rank" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult.estimated_rank" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the estimated rank of a matrix based on its singular values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -688,7 +684,7 @@ representing the estimated rank.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.LSNResult.singular_values">
-<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult.singular_values" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult.singular_values" title="Link to this definition">¶</a></dt>
 <dd><p>This function computes the singular values of a matrix and returns them either as a diagonal matrix
 or a 1D array.</p>
 <dl class="field-list simple">
@@ -713,7 +709,7 @@ If <cite>as_matrix</cite> is set to <cite>False</cite>, it returns a 1D array wi
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.LSNResult.singular_vectors">
-<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult.singular_vectors" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.LSNResult.singular_vectors" title="Link to this definition">¶</a></dt>
 <dd><p>The function returns the left, right, or both singular vectors of a given matrix using the SVD
 method in numpy.</p>
 <dl class="field-list simple">
@@ -740,7 +736,7 @@ singular vectors (matrix U), if <cite>type</cite> is “right”, the function r
 
 <dl class="py class">
 <dt class="sig sig-object py" id="decompy.interfaces.PCAResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.</span></span><span class="sig-name descname"><span class="pre">PCAResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.</span></span><span class="sig-name descname"><span class="pre">PCAResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The PCAResult class is a structure for holding the matrix decomposition in form of location and the principal components.</p>
 <dl class="field-list simple">
@@ -754,7 +750,7 @@ singular vectors (matrix U), if <cite>type</cite> is “right”, the function r
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decompy.interfaces.PCAResult.metrics">
-<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.PCAResult.metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.PCAResult.metrics" title="Link to this definition">¶</a></dt>
 <dd><p>a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -765,7 +761,7 @@ singular vectors (matrix U), if <cite>type</cite> is “right”, the function r
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.PCAResult.convergence_metrics">
-<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.convergence_metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.convergence_metrics" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns the convergence metrics from a dictionary called “metrics”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -777,7 +773,7 @@ singular vectors (matrix U), if <cite>type</cite> is “right”, the function r
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.PCAResult.cumulative_variance">
-<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.cumulative_variance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.cumulative_variance" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the cumulative variance of eigenvalues and returns either the cumulative sum
 of squared eigenvalues or the proportion of the cumulative sum of squared eigenvalues.</p>
 <dl class="field-list simple">
@@ -804,7 +800,7 @@ squared eigenvalues divided by the sum of all squared eigenvalues.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.PCAResult.eigen_values">
-<span class="sig-name descname"><span class="pre">eigen_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.eigen_values" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">eigen_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.eigen_values" title="Link to this definition">¶</a></dt>
 <dd><p>The function returns either the diagonal matrix of eigenvalues or the number of eigenvalues of a
 given matrix.</p>
 <dl class="field-list simple">
@@ -830,7 +826,7 @@ given matrix.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.PCAResult.eigen_vectors">
-<span class="sig-name descname"><span class="pre">eigen_vectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.eigen_vectors" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">eigen_vectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.eigen_vectors" title="Link to this definition">¶</a></dt>
 <dd><p>The function returns the eigenvectors of the PCAResult.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -841,7 +837,7 @@ given matrix.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.PCAResult.estimated_rank">
-<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.estimated_rank" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.estimated_rank" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the estimated rank of a matrix based on its eigenvalues.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -862,7 +858,7 @@ given matrix.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.PCAResult.location">
-<span class="sig-name descname"><span class="pre">location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.location" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.PCAResult.location" title="Link to this definition">¶</a></dt>
 <dd><p>The function returns a flattened version of the “loc” attribute of the PCAResult.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -876,7 +872,7 @@ given matrix.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="decompy.interfaces.RankFactorizationResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.</span></span><span class="sig-name descname"><span class="pre">RankFactorizationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.</span></span><span class="sig-name descname"><span class="pre">RankFactorizationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The RankFactorizationResult class is a structure for holding the matrix decomposition
 in form of rank factorization.</p>
@@ -892,7 +888,7 @@ in form of rank factorization.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decompy.interfaces.RankFactorizationResult.metrics">
-<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.metrics" title="Link to this definition">¶</a></dt>
 <dd><p>a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -903,7 +899,7 @@ in form of rank factorization.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.RankFactorizationResult.convergence_metrics">
-<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.convergence_metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.convergence_metrics" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns the convergence metrics from a dictionary called “metrics”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -915,7 +911,7 @@ in form of rank factorization.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.RankFactorizationResult.cumulative_variance">
-<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.cumulative_variance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.cumulative_variance" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the cumulative variance of a matrix’s singular values and returns either the
 cumulative sum or proportion of the singular values based on the specified type.</p>
 <dl class="field-list simple">
@@ -939,7 +935,7 @@ values</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.RankFactorizationResult.estimated_rank">
-<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.estimated_rank" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.estimated_rank" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns the rank of the result matrix decomposition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -950,7 +946,7 @@ values</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.RankFactorizationResult.singular_values">
-<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.singular_values" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.singular_values" title="Link to this definition">¶</a></dt>
 <dd><p>This function computes the singular values of a matrix product and returns them either as a diagonal
 matrix or a list.</p>
 <dl class="field-list simple">
@@ -974,7 +970,7 @@ function. The function returns either a diagonal matrix of singular values (if <
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.RankFactorizationResult.singular_vectors">
-<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.singular_vectors" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.RankFactorizationResult.singular_vectors" title="Link to this definition">¶</a></dt>
 <dd><p>The function computes the singular vectors of a matrix product and returns either the left, right,
 or both singular vectors depending on the specified type.</p>
 <dl class="field-list simple">
@@ -998,7 +994,7 @@ one of the valid options (“left”, “right”, “both”), a <cite>ValueErr
 
 <dl class="py class">
 <dt class="sig sig-object py" id="decompy.interfaces.SVDResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.</span></span><span class="sig-name descname"><span class="pre">SVDResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">decompy.interfaces.</span></span><span class="sig-name descname"><span class="pre">SVDResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The SVDResult class is a structure for holding the matrix decomposition in form of singular value decomposition.</p>
 <dl class="field-list simple">
@@ -1013,7 +1009,7 @@ one of the valid options (“left”, “right”, “both”), a <cite>ValueErr
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decompy.interfaces.SVDResult.metrics">
-<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.SVDResult.metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#decompy.interfaces.SVDResult.metrics" title="Link to this definition">¶</a></dt>
 <dd><p>a python dictionary object to hold arbitrary values related to convergence metrics of the relevant algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -1024,7 +1020,7 @@ one of the valid options (“left”, “right”, “both”), a <cite>ValueErr
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.SVDResult.convergence_metrics">
-<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult.convergence_metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">convergence_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult.convergence_metrics" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns the convergence metrics from a dictionary called “metrics”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -1036,7 +1032,7 @@ one of the valid options (“left”, “right”, “both”), a <cite>ValueErr
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.SVDResult.cumulative_variance">
-<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult.cumulative_variance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cumulative_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'identity'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'proportion'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult.cumulative_variance" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the cumulative variance of singular values and returns either the cumulative
 sum or proportion based on the specified type.</p>
 <dl class="field-list simple">
@@ -1062,7 +1058,7 @@ one of these two options, a ValueError is raised.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.SVDResult.estimated_rank">
-<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult.estimated_rank" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">estimated_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult.estimated_rank" title="Link to this definition">¶</a></dt>
 <dd><p>The function calculates the estimated rank of a matrix based on its singular values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1084,7 +1080,7 @@ returns an integer value representing the estimated rank of the matrix.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.SVDResult.singular_values">
-<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult.singular_values" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">as_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult.singular_values" title="Link to this definition">¶</a></dt>
 <dd><p>The function returns the singular values of a matrix either as a diagonal matrix or as a flattened
 array.</p>
 <dl class="field-list simple">
@@ -1108,7 +1104,7 @@ array.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decompy.interfaces.SVDResult.singular_vectors">
-<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult.singular_vectors" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">singular_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.interfaces.SVDResult.singular_vectors" title="Link to this definition">¶</a></dt>
 <dd><p>The function <cite>singular_vectors</cite> returns the left, right, or both singular vectors of a matrix
 depending on the input type.</p>
 <dl class="field-list simple">
@@ -1290,8 +1286,8 @@ if <cite>type</cite> is set to “both”. If <cite>type</cite> is set to any ot
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2024, Subhrajyoty Roy.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    &#169; Copyright 2024, Subhrajyoty Roy.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

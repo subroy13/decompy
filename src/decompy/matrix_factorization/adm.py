@@ -14,7 +14,19 @@ class AlternatingDirectionMethod:
     
     """
     
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
+        """Initialize Alternating Direction Method matrix factorization model.
+
+        Parameters
+        ----------
+        tol : float, optional
+            Tolerance for stopping criteria (default is 1e-6). 
+        maxiter : int, optional
+            Maximum number of iterations (default is 1000).
+        verbose : bool, optional
+            Whether to print progress messages (default is False).
+
+        """
         self.tol = kwargs.get('tol', 1e-6)
         self.maxiter = kwargs.get("maxiter", 1e3)
         self.verbose = kwargs.get("verbose", False)
@@ -28,6 +40,30 @@ class AlternatingDirectionMethod:
             initB: Union[np.ndarray, None] = None,
             initLambda: Union[np.ndarray, None] = None
         ):
+        """Decompose a matrix M into a low-rank and sparse component using ADM.
+
+        Parameters
+        ----------
+        M : ndarray
+            The input matrix to decompose.
+        tau : float, optional
+            Thresholding parameter. Default is 0.1.
+        beta : float or None, optional
+            Regularization parameter. Default is 0.25 / abs(M).mean().
+        initA : ndarray or None, optional
+            Initial guess for the sparse component. Default is zeros.
+        initB : ndarray or None, optional 
+            Initial guess for the low-rank component. Default is zeros.
+        initLambda : ndarray or None, optional
+            Initial guess for the Lagrange multiplier. Default is zeros.
+
+        Returns
+        -------
+        LSNResult
+            A named tuple containing the low-rank matrix L, sparse matrix S, 
+            and convergence info.
+
+        """
         check_real_matrix(M)
         C = np.copy(M)
         if beta is None:

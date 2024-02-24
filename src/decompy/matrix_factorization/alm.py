@@ -13,7 +13,33 @@ class AugmentedLagrangianMethod:
     
     """
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
+        """Initialize Augmented Lagrangian Method matrix factorization model.
+
+        Parameters
+        ----------
+        tol_inner1 : float, optional
+            Tolerance for the inner loop 1. Default is 1e-4.
+        tol_inner2 : float, optional
+            Tolerance for the inner loop 2. Default is 1e-6.
+        tol_out : float, optional
+            Tolerance for the outer loop. Default is 1e-7. 
+        maxiter_inner1 : int, optional
+            Maximum number of iterations for inner loop 1. Default is 1.
+        maxiter_inner2 : int, optional 
+            Maximum number of iterations for inner loop 2. Default is 20.
+        maxiter_out : int, optional
+            Maximum number of iterations for outer loop. Default is 500.
+        verbose : bool, optional
+            Whether to print progress. Default is False.
+        alpha : float, optional
+            ALM penalty parameter. Default is 1.
+        beta : float, optional 
+            ALM augmentation parameter. Default is 0.2.
+        rho : float, optional
+            ALM over-relaxation parameter. Default is 1.1.
+
+        """
         self.tol_inner1 = kwargs.get("tol_inner1", 1e-4)
         self.tol_inner2 = kwargs.get("tol_inner2", 1e-6)
         self.tol_out = kwargs.get("tol", 1e-7)
@@ -27,6 +53,33 @@ class AugmentedLagrangianMethod:
         self.rho = kwargs.get("rho", 1.1)
 
     def decompose(self, M: np.ndarray, rank: int = None, kappa: float = None, tau: float = None):
+        """Decompose a matrix M into low rank and sparse components using ALM.
+
+        Parameters
+        ----------
+        M : ndarray
+            Input matrix to decompose
+
+        rank : int, optional
+            Rank of the low rank component. If not provided,
+            will be estimated.
+
+        kappa : float, optional
+            ALM penalty parameter. Default is 1.1
+            if not provided.
+
+        tau : float, optional 
+            ALM penalty parameter. Default is 0.61
+            if not provided.
+
+        Returns
+        -------
+        LSNResult
+            A named tuple containing the low rank matrix L,
+            sparse matrix S, optional noise matrix N, 
+            and convergence info.
+
+        """
         check_real_matrix(M)
         D = M.copy()
         n, p = D.shape

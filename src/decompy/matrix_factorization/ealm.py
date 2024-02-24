@@ -12,7 +12,21 @@ class ExactAugmentedLagrangianMethod:
     [1] Lin, Zhouchen, Minming Chen, and Yi Ma. "The augmented lagrange multiplier method for exact recovery of corrupted low-rank matrices." arXiv preprint arXiv:1009.5055 (2010).
 
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
+        """Initialize Exact Augmented Lagrangian Method solver.
+
+        Parameters
+        ----------
+        tol : float, optional
+            Tolerance for stopping criteria.
+        maxit : int, optional
+            Maximum number of iterations.
+        maxit_inner : int, optional
+            Maximum number of inner iterations.
+        verbose : bool, optional
+            Print status messages if True.
+
+        """
         self.tol = kwargs.get("tol", 1e-7)
         self.maxit = kwargs.get("maxit", 1e3)
         self.maxit_inner = kwargs.get("maxit_inner", 100)
@@ -25,9 +39,31 @@ class ExactAugmentedLagrangianMethod:
             mu: float = None,
             rho: float = 6
         ):
+        """Decompose a matrix M into a low-rank matrix L and a sparse matrix S.
+
+        Parameters
+        ----------
+        M : ndarray
+            Input matrix to decompose
+
+        lambd : float, optional
+            Weight on sparse error term in cost function.
+            Default is 1/sqrt(m) where m is number of rows in M
+
+        mu : float, optional
+            Regularization parameter for low-rank matrix.
+            Default is 0.5 / norm_two where norm_two is L2 norm of M
+
+        rho : float, default 6
+            Parameter for increasing mu at each iteration
+
+        Returns
+        -------
+        LSNResult
+            Named tuple containing low-rank matrix L, sparse matrix S
+            and convergence info
         """
-            lambda is the weight on sparse error term in the cost function
-        """
+        
         check_real_matrix(M)
         D = M.copy()
         m, n = D.shape

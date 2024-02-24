@@ -6,7 +6,9 @@
 * Robust matrix or tensor factorization methods.
 * Matrix rank estimation methods.
 
-The latest version of `decompy` is **1.0.0**.
+![](https://img.shields.io/pypi/pyversions/decompy) [![](https://img.shields.io/pypi/v/decompy)](https://pypi.org/project/decompy/) [![](https://img.shields.io/badge/license-BSD3_Clause-green)](https://github.com/subroy13/decompy/blob/master/LICENSE)
+
+![PyPI - Downloads](https://img.shields.io/pypi/dm/decompy) ![](https://img.shields.io/pepy/dt/decompy) [![decompy](https://snyk.io/advisor/python/decompy/badge.svg)](https://snyk.io/advisor/python/decompy)
 
 ## Features
 
@@ -79,53 +81,85 @@ This project is licensed under the [BSD 3-Clause License](LICENSE).
 
 ### Matrix Factorization Methods
 
-1. Alternating Direction Method [(Yuan and Yang, 2009)](https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.400.8797) - `matrix_factorization/adm.py`
+Currently, there are **20** matrix factorization methods available in `decompy`, as follows:
 
-2. Augmented Lagrangian Method [(Tang and Nehorai)](https://ieeexplore.ieee.org/document/5766144) - `matrix_factorization/alm.py`
+* Alternating Direction Method [(Yuan and Yang, 2009)](https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.400.8797) - `matrix_factorization/adm.py`
 
-3. Exact Augmented Lagrangian Method [(Lin, Chen and Ma, 2010)](https://arxiv.org/abs/1009.5055) - `matrix_factorization/ealm.py`
+* Augmented Lagrangian Method [(Tang and Nehorai)](https://ieeexplore.ieee.org/document/5766144) - `matrix_factorization/alm.py`
 
-4. Inexact Augmented Lagrangian Method [(Lin et al. 2009)](http://arxiv.org/abs/1009.5055)  [website](http://perception.csl.illinois.edu/matrix-rank/sample_code.html) - `matrix_factorization/ialm.py`
+* AS-RPCA: Active Subspace: Towards Scalable Low-Rank Learning [(Liu and Yan, 2012)](http://dl.acm.org/citation.cfm?id=2421487) - `matrix_factorization/asrpca.py`
 
-5. Principal Component Pursuit (PCP) Method [(Candes et al. 2009)](https://arxiv.org/abs/0912.3599) - `matrix_factorization/pcp.py`
+* Dual RPCA [(Lin et al. 2009)](http://arxiv.org/abs/1009.5055) - `matrix_factorization/dual.py`
 
-6. Robust PCA by M-estimation [(De la Torre and Black, 2001)](https://ieeexplore.ieee.org/document/937541) - `matrix_factorization/rpca.py`
+* Exact Augmented Lagrangian Method [(Lin, Chen and Ma, 2010)](https://arxiv.org/abs/1009.5055) - `matrix_factorization/ealm.py`
 
-7. Robust PCA using Variational Bayes method [(Babacan et al 2012)](https://ieeexplore.ieee.org/document/6194350) - `matrix_factorization/vbrpca.py`
+* Robust PCA using Fast PCP Method [(Rodriguez and Wohlberg, 2013)](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6738015) - `matrix_factorization/fpcp.py`
 
-8. Robust PCA using Fast PCP Method [(Rodriguez and Wohlberg, 2013)](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6738015) - `matrix_factorization/fpcp.py`
+* Grassmann Average [(Hauberg et al. 2014)](http://files.is.tue.mpg.de/black/papers/RGA2014.pdf) [website](http://ps.is.tuebingen.mpg.de/project/Robust_PCA) - `matrix_factorization/ga.py`
 
-9. Robust SVD using Density Power Divergence (rSVDdpd) Algorithm [(Roy et al, 2023)](https://arxiv.org/abs/2109.10680) - `matrix_factorization/rsvddpd.py`
+* Trimmed Grassmann Average [(Hauberg et al. 2014)](http://files.is.tue.mpg.de/black/papers/RGA2014.pdf) [website](http://ps.is.tuebingen.mpg.de/project/Robust_PCA) - `matrix_factorization/ga.py` (with `trim_percent` value more than 0)
 
-10. SVT: Singular Value Thresholding [(Cai et al. 2008)](http://arxiv.org/abs/0810.3286)  [website](http://perception.csl.illinois.edu/matrix-rank/sample_code.html)
+* Inexact Augmented Lagrangian Method [(Lin et al. 2009)](http://arxiv.org/abs/1009.5055)  [website](http://perception.csl.illinois.edu/matrix-rank/sample_code.html) - `matrix_factorization/ialm.py`
 
-11. Outlier Pursuit [Xu et al, 2011](https://guppy.mpe.nus.edu.sg/~mpexuh/papers/OutlierPursuit-TIT.pdf) - `matrix_factorization/op.py`
+* L1 Filtering [(Liu et al. 2011)](http://arxiv.org/abs/1108.5359) - `matrix_factorization/l1f.py`
+
+* Linearized ADM with Adaptive Penalty [(Lin et al. 2011)](http://arxiv.org/abs/1109.0367) - `matrix_factorization/ladmap.py`
+
+* Robust PCA using M-estimation [(De la Torre and Black, 2001)](https://ieeexplore.ieee.org/document/937541) [website](http://users.salleurl.edu/~ftorre/papers/rpca2.html) - `matrix_factorization/mest.py`
+
+* MoG-RPCA: Mixture of Gaussians RPCA [(Zhao et al. 2014)](http://jmlr.org/proceedings/papers/v32/zhao14.pdf) [website](http://www.cs.cmu.edu/~deyum/index.htm) - `matrix_factorization/mog.py`
+
+* Outlier Pursuit [Xu et al, 2011](https://guppy.mpe.nus.edu.sg/~mpexuh/papers/OutlierPursuit-TIT.pdf) - `matrix_factorization/op.py`
+
+* Principal Component Pursuit (PCP) Method [(Candes et al. 2009)](https://arxiv.org/abs/0912.3599) - `matrix_factorization/pcp.py`
+
+* RegL1-ALM: Robust low-rank matrix approximation with missing data and outliers [(Zheng et al. 2012)](https://sites.google.com/site/yinqiangzheng/home/zheng_CVPR12_robust%20L1-norm%20low-rank%20matrix%20factorization.pdf) [website](https://sites.google.com/site/yinqiangzheng/) - `matrix_factorization/regl1alm.py`
+
+* Robust SVD using Density Power Divergence (rSVDdpd) Algorithm [(Roy et al, 2023)](https://arxiv.org/abs/2109.10680) - `matrix_factorization/rsvddpd.py`
+
+* SVT: Singular Value Thresholding [(Cai et al. 2008)](http://arxiv.org/abs/0810.3286) [website](http://perception.csl.illinois.edu/matrix-rank/sample_code.html) - `matrix_factorization/svt.py`
+
+* Symmetric Alternating Direction Augmented Lagrangian Method (SADAL) [(Goldfarb et al. 2010)](http://arxiv.org/abs/0912.4571) - `matrix_factorization/sadal.py`
+
+* Robust PCA using Variational Bayes method [(Babacan et al 2012)](https://ieeexplore.ieee.org/document/6194350) - `matrix_factorization/vbrpca.py`
+
+
+
+### Methods to be added (Coming soon)
+
+* R2PCP: Riemannian Robust Principal Component Pursuit [(Hintermüller and Wu, 2014)](http://link.springer.com/article/10.1007/s10851-014-0527-y)
+
+* DECOLOR: Contiguous Outliers in the Low-Rank Representation [(Zhou et al. 2011)](http://arxiv.org/abs/1109.0882) [website1](https://sites.google.com/site/eeyangc/software/decolor) [website2](https://fling.seas.upenn.edu/~xiaowz/dynamic/wordpress/?p=144)
+
+
+
 
 
 
 ## Rank Estimation Methods
 
-### Penalization Criterion (`rankmethods/penalized.py`)
+In `rankmethods/penalized.py` -
 
-1. Elbow method
+* Elbow method
 
-2. Akaike's Information Criterion (AIC) - https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15
+* Akaike's Information Criterion (AIC) - https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15
 
-3. Bayesian Information Criterion (BIC) - https://doi.org/10.1214/aos/1176344136
+* Bayesian Information Criterion (BIC) - https://doi.org/10.1214/aos/1176344136
 
-4. Bai and Ng's Information Criterion for spatiotemporal decomposition (PC1, PC2, PC3, IC1, IC2, IC3) - https://doi.org/10.1111/1468-0262.00273
+* Bai and Ng's Information Criterion for spatiotemporal decomposition (PC1, PC2, PC3, IC1, IC2, IC3) - https://doi.org/10.1111/1468-0262.00273
 
-5. Divergence Information Criterion (DIC) - https://doi.org/10.1080/03610926.2017.1307405
+* Divergence Information Criterion (DIC) - https://doi.org/10.1080/03610926.2017.1307405
 
-### Cross Validation Approaches (`rankmethods/cvrank.py`)
+In `rankmethods/cvrank.py` -
 
-1. Gabriel style Cross validation - http://www.numdam.org/item/JSFS_2002__143_3-4_5_0/
+* Gabriel style Cross validation - http://www.numdam.org/item/JSFS_2002__143_3-4_5_0/
 
-2. Wold style cross validation separate row and column deletion - https://www.jstor.org/stable/1267581
+* Wold style cross validation separate row and column deletion - https://www.jstor.org/stable/1267581
 
-3. Bi-cross validation (Owen and Perry) - https://doi.org/10.1214/08-AOAS227
+* Bi-cross validation (Owen and Perry) - https://doi.org/10.1214/08-AOAS227
 
-### Bayesian Approaches (`rankmethods/bayes.py`)
+In `rankmethods/bayes.py` -
 
-1. Bayesian rank estimation method by Hoffman - https://www.jstor.org/stable/27639896
+* Bayesian rank estimation method by Hoffman - https://www.jstor.org/stable/27639896
+
 
