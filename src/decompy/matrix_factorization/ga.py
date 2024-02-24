@@ -20,21 +20,65 @@ class GrassmannAverage:
     """
 
     def __init__(self, **kwargs):
+        """Initialize the Grassman Average class.
+
+        Parameters
+        ----------
+        eps : float, optional
+            Epsilon value for numerical stability. 
+            Default is 1e-10.
+        em_iter : int, optional
+            Number of EM iterations. 
+            Default is 3.
+        trim_percent : float, optional
+            Percentage of entries to trim from each end of the sorted list when taking average.
+            Must be between 0 and 0.5. Default is 0.
+
+        Raises
+        ------
+        AssertionError
+            If trim_percent is not between 0 and 0.5.
+        """
         self.eps = kwargs.get("eps", 1e-10)
         self.em_iter = kwargs.get("em_iter", 3)
         self.trim_percent = kwargs.get("trim_percent", 0)
         assert self.trim_percent > 0 and self.trim_percent < 0.5, "trim_percent must be in (0, 0.5)"
 
     def _reorth(self, Q: np.ndarray, r: int, normr: Union[float, None] = None, index = None, alpha = 0.5, method = 0):
-        """
-            Reorthogonalize a vector using iterated Gram-Schmidt
-            
-            References
-            ----------
-            [1] Aake Bjorck, "Numerical Methods for Least Squares Problems", SIAM, Philadelphia, 1996, pp. 68-69.
-            [2] J.~W. Daniel, W.~B. Gragg, L. Kaufman and G.~W. Stewart ``Reorthogonalization and Stable Algorithms Updating the Gram-Schmidt QR Factorization'', Math. Comp.,  30 (1976), no. 136, pp. 772-795.
-            [3] B. N. Parlett, ``The Symmetric Eigenvalue Problem'', Prentice-Hall, Englewood Cliffs, NJ, 1980. pp. 105-109
-            [4] Rasmus Munk Larsen, DAIMI, 1998.
+        """Reorthogonalize a vector using iterated Gram-Schmidt.
+
+        Parameters
+        ----------
+        Q : ndarray
+            The orthonormal basis matrix.
+        r : int
+            The vector to reorthogonalize.
+        normr : float or None, optional
+            The norm of `r`. If None, it will be computed.
+        index : ndarray or None, optional
+            The indices of the vectors in `Q` to use. If None, all vectors are used.
+        alpha : float, optional
+            The tolerance factor for reorthogonalization. 
+        method : int, optional
+            The reorthogonalization method to use.
+
+        Returns
+        -------
+        r : ndarray
+            The reorthogonalized vector.
+        normr : float
+            The norm of the reorthogonalized vector `r`.
+        s : ndarray
+            The coefficients of the projections of `r` onto each vector in `Q`.
+        nre : int
+            The number of reorthogonalizations performed.
+
+        References
+        ----------
+        [1] Aake Bjorck, "Numerical Methods for Least Squares Problems", SIAM, Philadelphia, 1996, pp. 68-69.
+        [2] J.~W. Daniel, W.~B. Gragg, L. Kaufman and G.~W. Stewart ``Reorthogonalization and Stable Algorithms Updating the Gram-Schmidt QR Factorization'', Math. Comp.,  30 (1976), no. 136, pp. 772-795.
+        [3] B. N. Parlett, ``The Symmetric Eigenvalue Problem'', Prentice-Hall, Englewood Cliffs, NJ, 1980. pp. 105-109
+        [4] Rasmus Munk Larsen, DAIMI, 1998.
         """
 
         # initialize the parameters
@@ -87,6 +131,37 @@ class GrassmannAverage:
 
 
     def decompose(self, M: np.ndarray, K: Union[int, None] = None):
+        """Decompose a matrix M into two low rank matrices using Grassmann averages.
+
+        Parameters
+        ----------
+        M : ndarray
+            The input matrix to decompose, of shape (N, D).
+
+        K : int or None, optional
+            The target rank for decomposition. If not provided, default is 1.
+
+        Returns
+        -------
+        res : RankFactorizationResult
+            A named tuple containing the low rank factors A and B, as well as
+            convergence diagnostics.
+
+        Notes
+        ----- 
+        The algorithm is based on Grassmann averages. It iteratively extracts 
+        the top K principal components while orthogonalizing them.
+
+        Examples
+        --------
+        >>> import numpy as np
+        >>> from decompy.matrix_factorization import GrassmannAverage
+        >>> M = np.random.rand(10, 20)
+        >>> ga = GrassmannAverage()
+        >>> res = ga.decompose(M, K=5)
+        >>> A = res.A 
+        >>> B = res.B
+        """
         check_real_matrix(M)
         X = M.copy()    # create a copy of the matrix to avoid side effects
         n, d = X.shape

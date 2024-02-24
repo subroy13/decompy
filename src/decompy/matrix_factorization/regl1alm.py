@@ -6,6 +6,9 @@ from ..interfaces import RankFactorizationResult
 
 class RegulaizedL1AugmentedLagrangianMethod:
     """
+    Implements the Regularized L1 Augmented Lagrangian algorithm for low rank matrix factorization 
+    with trace norm regularization.
+
     Robust low-rank matrix approximation with missing data and outliers
         min |W.*(M-E)|_1 + lambda*|V|_*
         s.t., E = UV, U'*U = I
@@ -16,6 +19,22 @@ class RegulaizedL1AugmentedLagrangianMethod:
     """
 
     def __init__(self, **kwargs):
+        """Initialize the Regularized L1 Augmented Lagrangian Method class.
+
+        Parameters
+        ----------
+        maxiter_in : int, optional
+            Maximum number of inner iterations. Default is 100.
+        maxiter_out : int, optional
+            Maximum number of outer iterations. Default is 5000.
+        rho : float, optional
+            Penalty parameter. Default is 1.05.
+        max_mu : float, optional
+            Maximum value for penalty parameter. Default is 1e20.
+        tol : float, optional
+            Tolerance for stopping criteria. Default is 1e-8.
+
+        """
         self.maxiter_in = kwargs.get("maxiter_in", 100)
         self.maxiter_out = kwargs.get("maxiter_out", 5000)
         self.rho = kwargs.get("rho", 1.05)
@@ -23,12 +42,27 @@ class RegulaizedL1AugmentedLagrangianMethod:
         self.tol = kwargs.get("tol", 1e-8)
 
     def decompose(self, D: np.ndarray, W: Union[np.ndarray, None] = None, r = None, lambd: Union[float, None] = None):
-        """
-        %Input: 
-           M: m*n data matrix
-           W: m*n indicator matrix, with '1' means 'observed', and '0' 'missing'.
-           r: the rank of r
-           lambda: the weighting factor of the trace-norm regularization, 1e-3 in default.
+        """Decompose a matrix D into low rank factors U and V.
+
+        Parameters
+        ----------
+        D : ndarray
+            The m x n data matrix to decompose.
+        W : ndarray or None, optional
+            The m x n indicator matrix, with 1 representing observed entries 
+            and 0 representing missing entries. Default is None, which means
+            all entries are observed.
+        r : int or None, optional
+            The rank of the decomposition. If None, default is ceil(0.1*min(m,n)).
+        lambd : float or None, optional
+            The regularization parameter. Default is 1e-3.
+
+        Returns
+        -------
+        res : RankFactorizationResult
+            A named tuple containing the low rank factors U and V, and convergence 
+            info such as number of iterations, error, etc.
+
         """
         check_real_matrix(D)
         M = D.copy()  # create a copy of the matrix

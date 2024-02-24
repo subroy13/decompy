@@ -23,7 +23,25 @@ class DualRobustPCA:
     [2] "Fast Convex Optimization Algorithms for Exact Recovery of a Corrupted Low-Rank Matrix", Z. Lin et al.,  preprint 2009.
     """
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
+        """Initialize the Dual Robust PCA class.
+
+        Parameters
+        ----------
+        maxiter : int, optional
+            Maximum number of iterations. Default is 1000.
+        tol : float, optional
+            Tolerance for stopping criteria. Default is 1e-5.
+        eps : float, optional 
+            Tolerance for line search. Default is 1e-4.
+        beta : float, optional
+            Backtracking line search parameter. Default is 0.6.
+        eps_proj : float, optional
+            Tolerance for projection. Default is 1e-1. 
+        linesearch : bool, optional
+            Whether to use backtracking line search. Default is False.
+
+        """
         self.maxiter = kwargs.get('maxiter', 1000)
         self.tol = kwargs.get('tol', 2e-5)
         self.eps = kwargs.get('eps', 1e-4)
@@ -32,6 +50,20 @@ class DualRobustPCA:
         self.linesearch = kwargs.get('linesearch', False)
 
     def choosvd(self, n: int, d: int):
+        """Choose whether to use SVD based on matrix dimensions.
+    
+        Parameters
+        ----------
+        n : int
+            Number of rows/columns in the matrix.
+        d : int 
+            Rank of the matrix.
+        
+        Returns
+        -------
+        bool
+            True if SVD should be used based on the ratio of d to n, False otherwise.
+        """
         if n <= 100:
             return (d / n <= 0.02)
         elif n <= 200:
@@ -47,6 +79,23 @@ class DualRobustPCA:
 
 
     def decompose(self, M: np.ndarray, lambd: Union[float, None] = None):
+        """Decompose a matrix M into two low-rank matrices using dual proximal gradient.
+
+        Parameters
+        ----------
+        M : ndarray
+            The input matrix to decompose.
+        lambd : float or None, optional
+            Regularization parameter. Default is 1/sqrt(m) where m is the number of rows of M.
+
+        Returns
+        -------
+        LSNResult
+            A named tuple containing the low rank matrix L,
+            sparse matrix S, optional noise matrix N, 
+            and convergence info.
+            
+        """
         check_real_matrix(M)
         D = M.copy()   # this is copy so that we don't modify the thing
         m, n = D.shape

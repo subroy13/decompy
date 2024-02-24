@@ -5,13 +5,29 @@ from ..interfaces import LSNResult
 
 class InexactAugmentedLagrangianMethod:
     """
-        TODO:
+        Inexact Augmented Lagrangian Method for Robust PCA
 
         Reference: Augmented Lagrange multiplier method for Robust PCA - Inexact method
             - Minming Chen, October 2009. Questions? v-minmch@microsoft.com
             - Arvind Ganesh (abalasu2@illinois.edu)
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
+        """Initialize Inexact Augmented Lagrangian Method solver.
+
+        Parameters
+        ----------
+        tol : float, optional
+            Tolerance for stopping criteria. Default is 1e-7.
+
+        maxit : int, optional
+            Maximum number of iterations. Default is 1000.
+
+        maxit_inner : int, optional
+            Maximum number of inner iterations. Default is 100.
+
+        verbose : bool, optional
+            Whether to print progress messages. Default is False.
+        """
         self.tol = kwargs.get("tol", 1e-7)
         self.maxit = kwargs.get("maxit", 1e3)
         self.maxit_inner = kwargs.get("maxit_inner", 100)
@@ -24,8 +40,38 @@ class InexactAugmentedLagrangianMethod:
             mu: float = None,
             rho: float = 1.5
         ):
-        """
-            lambda is the weight on sparse error term in the cost function
+        """Decompose a matrix M into a low rank L and sparse S using Inexact ALM.
+    
+        Parameters
+        ----------
+        M : ndarray
+            Input matrix to decompose
+        lambd : float, optional
+            Weight on sparse error term in cost function. 
+            Default is 1/sqrt(m) where m is number of rows in M
+        mu : float, optional
+            Initial penalty parameter.
+            Default is 1.25 / frobenius norm of M
+        rho : float, optional
+            Factor to increase mu by at each iteration.
+            Default is 1.5
+            
+        Returns
+        -------
+        LSNResult
+            Named tuple containing low rank L, sparse S, and convergence info.
+        
+        Notes
+        ----- 
+        The Inexact ALM algorithm decomposes M into L and S by 
+        minimizing the objective:
+            
+            ||L||_* + lambd||S||_1  
+            s.t. M = L + S
+            
+        where ||.||_* is nuclear norm (sum of singular values) and 
+        ||.||_1 is L1 norm (sum of absolute values).
+
         """
         check_real_matrix(M)
         D = M.copy()

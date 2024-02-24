@@ -16,7 +16,49 @@ class VariationalBayes:
     
     """
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
+        """Initialize the Variational Bayes Robust PCA model.
+
+        Parameters
+        ----------
+        verbose : bool, optional
+            Whether to print progress updates. Default is False.
+        initmethod : {'ml', 'rand'}, optional
+            Initialization method for factors A and B. 
+            'ml' uses SVD on Y, 'rand' uses random initialization. 
+            Default is 'ml'.
+        a_gamma0 : float, optional
+            Initial value for precision of A. Default is 1e-6.
+        b_gamma0 : float, optional
+            Initial value for precision of B. Default is 1e-6.
+        a_alpha0 : float, optional
+            Initial value for mean of A. Default is 0.
+        b_alpha0 : float, optional
+            Initial value for mean of B. Default is 0.
+        a_beta0 : float, optional
+            Initial value for precision of noise in A. Default is 0.
+        b_beta0 : float, optional
+            Initial value for precision of noise in B. Default is 0.
+        inference_flag : {'standard', 'fixed point'}, optional
+            Inference method. 'standard' or 'fixed point'. 
+            Default is 'standard'.
+        maxiter : int, optional
+            Maximum number of iterations. Default is 100.
+        update_beta : bool, optional
+            Whether to update noise variance. Default is True.
+        beta : float, optional
+            Initial value for precision of noise. Default is None.
+        dim_red : bool, optional
+            Whether to reduce dimensions. Default is True.
+        dim_red_thr : float, optional
+            Threshold to use for dimension reduction. Default is 1e4.  
+        mode : {'VB', 'VB_app', 'MAP'}, optional
+            Estimation mode. 'VB', 'VB_app' or 'MAP'.
+            Default is 'VB'.
+        tol : float, optional
+            Tolerance for convergence. Default is 1e-5.
+
+        """
         self.verbose = kwargs.get("verbose", False)   # output the progress
         
         # initialization method: 
@@ -52,6 +94,27 @@ class VariationalBayes:
 
         
     def decompose(self, M: np.ndarray, rank: int = None):
+        """Decompose a matrix M into low rank and sparse components.
+
+        Parameters
+        ----------
+        M : ndarray
+            Input matrix to decompose, of shape (m, n)
+        rank : int, optional
+            Rank of the low rank component. If not provided, the minimum of m and n
+            is used.
+
+        Returns
+        -------
+        A : ndarray
+            Low rank component, of shape (m, rank)
+        B : ndarray
+            Low rank component, of shape (rank, n)
+        E : ndarray
+            Sparse component, of shape (m, n)
+        X : ndarray
+            Reconstructed low rank component A@B.T, of shape (m, n)
+        """
         check_real_matrix(M)
         Y = np.copy(M)
         m, n = Y.shape

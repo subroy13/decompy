@@ -13,14 +13,46 @@ class MEstimation:
     [1] F. De la Torre and M. J. Black, "Robust principal component analysis for computer vision," Proceedings Eighth IEEE International Conference on Computer Vision. ICCV 2001, Vancouver, BC, Canada, 2001, pp. 362-369 vol.1, doi: 10.1109/ICCV.2001.937541.
 
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
+        """Initialize the M-Estimator class.
+
+        Parameters
+        ----------
+        maxiter : int, optional
+            Maximum number of iterations. Default is 300.
+        verbose : bool, optional
+            Whether to print optimization progress. Default is False. 
+        iter_grad : int, optional
+            Gradient is estimated every `iter_grad` iterations. Default is 2.
+        mu : float, optional
+            Regularization parameter. Default is 1.
+        """
         self.maxiter = kwargs.get("maxiter", 300)
         self.verbose = kwargs.get("verbose", False)
         self.iter_grad = kwargs.get("iter_grad", 2)
         self.mu = kwargs.get("mu", 1)
 
 
-    def compute_scale_statistics(self, M: np.ndarray, ini_rank: int = None):
+    def _compute_scale_statistics(self, M: np.ndarray, ini_rank: int = None):
+        """Compute scale statistics from input matrix M.
+
+        Parameters
+        ----------
+        M : ndarray
+            Input matrix.
+        ini_rank : int, optional
+            Initial rank for SVD computation. If None, set to ceil(M.shape[0]/10).
+
+        Returns
+        -------
+        Sigmai : ndarray
+            Scale matrix for input.
+        Sigmaf : ndarray 
+            Scale matrix for error.
+        basis_ini : ndarray
+            Initial basis matrix.
+
+        """
         # compute standard PCA
         mean_ls = np.mean(M, axis = 0)
         U, _, VT = np.linalg.svd(M - mean_ls, full_matrices=False)
@@ -56,12 +88,35 @@ class MEstimation:
         M: np.ndarray, 
         rank: int = None
     ):
+        """Perform robust M-Estimation based matrix factorization on input matrix M.
+
+        Parameters
+        ----------
+        M : ndarray
+            Input matrix to decompose, must be a real matrix.
+        rank : int, optional
+            Rank of decomposition. If not provided, rank is set to
+            min(M.shape). 
+
+        Returns
+        -------
+        pca_result : PCAResult
+            Results of MEST factorization containing components.
+
+        Examples
+        --------
+        >>> import numpy as np
+        >>> from decompy.matrix_factorization import MEstimation
+        >>> X = np.random.rand(100,200) 
+        >>> mest = MEstimation()
+        >>> results = mest.decompose(X)
+        """
         check_real_matrix(M)
         X = M.copy()
        
         # Do initialization
         info = np.zeros((self.maxiter, 2))
-        Sigma_end, Sigma_start, Bg = self.compute_scale_statistics(X, rank)
+        Sigma_end, Sigma_start, Bg = self._compute_scale_statistics(X, rank)
         rob_mean = np.median(X, axis = 0)
         cg = np.linalg.pinv(Bg) @ (X - rob_mean)
         Sigma = Sigma_start

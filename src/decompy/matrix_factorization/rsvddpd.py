@@ -16,7 +16,31 @@ class RobustSVDDensityPowerDivergence:
     
     """
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
+        """Initialize the Robust SVD using Density Power Divergence class.
+
+        Parameters
+        ----------
+        alpha : float, optional
+            The alpha parameter for the robust density power divergence. 
+            Must be between 0 and 1. Default is 0.5.
+        tol : float, optional
+            Minimum tolerance level for the norm of X. Default is 1e-4.
+        eps : float, optional 
+            Convergence criterion for change in left/right vectors. 
+            Default is 1e-8.
+        maxiter : int, optional
+            Maximum number of iterations per singular value. Default is 100.
+        inneriter : int, optional
+            Number of inner fixed point iterations. Default is 5.
+        verbose : bool, optional
+            If True, print status messages. Default is False.
+        method : {'v1', 'v2'}, optional
+            The method of regression. Default is 'v2'.
+        initmethod : {'random', 'tsvd'}, optional
+            The method for initializing vectors. Default is 'random'.
+
+        """
         self.alpha = kwargs.get("alpha", 0.5)  # the alpha in the robust minimum divergence
         assert self.alpha >= 0 and self.alpha <= 1, "alpha must be between 0 and 1"   # * Protect against absurd options
         self.tol = kwargs.get("tol", 1e-4)     # * Minimum tolerance level for the norm of X
@@ -31,8 +55,26 @@ class RobustSVDDensityPowerDivergence:
 
 
     def sanity_check(self, X: np.ndarray, lambdas: np.ndarray, maxit_reached: np.ndarray):
-        """
-            Does some simple sanity check on the output
+        """Performs sanity checks on the output.
+
+        Parameters
+        ----------
+        X : ndarray
+            The input data matrix
+        lambdas : ndarray
+            The computed singular values
+        maxit_reached : ndarray
+            Boolean array indicating if max iterations were reached
+            
+        Returns
+        -------
+        None
+        
+        Notes
+        -----
+        Checks if max iterations were reached and warns if so. 
+        Also checks if singular values are in decreasing order.
+
         """
         # * Check if maxit is reached
         if maxit_reached.sum() > 0:
@@ -229,6 +271,42 @@ class RobustSVDDensityPowerDivergence:
 
 
     def decompose(self, M: np.ndarray, rank: Union[int, None] = None, initu: Union[np.ndarray, None] = None, initv: Union[np.ndarray, None] = None):
+        """Decompose a matrix M into U, S, V using robust SVD.
+
+        Parameters
+        ----------
+        M : ndarray
+            Input matrix to decompose, of shape (n, p).
+        rank : int
+            Rank of the decomposition.
+        initu : ndarray
+            Left singular vectors at initialization, of shape (n, rank). Leave blank if to be initialized by initialization method.
+        initv : ndarray
+            Right singular vectors at initialization, of shape (p, rank). Leave blank if to be initialized by initialization method.
+
+        Returns
+        -------
+        res: SVDResult
+            A tuple containing the factorization results
+
+            sigs : ndarray
+                Singular values, of shape (rank,).
+            U : ndarray
+                Left singular vectors, of shape (n, rank).
+            V : ndarray
+                Right singular vectors, of shape (p, rank).  
+            niter : int
+                Number of iterations taken.
+
+        Notes
+        -----
+        Implements the rSVD-DPD algorithm from [1]_.
+
+        References
+        ----------
+        .. [1] T. Zhou and D. Tao, "GoDec: Randomized Low-rank & Sparse Matrix Decomposition in Noisy Case", ICML-11.
+
+        """
         check_real_matrix(M)
         n, p = M.shape
 

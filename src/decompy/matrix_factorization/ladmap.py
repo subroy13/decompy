@@ -18,6 +18,21 @@ class LinearizedADMAdaptivePenalty:
 
     """
     def __init__(self, **kwargs):
+        """Initialize Linearized ADM with Adaptive Penalty solver.
+
+        Parameters
+        ----------
+        tol1 : float, optional
+            Tolerance for primal residual (default is 1e-4). 
+        tol2 : float, optional
+            Tolerance for dual residual (default is 1e-5).
+        maxiter : int, optional
+            Maximum number of iterations (default is 1000).
+        max_mu : float, optional
+            Maximum value for regularization parameter mu (default is 1e10).
+        verbose : bool, optional
+            Print info if True (default is False).
+        """
         self.tol1 = kwargs.get('tol1', 1e-4)
         self.tol2 = kwargs.get('tol2', 1e-5)
         self.maxiter = kwargs.get('maxiter', 1e3)
@@ -26,6 +41,20 @@ class LinearizedADMAdaptivePenalty:
 
 
     def _solve_l2(self, W: np.ndarray, lambd: float):
+        """Solve L2 regularized least squares with closed form solution.
+        
+        Parameters
+        ----------
+        W : ndarray
+            The matrix to solve for.
+        lambd : float
+            The L2 regularization parameter.
+            
+        Returns
+        -------
+        E : ndarray
+            The solution to the regularized least squares problem.
+        """
         _, n = W.shape
         E = W.copy()  # make a copy so that we don't accidentally make changes to W
         for i in range(n):
@@ -34,9 +63,25 @@ class LinearizedADMAdaptivePenalty:
 
 
     def _solve_l1l2(self, w: np.ndarray, lambd: float):
-        """
-            It solves an optimization problem given by 
-            min lambda |x|_2 + |x - w|_2^2
+        """Solve L1-L2 regularized least squares problem.
+    
+        Solves the optimization problem:
+            
+            min_x lambda * ||x||_2 + ||x - w||_2^2
+        
+        Using the closed form solution.
+        
+        Parameters
+        ----------
+        w : ndarray
+            The target vector.
+        lambd : float
+            The L1 regularization parameter.
+        
+        Returns
+        -------
+        x : ndarray
+            The solution to the regularized least squares problem.
         """
         nw = np.linalg.norm(w)
         if nw > lambd:
@@ -47,6 +92,23 @@ class LinearizedADMAdaptivePenalty:
 
 
     def decompose(self, M: np.ndarray, rho: Union[float, None] = None, lambd: Union[float, None] = None):
+        """Decompose a matrix M into low-rank (L), sparse (S) and noise (N) components.
+
+        Parameters
+        ----------
+        M : ndarray
+            The input matrix to decompose.
+        rho : float or None, optional
+            The multiplicative factor to increase mu at each iteration. Default is 1.9.
+        lambd : float or None, optional
+            The regularization parameter for the L1 norm of S. Default is 0.1.
+
+        Returns
+        -------
+        LSNResult
+            A named tuple containing the low-rank matrix L, sparse matrix S, 
+            noise matrix N and convergence details.
+        """
         rho = 1.9 if rho is None else rho
         lambd = 0.1 if lambd is None else lambd
 

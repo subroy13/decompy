@@ -12,7 +12,26 @@ class SymmetricAlternatingDirectionALM:
     -----
     [1] ''Fast Alternating Linearization Methods for Minimizing the Sum of Two Convex Functions'', Donald Goldfarb, Shiqian Ma and Katya Scheinberg, Tech. Report, Columbia University, 2009 - 2010. 
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
+        """Initialize the SADAL (Symmetric Alternating Direction Augmented Lagrangian) algorithm.
+
+        Parameters
+        ----------
+        maxiter : int, optional
+            Maximum number of iterations. Default is 1000.
+        sigma : float, optional
+            Regularization parameter for X. Default is 1e-6.
+        eps : float, optional 
+            Tolerance for stopping criterion. Default is 1e-7.
+        muf : float, optional
+            Regularization parameter for F. Default is 1e-6.
+        sigmaf : float, optional
+            Noise parameter for F. Default is 1e-6.
+        eta_mu : float, optional
+            Update parameter for muf. Default is 2/3.
+        eta_sigma : float, optional
+            Update parameter for sigmaf. Default is 2/3.
+        """
         self.maxiter = kwargs.get('maxiter', 1000)
         self.sigma = kwargs.get('sigma', 1e-6) 
         self.eps = kwargs.get('eps', 1e-7)
@@ -22,6 +41,27 @@ class SymmetricAlternatingDirectionALM:
         self.eta_sigma = kwargs.get('eta_sigma', 2/3)
 
     def decompose(self, M: np.ndarray, sv: Union[int, None] = None, mu: float = 0, rho: float = 0):
+        """Decompose a matrix M into low-rank (L), sparse (S) and noise (N) components.
+
+        Parameters
+        ----------
+        M : ndarray
+            The input matrix to decompose.
+        sv : int or None, optional
+            The number of singular values to use in the decomposition. If None,
+            set to 10% of min(m, n) + 1.
+        mu : float, optional
+            Augmented Lagrangian parameter. Default is norm(M)/1.25.
+        rho : float, optional
+            Proximal parameter for the sparse component. Default is 1/sqrt(n).
+
+        Returns
+        -------
+        LSNResult
+            A named tuple containing the low-rank (L), sparse (S) and noise (N)
+            components of the decomposition, and convergence information.
+
+        """
         check_real_matrix(M)
         D = M.copy()  # copy the original matrix so that to ensure non modification
         

@@ -1,6 +1,5 @@
 from typing import Union
 import numpy as np
-import warnings
 
 from ..utils.validations import check_real_matrix
 from ..interfaces import SVDResult
@@ -8,23 +7,76 @@ from ..interfaces import SVDResult
 
 class FastPrincipalComponentPursuit:
     """
-    Robust PCA using Fast PCP Method
+    Robust PCA using Fast Principal Component Pursuit Method
 
     Notes
     -----
-    [1] [Rodriguez and Wohlberg, 2013](http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6738015)
-
+    [1] P. Rodríguez and B. Wohlberg, "Fast principal component pursuit via alternating minimization," 2013 IEEE International Conference on Image Processing, Melbourne, VIC, Australia, 2013, pp. 69-73, doi: 10.1109/ICIP.2013.6738015. 
     """
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
+        """Initialize the FPCP algorithm.
+
+        Parameters
+        ----------
+        maxiter : int, optional
+            Maximum number of iterations. Default is 2. 
+        verbose : bool, optional
+            Whether to print status messages during solving. Default is False.
+
+        """
         self.maxiter = kwargs.get("maxiter", 2)
         self.verbose = kwargs.get("verbose", False)
 
     def _shrink(self, v, lambdval):
+        """Shrinks values in v towards zero.
+    
+        This applies soft thresholding/shrinkage to each value in v. 
+        Values that are less than the lambdval are set to zero.
+        
+        Parameters
+        ----------
+        v : numpy array
+            Array to apply shrinkage to.
+        lambdval : float
+            Shrinkage parameter. Values in v less than this are set to zero.
+            
+        Returns
+        -------
+        u : numpy array
+            Shrunk version of v.
+        """
         u = np.sign(v) * np.maximum(0, np.abs(v) - lambdval)
         return u
 
     def decompose(self, M: np.ndarray, initrank: Union[int, None] = None, rank_threshold: Union[float, None] = None, lambdaval: Union[float, None] = None, lambdafactor: Union[float, None] = None):
+        """Decompose a matrix M using FPCP method.
+
+        Parameters
+        ----------
+        M : ndarray
+            The input matrix to decompose.
+        initrank : int or None, optional
+            The initial rank estimate. If None, set to 1.
+            Default is None.
+        rank_threshold : float or None, optional
+            The threshold value for incrementing the rank. 
+            If None, set to 0.01.
+            Default is None.
+        lambdaval : float or None, optional
+            The regularization parameter. If None, set to 1/sqrt(max(n,p)).
+            Default is None.
+        lambdafactor : float or None, optional
+            The factor to decrease lambda at each iteration. 
+            If None, set to 1.
+            Default is None.
+
+        Returns
+        -------
+        SVDResult
+            A named tuple containing the final U, S, V^T matrices along
+            with convergence information.
+        """
         check_real_matrix(M)
         X = np.copy(M)  # to ensure that original matrix is not modified
         n, p = X.shape

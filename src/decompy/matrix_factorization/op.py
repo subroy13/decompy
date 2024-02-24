@@ -13,11 +13,42 @@ class OutlierPursuit:
 
     """
     def __init__(self, **kwargs):
+        """Initialize the matrix factorization model.
+
+        Parameters
+        ----------
+        full_svd : bool, optional
+            Whether to compute full SVD or not. Default is True.
+        increaseK : int, optional
+            Amount to increase K for each iteration. Default is 10. 
+        maxiter : float, optional
+            Maximum number of iterations. Default is 1000.
+
+        """
         self.full_svd = kwargs.get("full_svd", True)
         self.increaseK = kwargs.get("increaseK", 10)
         self.maxiter = kwargs.get("maxiter", 1e3)
 
     def _iterate_L(self, L, epsilon, starting_K):
+        """Iterate matrix L towards rank K using SVD.
+
+        Parameters
+        ----------
+        L : ndarray
+            Input matrix to iterate on
+        epsilon : float
+            Threshold value for singular values 
+        starting_K : int
+            Target rank K
+
+        Returns
+        -------
+        output : ndarray
+            Iterated L matrix
+        rank_out : int
+            Output rank of L
+
+        """
         if not self.full_svd:
             pass
             # TODO: implement lansvd()
@@ -31,7 +62,21 @@ class OutlierPursuit:
         return output, rank_out
         
 
-    def _iterate_C(self, C, epsilon):
+    def _iterate_C(self, C: np.ndarray, epsilon: float):
+        """Iterate over columns of C, thresholding each column.
+
+        Parameters
+        ----------
+        C : ndarray
+            Input matrix 
+        epsilon : float
+            Threshold value
+
+        Returns
+        -------
+        output : ndarray
+            Output matrix with columns thresholded
+        """
         m, n = C.shape
         output = np.zeros_like(C)
         for i in range(n):
@@ -46,6 +91,27 @@ class OutlierPursuit:
     
 
     def decompose(self, M: np.ndarray, rank: int = None, lambd: float = None, Omega_mask: np.ndarray = None):
+        """Decompose a matrix M into low rank matrices L and S.
+
+        Parameters
+        ----------
+        M : ndarray
+            The input matrix to decompose.
+        rank : int, optional
+            The rank of the decomposition. If not provided, set to 10% of min(m, n).
+        lambd : float, optional
+            Regularization parameter for S. If not provided, set to 1/sqrt(min(m, n)).
+        Omega_mask : ndarray, optional
+            Binary mask indicating observed entries. 1 means observed.
+            If not provided, all entries are observed.
+
+        Returns
+        -------
+        LSNResult
+            A named tuple containing the low rank factor L, sparse factor S
+            and convergence information.
+
+        """
         check_real_matrix(M)
         X = np.copy(M)
         m, n = X.shape

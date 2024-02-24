@@ -4,22 +4,48 @@ import numpy as np
 from ..interfaces import LSNResult
 
 class SingularValueThresholding:
-
-    """
-    Robust SVD using Density Power Divergence based Alternating Regression Method
-
-    Notes
-    -----
-    [1] Roy, Subhrajyoty, Ayanendranath Basu, and Abhik Ghosh. "A New Robust Scalable Singular Value Decomposition Algorithm for Video Surveillance Background Modelling." arXiv preprint arXiv:2109.10680 (2021).
-    
+    """ Implements the Singular Value Thresholding (SVT) algorithm for 
+        Robust PCA.
     """
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
+        """Initialize the SVT class.
+
+        Parameters
+        ----------
+        verbose : bool, optional
+            Whether to print progress messages. Default is False.
+
+        maxiter : float, optional
+            Maximum number of iterations. Default is 25000.
+
+        epsilon : float, optional
+            Tolerance for stopping criterion. Default is 0.0005.
+        """
         self.verbose = kwargs.get("verbose", False)
         self.maxiter = kwargs.get("maxiter", 25e3)
         self.epsilon = kwargs.get("epsilon", 5e-4)
 
     def decompose(self, M: np.ndarray, lambdaval: float, tau: Union[float, None] = None, delta: Union[float, None] = None):
+        """Decompose a matrix M into low-rank (L) and sparse (S) components.
+
+        Parameters
+        ----------
+        M : ndarray
+            Input matrix to decompose
+        lambdaval : float
+            Regularization parameter for sparse component
+        tau : float or None, optional
+            Threshold for singular values, by default None
+        delta : float or None, optional
+            Step size for dual ascent, by default None
+
+        Returns
+        -------
+        LSNResult
+            Named tuple containing low-rank matrix L, sparse matrix S, 
+            noise matrix N, and convergence info
+        """
         X = np.copy(M)
         n, p = X.shape
 

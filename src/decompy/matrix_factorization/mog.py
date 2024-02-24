@@ -5,12 +5,39 @@ from ..utils.validations import check_real_matrix
 from ..interfaces.lsnresult import LSNResult
 
 class LRPrior:
+    """LRPrior class.
+
+    Parameters
+    ----------
+    a0 : float, optional
+        The a0 parameter for the prior (default is 1e-6).
+    b0 : float, optional
+        The b0 parameter for the prior (default is 1e-6).
+
+    """
 
     def __init__(self, a0 = None, b0 = None):
         self.a0 = a0 or 1e-6
         self.b0 = b0 or 1e-6
 
 class MOGPrior:
+    """
+    Prior for MOG (Mixture of Gaussian) model.
+
+    Parameters
+    ----------
+    mu0 : float, optional
+        Mean of Gaussian prior on mu (default 0)
+    c0 : float, optional
+        Precision of Gaussian prior on mu (default 1e-6) 
+    d0 : float, optional
+        Shape parameter of Gamma prior on sigma2 (default 1e-6)
+    alpha0 : float, optional
+        Scale parameter of Gamma prior on sigma2 (default 1e-6)
+    beta0 : float, optional 
+        Shape parameter of Gamma prior on pi (default 1e-6)
+
+    """
 
     def __init__(self, mu0 = None, c0 = None, d0 = None, alpha0 = None, beta0 = None):
         self.mu0 = mu0 or 0
@@ -20,6 +47,22 @@ class MOGPrior:
         self.beta0 = beta0 or 1e-6
 
 class LRModel:
+    """LRModel class for matrix factorization.
+    
+    Attributes
+    ----------
+    U : ndarray
+        Left factor matrix.
+    V : ndarray 
+        Right factor matrix.
+    sigma_U : ndarray
+        Noise variance for U.
+    sigma_V : ndarray
+        Noise variance for V.
+    gammas : ndarray
+        Observation noise variance.
+        
+    """
 
     def __init__(self, U: np.ndarray, V: np.ndarray, Sigma_U: np.ndarray, Sigma_V: np.ndarray, gammas: np.ndarray):
         self.U = U
@@ -29,6 +72,22 @@ class LRModel:
         self.gammas = gammas
 
 class MOGModel:
+    """MOG (Mixture of Gaussian) Model class for matrix factorization.
+    
+    Parameters
+    ----------
+    R : ndarray
+        The user-item rating matrix.
+    c : ndarray
+        The user latent factors (rowwise factors).
+    beta : ndarray
+        The item latent factors (column wise factors).
+    d : ndarray
+        The user biases. (rowwise biases)
+    mu : ndarray
+        The item biases. (column wise biases)
+    
+    """
 
     def __init__(self, R: np.ndarray, c: np.ndarray, beta: np.ndarray, d: np.ndarray, mu: np.ndarray):
         self.R = R
@@ -50,6 +109,20 @@ class MixtureOfGaussianRobustPCA:
     """
 
     def __init__(self, **kwargs):
+        """Initialize Mixture of Gaussians matrix factorization model.
+
+        Parameters
+        ----------
+        maxiter : int, optional
+            Maximum number of iterations. Default is 100.
+        tol : float, optional
+            Tolerance for stopping criteria. Default is 1e-4. 
+        mog_k : int, optional
+            Number of Gaussians per factor. Default is 3.
+        init_method : {'SVD', 'random'}, optional
+            Method for initializing the factor matrices. Default is 'SVD'.
+
+        """
         self.maxiter = kwargs.get("maxiter", 100)
         self.tol = kwargs.get("tol", 1e-4)
         self.mog_k = kwargs.get("mog_k", 3)
@@ -57,6 +130,29 @@ class MixtureOfGaussianRobustPCA:
         assert self.init_method in ["SVD", "random"], "init_method must be either SVD or random"
 
     def __R_initialization(self, X: np.ndarray, k):
+        """Initialize membership matrix R with random initialization.
+
+        Parameters
+        ----------
+        X : ndarray
+            The data matrix with shape (n, d). 
+
+        k : int
+            The number of clusters.
+
+        Returns
+        -------
+        R : ndarray
+            The membership matrix with shape (n, k). R[i, j] is 1 if 
+            data point i belongs to cluster j, and 0 otherwise.
+
+        Notes
+        ----- 
+        The initialization is done by randomly selecting k data points to be
+        the initial cluster centers. The remaining points are assigned to the
+        closest cluster center based on Euclidean distance. This is repeated
+        until all clusters have at least one member.
+        """
         n = X.shape[0]
         idx = np.random.choice(n, k, replace=False)
         m = X[:, idx]
@@ -74,6 +170,39 @@ class MixtureOfGaussianRobustPCA:
         return R
     
     def __lr_update(self, Y: np.ndarray, lr_model: LRModel, mog_model: MOGModel, r: int, lr_prior: LRPrior):
+        """Update the low-rank model using Mixture of Gaussians.
+
+        Parameters
+        ----------
+        Y : ndarray of shape (m, n)
+            The input matrix to factorize.
+        lr_model : LRModel
+            The current low-rank model containing U, V, sigmas.
+        mog_model : MOGModel
+            The mixture of gaussians model.
+        r : int
+            The rank of the factorization.
+        lr_prior : LRPrior
+            The prior for the low-rank model.
+
+        Returns
+        -------
+        lr_model : LRModel
+            Updated low-rank model.
+        r : int
+            Updated rank after pruning.
+        E_YminusUV : ndarray of shape (m, n)
+            Residuals after updating low-rank. 
+        E_YminusUV2 : ndarray of shape (m, n)
+            Elementwise squared residuals.
+
+        Notes
+        -----
+        The low-rank matrices U, V and their standard deviations Sigma_U, Sigma_V 
+        are updated based on the Mixture of Gaussians parameters.
+        Redundant dimensions are pruned based on the gamma threshold.
+
+        """
         m, n = Y.shape
 
         a0 = lr_prior.a0
@@ -149,6 +278,28 @@ class MixtureOfGaussianRobustPCA:
         )
 
     def __mog_vmax(self, mog_model: MOGModel, mog_prior: MOGPrior, E_YminusUV: np.ndarray, E_YminusUV2: np.ndarray):
+        """Estimate the parameters of the MOG prior from the data.
+
+        Parameters
+        ------------
+        mog_model : MOGModel 
+            The MOG model object containing the responsibility matrix R.
+            
+        mog_prior : MOGPrior 
+            The prior MOG model parameters.
+            
+        E_YminusUV : ndarray 
+            The residual matrix (Y - UV).
+        
+        E_YminusUV2 : ndarray 
+            The elementwise squared residual matrix.
+
+        Returns
+        --------
+        mog_model : MOGModel 
+            The updated MOG model with new parameters estimated from data.
+
+        """
         alpha0 = mog_prior.alpha0
         beta0 = mog_prior.beta0
         mu0 = mog_prior.mu0
@@ -171,6 +322,23 @@ class MixtureOfGaussianRobustPCA:
         return mog_model
 
     def __mog_vexp(self, mog_model: MOGModel, E_YminusUV: np.ndarray, E_YminusUV2: np.ndarray):
+        """Update responsibilities in MOG model using variational expectation.
+
+        Parameters
+        ----------
+        mog_model : MOGModel
+            The MOG model containing parameters alpha, beta, mu, c, d.
+        E_YminusUV : ndarray
+            Residual matrix E[Y-UV].
+        E_YminusUV2 : ndarray 
+            Elementwise square of E_YminusUV.
+
+        Returns
+        -------
+        mog_model : MOGModel
+            The updated MOG model with updated responsibilities R.
+
+        """
         alpha = mog_model.alpha
         beta = mog_model.beta
         mu = mog_model.mu
@@ -198,6 +366,34 @@ class MixtureOfGaussianRobustPCA:
         return mog_model
 
     def decompose(self, M: np.ndarray, rank =  None, lr_prior: LRPrior = None, mog_prior: MOGPrior = None):
+        """Decompose a matrix M into low rank (L) and sparse noise (S) components using MOG prior.
+
+        Parameters
+        ----------
+        M : ndarray
+            Input matrix to decompose
+
+        rank : int, optional
+            Rank of the low rank component. If not specified, set to min(m, n)
+
+        lr_prior : LRPrior, optional
+            Prior for low rank component
+
+        mog_prior : MOGPrior, optional
+            Prior for sparse noise component
+
+        Returns
+        -------
+        result : LSNResult
+            Result object containing:
+            - L : Low rank component
+            - S : Sparse noise component
+            - N : None (not used)
+            - convergence : Dictionary with convergence details
+            - lr_model : Low rank model parameters
+            - mog_model : Sparse noise model parameters
+
+        """
         check_real_matrix(M)
         Y = M.copy()   # make a copy of the matrix to avoid side effects
 

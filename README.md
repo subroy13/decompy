@@ -6,7 +6,9 @@
 * Robust matrix or tensor factorization methods.
 * Matrix rank estimation methods.
 
-The latest version of `decompy` is **1.0.0**.
+![](https://img.shields.io/pypi/pyversions/decompy) [![](https://img.shields.io/pypi/v/decompy)](https://pypi.org/project/decompy/) [![](https://img.shields.io/badge/license-BSD3_Clause-green)](https://github.com/subroy13/decompy/blob/master/LICENSE)
+
+![PyPI - Downloads](https://img.shields.io/pypi/dm/decompy) ![](https://img.shields.io/pepy/dt/decompy) [![decompy](https://snyk.io/advisor/python/decompy/badge.svg)](https://snyk.io/advisor/python/decompy)
 
 ## Features
 
