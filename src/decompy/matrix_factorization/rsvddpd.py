@@ -46,9 +46,9 @@ class RobustSVDDensityPowerDivergence:
         self.tol = kwargs.get("tol", 1e-4)     # * Minimum tolerance level for the norm of X
         self.eps = kwargs.get("eps", 1e-8)     # * Convergence criterion for change in left / right vectors
         self.maxiter = kwargs.get("maxiter", 1e2)  # * Maximum number of iterations per singular value
-        self.inneriter = kwargs.get("inneriter", 5)   # * Number of inner fixed point iteration
+        self.inneriter = kwargs.get("inneriter", 3)   # * Number of inner fixed point iteration
         self.verbose = kwargs.get("verbose", False)
-        self.method = kwargs.get("method", "v2")   # * The method of regression
+        self.method = kwargs.get("method", "v1")   # * The method of regression
         assert self.method in ["v1", "v2"] 
         self.initmethod = kwargs.get("initmethod", "random")   # the method of vector initialization
         assert self.initmethod in ["random", "tsvd"]
@@ -93,13 +93,13 @@ class RobustSVDDensityPowerDivergence:
         X /= (scale_factor[1] - scale_factor[0])
         Xnorm = np.linalg.norm(X)
 
+        sigma = np.median(np.abs(X - np.median(X))) * 1.4826  # consistent estimate of sigma^2
+
         for r in range(rank):
             curr_relnorm = np.linalg.norm(X) / Xnorm
 
             if curr_relnorm > self.tol:
-                niter = 0
-                converged = False
-                sigma = 1
+                niter, converged = 0, False
 
                 while not converged:
                     curr_a = initu[:, r]
@@ -108,18 +108,16 @@ class RobustSVDDensityPowerDivergence:
 
                     # STEP 1: Fix Right, Optimize Left
                     # Do fixed point iteration
-                    left_iter = 0
-                    fixed = False
+                    left_iter, fixed = 0, False
 
                     c = np.zeros(n)
-
                     while not fixed:
                         curr_c = c
                         wmat = X - np.outer(c, curr_b)
                         wmat = np.exp(-0.5 * self.alpha * (wmat ** 2) / sigma)
                         numer = np.multiply(wmat * X, curr_b).sum(axis = 1)
                         denom = np.multiply(wmat, curr_b**2).sum(axis = 1)
-                        c = numer / denom 
+                        c = numer / np.maximum(denom, EPS)   # since denom is always > 0
                         left_iter += 1
 
                         # Check if fixed point criterion is met
@@ -131,22 +129,19 @@ class RobustSVDDensityPowerDivergence:
                     
                     # Normalized
                     curr_lambda = np.linalg.norm(c)
-                    curr_a = c / curr_lambda
+                    curr_a = c / curr_lambda if curr_lambda > EPS else np.zeros_like(c)
 
                     # STEP 2: Fix Left, Optimize Right
                     # Do fixed point iteration
-                    right_iter = 0
-                    fixed = False
-
+                    right_iter, fixed = 0, False
                     d = np.zeros(p)
-
                     while not fixed:
                         curr_d = d
-                        wmat = X - np.outer(curr_a, curr_d)
+                        wmat = X - np.outer(curr_a, d)
                         wmat = np.exp(-0.5 * self.alpha * (wmat ** 2) / sigma)
                         numer = np.multiply((wmat * X).T, curr_a).sum(axis = 1)
                         denom = np.multiply(wmat.T, curr_a**2).sum(axis = 1)
-                        d = numer / denom 
+                        d = numer / np.maximum(denom, EPS) 
                         right_iter += 1
 
                         # Check if fixed point criterion is met
@@ -158,7 +153,7 @@ class RobustSVDDensityPowerDivergence:
 
                     # Normalize
                     curr_lambda = np.linalg.norm(d)
-                    curr_b = d / curr_lambda
+                    curr_b = d / curr_lambda if curr_lambda > EPS else np.zeros_like(d)
 
                     # STEP 3: Check if convergence is met
                     niter += 1
@@ -168,9 +163,7 @@ class RobustSVDDensityPowerDivergence:
 
                     converged = (niter > self.maxiter) or (is_convl and is_conva and is_convb)
                     
-                    lambdas[r] = curr_lambda
-                    initu[:, r] = curr_a
-                    initv[:, r] = curr_b
+                    lambdas[r], initu[:, r], initv[:, r] = curr_lambda, curr_a, curr_b
 
                 # Outside iteration, count iteration
                 iterlist[r] = niter
@@ -195,6 +188,7 @@ class RobustSVDDensityPowerDivergence:
         # normalize entries for better numerical precision
         scale_factor = np.quantile(X, [0.25, 0.75])
         X /= (scale_factor[1] - scale_factor[0])
+        sigma = np.median(np.abs(X - np.median(X))) * 1.4826
 
         niter = 0
         sigs = np.ones(rank)  # (r, )
@@ -333,7 +327,6 @@ class RobustSVDDensityPowerDivergence:
         lambdas = lambdas[idx]
         initu = initu[:, idx]
         initv = initv[:, idx]   # rearrage the singular values in the same order
-
 
         if self.verbose:
             self.sanity_check(M, lambdas, (iterlist >= self.maxiter))

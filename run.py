@@ -46,13 +46,17 @@ def deploy_action():
     subprocess.Popen('twine check dist/*', cwd = project_root, shell = True).wait()
     subprocess.Popen('twine upload dist/* --verbose', cwd = project_root, shell = True).wait()
     
+def test_action():
+    print(f"Starting test")
+    subprocess.Popen("pytest --cov-report term-missing --cov=decompy tests/", cwd=project_root, shell = True).wait()
+
 
 if args.action == 'build':
     build_action()
 elif args.action == 'document':
     document_action()
 elif args.action == 'test':
-    print(f"No test found")
+    test_action()
 elif args.action == 'deploy':
     build_action()
     deploy_action()

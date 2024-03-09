@@ -25,6 +25,11 @@ dynamic = ["version"]
 [tool.setuptools.dynamic]
 version = {attr = "decompy.__version__"}
 
+[tool.pytest.ini_options]
+pythonpath = [
+  ".", "src",
+]
+
 [project.urls]
 "Homepage" = "https://github.com/subroy13/decompy"
 Repository = "https://github.com/subroy13/decompy.git"

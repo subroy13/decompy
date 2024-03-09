@@ -29,7 +29,7 @@ class PCAResult:
         assert len(loc.shape) == 1 and len(eval.shape) == 1 and len(evec.shape) == 2, "Mismatched shape"
         assert loc.shape[0] >= eval.shape[0] and eval.shape[0] == evec.shape[1], "Mismatched shape"
         self.loc = loc
-        self.eval = eval
+        self.eigval = eval
         self.evec = evec
         self.metrics = kwargs
 
@@ -63,9 +63,9 @@ class PCAResult:
         
         '''
         if as_matrix:
-            return np.diag(self.eval.shape(-1))
+            return np.diag(self.eigval.reshape(-1))
         else:
-            return self.eval.shape(-1)
+            return self.eigval.reshape(-1)
         
     def eigen_vectors(self):
         '''The function returns the eigenvectors of the PCAResult.

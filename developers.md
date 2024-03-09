@@ -21,6 +21,17 @@ To generate documentation, use
 4. The generated html files will be present inside `_build` folder.
 
 
+## Testing
+
+1. Run `pytest --cov-report term-missing --cov=decompy tests/` for testing development.
+2. To generate test badges run the commands:
+    * `pytest --cov-report term-missing --cov=decompy --junitxml=reports/junit/junit.xml tests/`
+    * `genbadge tests`
+    * `coverage-badge -o coverage.svg`
+
+
+
+
 ## Reference 
 
 1. https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/
