@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>src\decompy\rankmethods\bayes.py - flake8 annotated source</title>
+      <meta http-equiv="Content-Type" value="text/html; charset=UTF-8">
+      <link rel="stylesheet" href="styles.css">
+   </head>
+   <body>
+      <div id="masthead" class="sev-2"></div>
+      <div id="page">
+         <h1>
+            <a href="src.decompy.rankmethods.bayes.report.html">
+               <img src="back.svg" alt="&#x2B05;">
+               src\decompy\rankmethods\bayes.py source
+            </a>
+         </h1>
+
+         <div id="doc">
+            <div id="l1"
+               class="code sev- "><tt><i>1</i> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span></tt>
+            </div>
+            <div id="l2"
+               class="code sev- "><tt><i>2</i> <span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">null_space</span></tt>
+            </div>
+            <div id="l3"
+               class="code sev- "><tt><i>3</i> <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">mode</span></tt>
+            </div>
+            <div id="l4"
+               class="code sev- "><tt><i>4</i> <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">loggamma</span></tt>
+            </div>
+            <div id="l5"
+               class="code sev- "><tt><i>5</i> <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span></tt>
+            </div>
+            <div id="l6"
+               class="code sev- "><tt><i>6</i> &nbsp;</tt>
+            </div>
+            <div id="l7"
+               class="code sev- "><tt><i>7</i> <span class="kn">from</span> <span class="nn">..utils.bayesmethods</span> <span class="kn">import</span> <span class="n">rXL</span><span class="p">,</span> <span class="n">ln2moment</span><span class="p">,</span> <span class="n">rmf_vector</span></tt>
+            </div>
+            <div id="l8"
+               class="code sev- "><tt><i>8</i> &nbsp;</tt>
+            </div>
+            <div id="l9"
+               class="code sev- "><tt><i>9</i> &nbsp;</tt>
+            </div>
+            <div id="l10"
+               class="code sev- "><tt><i>10</i> <span class="k">def</span> <span class="nf">_gibbs_sample</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">Nu</span><span class="p">,</span> <span class="n">Nv</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">lor</span><span class="p">,</span> <span class="n">llb</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">lub</span><span class="o">=</span><span class="mi">750</span><span class="p">):</span></tt>
+            </div>
+            <div id="l11"
+               class="code sev- "><tt><i>11</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l12"
+               class="code sev- "><tt><i>12</i> <span class="sd">    One step of gibbs sampling (restricted integral approximation)</span></tt>
+            </div>
+            <div id="l13"
+               class="code sev- "><tt><i>13</i> <span class="sd">    E: (m, n), Nu: (m, m-r+1), Nv: (n, n-r+1)</span></tt>
+            </div>
+            <div id="l14"
+               class="code sev- "><tt><i>14</i> <span class="sd">    phi, mu, psi: scalar</span></tt>
+            </div>
+            <div id="l15"
+               class="code sev- "><tt><i>15</i> <span class="sd">    lor = log odds ratio</span></tt>
+            </div>
+            <div id="l16"
+               class="code sev- "><tt><i>16</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l17"
+               class="code sev- "><tt><i>17</i> &nbsp;</tt>
+            </div>
+            <div id="l18"
+               class="code sev- "><tt><i>18</i>     <span class="k">def</span> <span class="nf">lcr</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span></tt>
+            </div>
+            <div id="l19"
+               class="code sev- "><tt><i>19</i>         <span class="n">n</span> <span class="o">=</span> <span class="n">theta</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></tt>
+            </div>
+            <div id="l20"
+               class="code sev- "><tt><i>20</i>         <span class="n">lc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></tt>
+            </div>
+            <div id="l21"
+               class="code sev- "><tt><i>21</i>         <span class="n">ls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></tt>
+            </div>
+            <div id="l22"
+               class="code sev- "><tt><i>22</i>         <span class="n">lr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></tt>
+            </div>
+            <div id="l23"
+               class="code sev- "><tt><i>23</i>         <span class="n">lr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l24"
+               class="code sev- "><tt><i>24</i>         <span class="n">lc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l25"
+               class="code sev- "><tt><i>25</i>         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span></tt>
+            </div>
+            <div id="l26"
+               class="code sev- "><tt><i>26</i>             <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">theta</span> <span class="o">/</span> <span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="n">i</span><span class="p">)</span></tt>
+            </div>
+            <div id="l27"
+               class="code sev- "><tt><i>27</i>             <span class="n">ls</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span></tt>
+            </div>
+            <div id="l28"
+               class="code sev- "><tt><i>28</i>             <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lc</span> <span class="o">+</span> <span class="n">ls</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ls</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">)))</span></tt>
+            </div>
+            <div id="l29"
+               class="code sev- "><tt><i>29</i>             <span class="n">lc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ls</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span></tt>
+            </div>
+            <div id="l30"
+               class="code sev- "><tt><i>30</i>             <span class="n">lr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">loggamma</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">loggamma</span><span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">loggamma</span><span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span></tt>
+            </div>
+            <div id="l31"
+               class="code sev- "><tt><i>31</i>         <span class="k">return</span> <span class="n">lr</span></tt>
+            </div>
+            <div id="l32"
+               class="code sev- "><tt><i>32</i> &nbsp;</tt>
+            </div>
+            <div id="l33"
+               class="code sev- "><tt><i>33</i>     <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">E</span><span class="o">.</span><span class="n">shape</span></tt>
+            </div>
+            <div id="l34"
+               class="code sev- "><tt><i>34</i> &nbsp;</tt>
+            </div>
+            <div id="l35"
+               class="code sev- "><tt><i>35</i>     <span class="n">E0</span> <span class="o">=</span> <span class="n">Nu</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">E</span> <span class="o">@</span> <span class="n">Nv</span>  <span class="c1"># (m-r+1, m) x (m, n) x (n, n-r+1) -&gt; (m-r+1, n-r+1)</span></tt>
+            </div>
+            <div id="l36"
+               class="code sev- "><tt><i>36</i>     <span class="n">m0</span><span class="p">,</span> <span class="n">n0</span> <span class="o">=</span> <span class="n">E0</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># m0 = m-r+1, n0 = n-r+1</span></tt>
+            </div>
+            <div id="l37"
+               class="code sev- "><tt><i>37</i>     <span class="n">svdE0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">E0</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># (m0, k), (k, ), (k, n0)</span></tt>
+            </div>
+            <div id="l38"
+               class="code sev- "><tt><i>38</i>     <span class="n">z</span> <span class="o">=</span> <span class="n">svdE0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>  <span class="c1"># (k, )</span></tt>
+            </div>
+            <div id="l39"
+               class="code sev- "><tt><i>39</i>     <span class="n">E02</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>  <span class="c1"># scalar</span></tt>
+            </div>
+            <div id="l40"
+               class="code sev- "><tt><i>40</i>     <span class="n">theta</span> <span class="o">=</span> <span class="n">z</span> <span class="o">/</span> <span class="n">E02</span>  <span class="c1"># (k, )</span></tt>
+            </div>
+            <div id="l41"
+               class="code sev- "><tt><i>41</i> &nbsp;</tt>
+            </div>
+            <div id="l42"
+               class="code sev- "><tt><i>42</i>     <span class="n">delta</span> <span class="o">=</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l43"
+               class="code sev- "><tt><i>43</i>     <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">m0</span><span class="p">)</span>  <span class="c1"># (m0, )</span></tt>
+            </div>
+            <div id="l44"
+               class="code sev- "><tt><i>44</i>     <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n0</span><span class="p">)</span>  <span class="c1"># (n0, )</span></tt>
+            </div>
+            <div id="l45"
+               class="code sev- "><tt><i>45</i> &nbsp;</tt>
+            </div>
+            <div id="l46"
+               class="code sev- "><tt><i>46</i>     <span class="c1"># critical value for approximating bessel function</span></tt>
+            </div>
+            <div id="l47"
+               class="code sev- "><tt><i>47</i>     <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">svdE0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">phi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>  <span class="c1"># (k, )</span></tt>
+            </div>
+            <div id="l48"
+               class="code sev- "><tt><i>48</i>     <span class="n">lcrit</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span></tt>
+            </div>
+            <div id="l49"
+               class="code sev- "><tt><i>49</i>         <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">n0</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">n0</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="o">-</span> <span class="p">(</span><span class="n">n0</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></tt>
+            </div>
+            <div id="l50"
+               class="code sev- "><tt><i>50</i>     <span class="p">)</span>  <span class="c1"># (k, )</span></tt>
+            </div>
+            <div id="l51"
+               class="code sev- "><tt><i>51</i>     <span class="n">lmax</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lcrit</span><span class="p">)</span></tt>
+            </div>
+            <div id="l52"
+               class="code sev- "><tt><i>52</i>     <span class="n">lmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">lmax</span><span class="p">,</span> <span class="n">llb</span><span class="p">),</span> <span class="n">lub</span><span class="p">))</span></tt>
+            </div>
+            <div id="l53"
+               class="code sev- "><tt><i>53</i>     <span class="n">lseq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">lmax</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># (lmax + 1, )</span></tt>
+            </div>
+            <div id="l54"
+               class="code sev- "><tt><i>54</i> &nbsp;</tt>
+            </div>
+            <div id="l55"
+               class="code sev- "><tt><i>55</i>     <span class="c1"># log terms</span></tt>
+            </div>
+            <div id="l56"
+               class="code sev- "><tt><i>56</i>     <span class="n">la</span> <span class="o">=</span> <span class="p">(</span></tt>
+            </div>
+            <div id="l57"
+               class="code sev- "><tt><i>57</i>         <span class="n">loggamma</span><span class="p">(</span><span class="n">m0</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></tt>
+            </div>
+            <div id="l58"
+               class="code sev- "><tt><i>58</i>         <span class="o">-</span> <span class="n">loggamma</span><span class="p">(</span><span class="n">m0</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">lseq</span><span class="p">)</span></tt>
+            </div>
+            <div id="l59"
+               class="code sev- "><tt><i>59</i>         <span class="o">-</span> <span class="n">loggamma</span><span class="p">(</span><span class="n">lseq</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></tt>
+            </div>
+            <div id="l60"
+               class="code sev- "><tt><i>60</i>         <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">lseq</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></tt>
+            </div>
+            <div id="l61"
+               class="code sev- "><tt><i>61</i>         <span class="o">+</span> <span class="n">lcr</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">lmax</span><span class="p">)</span></tt>
+            </div>
+            <div id="l62"
+               class="code sev- "><tt><i>62</i>     <span class="p">)</span>  <span class="c1"># (lmax + 1, )</span></tt>
+            </div>
+            <div id="l63"
+               class="code sev- "><tt><i>63</i>     <span class="n">lb</span> <span class="o">=</span> <span class="p">(</span></tt>
+            </div>
+            <div id="l64"
+               class="code sev- "><tt><i>64</i>         <span class="n">ln2moment</span><span class="p">(</span><span class="n">mu</span> <span class="o">*</span> <span class="n">psi</span> <span class="o">/</span> <span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">psi</span><span class="p">),</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">psi</span><span class="p">),</span> <span class="n">lmax</span><span class="p">)</span></tt>
+            </div>
+            <div id="l65"
+               class="code sev- "><tt><i>65</i>         <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">psi</span> <span class="o">/</span> <span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">psi</span><span class="p">))</span></tt>
+            </div>
+            <div id="l66"
+               class="code sev- "><tt><i>66</i>         <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">mu</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">psi</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">/</span> <span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">psi</span><span class="p">)</span></tt>
+            </div>
+            <div id="l67"
+               class="code sev- "><tt><i>67</i>     <span class="p">)</span>  <span class="c1"># (lmax + 1, )</span></tt>
+            </div>
+            <div id="l68"
+               class="code sev- "><tt><i>68</i>     <span class="n">lc</span> <span class="o">=</span> <span class="n">lseq</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">E02</span> <span class="o">*</span> <span class="n">phi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># (lmax + 1, )</span></tt>
+            </div>
+            <div id="l69"
+               class="code sev- "><tt><i>69</i>     <span class="n">lt</span> <span class="o">=</span> <span class="n">la</span> <span class="o">+</span> <span class="n">lb</span> <span class="o">+</span> <span class="n">lc</span>  <span class="c1"># (lmax + 1, )</span></tt>
+            </div>
+            <div id="l70"
+               class="code sev- "><tt><i>70</i>     <span class="n">lper10</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lt</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lt</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lt</span><span class="p">))))</span>  <span class="c1"># scalar</span></tt>
+            </div>
+            <div id="l71"
+               class="code sev- "><tt><i>71</i> &nbsp;</tt>
+            </div>
+            <div id="l72"
+               class="code sev- "><tt><i>72</i>     <span class="c1"># generating the number of ranks</span></tt>
+            </div>
+            <div id="l73"
+               class="code sev- "><tt><i>73</i>     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">lor</span> <span class="o">+</span> <span class="n">lper10</span><span class="p">)))</span>  <span class="c1"># boolean</span></tt>
+            </div>
+            <div id="l74"
+               class="code sev- "><tt><i>74</i>     <span class="k">if</span> <span class="n">s</span><span class="p">:</span></tt>
+            </div>
+            <div id="l75"
+               class="code sev- "><tt><i>75</i>         <span class="c1"># sample delta</span></tt>
+            </div>
+            <div id="l76"
+               class="code sev- "><tt><i>76</i>         <span class="n">lpd</span> <span class="o">=</span> <span class="n">la</span> <span class="o">+</span> <span class="n">lb</span> <span class="o">+</span> <span class="n">lc</span>  <span class="c1"># (lmax + 1, )</span></tt>
+            </div>
+            <div id="l77"
+               class="code sev- "><tt><i>77</i>         <span class="n">pdl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lpd</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lpd</span><span class="p">))</span>  <span class="c1"># (lmax + 1, )</span></tt>
+            </div>
+            <div id="l78"
+               class="code sev- "><tt><i>78</i>         <span class="n">pdl</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pdl</span><span class="p">)</span>  <span class="c1"># make it probability</span></tt>
+            </div>
+            <div id="l79"
+               class="code sev-2  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-2">
+                        E741
+                     </span>
+                     Ambiguous variable name 'l'</li>
+               
+               </ul><tt><i>79</i>         <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">lseq</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">pdl</span><span class="p">)</span>  <span class="c1"># index between 1 to lmax + 1</span></tt>
+            </div>
+            <div id="l80"
+               class="code sev- "><tt><i>80</i>         <span class="k">if</span> <span class="n">l</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span></tt>
+            </div>
+            <div id="l81"
+               class="code sev- "><tt><i>81</i>             <span class="n">delta</span> <span class="o">=</span> <span class="n">rXL</span><span class="p">(</span><span class="n">mu</span> <span class="o">*</span> <span class="n">psi</span> <span class="o">/</span> <span class="p">(</span><span class="n">psi</span> <span class="o">+</span> <span class="n">phi</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">psi</span><span class="p">)),</span> <span class="n">l</span><span class="p">)</span>  <span class="c1"># scalar</span></tt>
+            </div>
+            <div id="l82"
+               class="code sev- "><tt><i>82</i>         <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l83"
+               class="code sev- "><tt><i>83</i>             <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">psi</span><span class="p">)</span> <span class="o">+</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">psi</span> <span class="o">/</span> <span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">psi</span><span class="p">)</span></tt>
+            </div>
+            <div id="l84"
+               class="code sev- "><tt><i>84</i> &nbsp;</tt>
+            </div>
+            <div id="l85"
+               class="code sev- "><tt><i>85</i>         <span class="c1"># sample u, v</span></tt>
+            </div>
+            <div id="l86"
+               class="code sev- "><tt><i>86</i>         <span class="n">A</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">E0</span>  <span class="c1"># (m0, n0)</span></tt>
+            </div>
+            <div id="l87"
+               class="code sev- "><tt><i>87</i>         <span class="n">svdE0D</span> <span class="o">=</span> <span class="n">svdE0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">delta</span>  <span class="c1"># this is same as svd(A)</span></tt>
+            </div>
+            <div id="l88"
+               class="code sev- "><tt><i>88</i> &nbsp;</tt>
+            </div>
+            <div id="l89"
+               class="code sev- "><tt><i>89</i>         <span class="c1"># sample a node</span></tt>
+            </div>
+            <div id="l90"
+               class="code sev- "><tt><i>90</i>         <span class="n">pvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">svdE0D</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">svdE0D</span><span class="p">))</span></tt>
+            </div>
+            <div id="l91"
+               class="code sev- "><tt><i>91</i>         <span class="n">pvals</span> <span class="o">/=</span> <span class="n">pvals</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span></tt>
+            </div>
+            <div id="l92"
+               class="code sev- "><tt><i>92</i>         <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span></tt>
+            </div>
+            <div id="l93"
+               class="code sev- "><tt><i>93</i>             <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">svdE0D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">p</span><span class="o">=</span><span class="n">pvals</span></tt>
+            </div>
+            <div id="l94"
+               class="code sev- "><tt><i>94</i>         <span class="p">)</span>  <span class="c1"># random index between 1 to k</span></tt>
+            </div>
+            <div id="l95"
+               class="code sev- "><tt><i>95</i>         <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">svdE0</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span></tt>
+            </div>
+            <div id="l96"
+               class="code sev- "><tt><i>96</i>             <span class="o">-</span><span class="mi">1</span></tt>
+            </div>
+            <div id="l97"
+               class="code sev- "><tt><i>97</i>         <span class="p">)</span>  <span class="c1"># (n0, )</span></tt>
+            </div>
+            <div id="l98"
+               class="code sev- "><tt><i>98</i>         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">):</span></tt>
+            </div>
+            <div id="l99"
+               class="code sev- "><tt><i>99</i>             <span class="n">u</span> <span class="o">=</span> <span class="n">rmf_vector</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">v</span><span class="p">)</span>  <span class="c1"># (m0, n0) x (n0, ) -&gt; (m0, )</span></tt>
+            </div>
+            <div id="l100"
+               class="code sev- "><tt><i>100</i>             <span class="n">v</span> <span class="o">=</span> <span class="n">rmf_vector</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">u</span><span class="p">)</span>  <span class="c1"># (n0, m0) x (m0, ) -&gt; (n0, )</span></tt>
+            </div>
+            <div id="l101"
+               class="code sev- "><tt><i>101</i>     <span class="k">return</span> <span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></tt>
+            </div>
+            <div id="l102"
+               class="code sev- "><tt><i>102</i> &nbsp;</tt>
+            </div>
+            <div id="l103"
+               class="code sev- "><tt><i>103</i> &nbsp;</tt>
+            </div>
+            <div id="l104"
+               class="code sev- "><tt><i>104</i> <span class="k">def</span> <span class="nf">_gibbs_fixedrank</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">VT</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">psi</span><span class="p">):</span></tt>
+            </div>
+            <div id="l105"
+               class="code sev- "><tt><i>105</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l106"
+               class="code sev- "><tt><i>106</i> <span class="sd">    ## Gibbs Sample Fixed Rank</span></tt>
+            </div>
+            <div id="l107"
+               class="code sev- "><tt><i>107</i> <span class="sd">    Y: (m, n), U: (m, r), D: (r, ), VT: (r, n)</span></tt>
+            </div>
+            <div id="l108"
+               class="code sev- "><tt><i>108</i> <span class="sd">    phi, mu, psi: scalar</span></tt>
+            </div>
+            <div id="l109"
+               class="code sev- "><tt><i>109</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l110"
+               class="code sev- "><tt><i>110</i>     <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span></tt>
+            </div>
+            <div id="l111"
+               class="code sev- "><tt><i>111</i>     <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="n">D</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># (r, )</span></tt>
+            </div>
+            <div id="l112"
+               class="code sev- "><tt><i>112</i>     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span></tt>
+            </div>
+            <div id="l113"
+               class="code sev- "><tt><i>113</i>         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span></tt>
+            </div>
+            <div id="l114"
+               class="code sev- "><tt><i>114</i>             <span class="n">Nu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>  <span class="c1"># r = 1, so (m, m)</span></tt>
+            </div>
+            <div id="l115"
+               class="code sev- "><tt><i>115</i>             <span class="n">Nv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># r = 1, so (n, n)</span></tt>
+            </div>
+            <div id="l116"
+               class="code sev- "><tt><i>116</i>         <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l117"
+               class="code sev- "><tt><i>117</i>             <span class="n">Nu</span> <span class="o">=</span> <span class="n">null_space</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># Null((r-1, m)) -&gt; (m, m-r+1)</span></tt>
+            </div>
+            <div id="l118"
+               class="code sev- "><tt><i>118</i>             <span class="n">Nv</span> <span class="o">=</span> <span class="n">null_space</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">VT</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># Null((r-1, n)) -&gt; (n, n-r+1)</span></tt>
+            </div>
+            <div id="l119"
+               class="code sev- "><tt><i>119</i> &nbsp;</tt>
+            </div>
+            <div id="l120"
+               class="code sev- "><tt><i>120</i>         <span class="n">E</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span></tt>
+            </div>
+            <div id="l121"
+               class="code sev- "><tt><i>121</i>             <span class="n">VT</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l122"
+               class="code sev- "><tt><i>122</i>         <span class="p">)</span>  <span class="c1"># (m, n) - (m, r-1) x (r-1, r-1) x (r-1, n)</span></tt>
+            </div>
+            <div id="l123"
+               class="code sev- "><tt><i>123</i>         <span class="n">VT</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Nv</span> <span class="o">@</span> <span class="n">rmf_vector</span><span class="p">(</span></tt>
+            </div>
+            <div id="l124"
+               class="code sev- "><tt><i>124</i>             <span class="n">D</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nv</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">E</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">U</span><span class="p">[:,</span> <span class="n">j</span><span class="p">])</span></tt>
+            </div>
+            <div id="l125"
+               class="code sev- "><tt><i>125</i>         <span class="p">)</span>  <span class="c1"># (n, n-r+1) x rmf( (n-r+1, n) x (n, m) x (m, ) )</span></tt>
+            </div>
+            <div id="l126"
+               class="code sev- "><tt><i>126</i>         <span class="n">U</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">Nu</span> <span class="o">@</span> <span class="n">rmf_vector</span><span class="p">(</span></tt>
+            </div>
+            <div id="l127"
+               class="code sev- "><tt><i>127</i>             <span class="n">D</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nu</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">E</span> <span class="o">@</span> <span class="n">VT</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:])</span></tt>
+            </div>
+            <div id="l128"
+               class="code sev- "><tt><i>128</i>         <span class="p">)</span>  <span class="c1"># (m, m-r+1) x rmf( (m-r+1, m) x (m, n) x (n, ) )</span></tt>
+            </div>
+            <div id="l129"
+               class="code sev- "><tt><i>129</i> &nbsp;</tt>
+            </div>
+            <div id="l130"
+               class="code sev- "><tt><i>130</i>         <span class="n">mn</span> <span class="o">=</span> <span class="p">(</span><span class="n">U</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">@</span> <span class="n">E</span> <span class="o">@</span> <span class="n">VT</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">+</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">psi</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span></tt>
+            </div>
+            <div id="l131"
+               class="code sev- "><tt><i>131</i>             <span class="n">phi</span> <span class="o">+</span> <span class="n">psi</span></tt>
+            </div>
+            <div id="l132"
+               class="code sev- "><tt><i>132</i>         <span class="p">)</span>  <span class="c1"># (1, m) x (m, n) x (n, 1)</span></tt>
+            </div>
+            <div id="l133"
+               class="code sev- "><tt><i>133</i>         <span class="n">se</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">phi</span> <span class="o">+</span> <span class="n">psi</span><span class="p">))</span></tt>
+            </div>
+            <div id="l134"
+               class="code sev- "><tt><i>134</i>         <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">()</span> <span class="o">*</span> <span class="n">se</span> <span class="o">+</span> <span class="n">mn</span></tt>
+            </div>
+            <div id="l135"
+               class="code sev- "><tt><i>135</i>         <span class="n">D</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span></tt>
+            </div>
+            <div id="l136"
+               class="code sev- "><tt><i>136</i>     <span class="k">return</span> <span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">VT</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span></tt>
+            </div>
+            <div id="l137"
+               class="code sev- "><tt><i>137</i> &nbsp;</tt>
+            </div>
+            <div id="l138"
+               class="code sev- "><tt><i>138</i> &nbsp;</tt>
+            </div>
+            <div id="l139"
+               class="code sev- "><tt><i>139</i> <span class="k">def</span> <span class="nf">_gibbs_varrank</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">VT</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">nsamp</span><span class="p">):</span></tt>
+            </div>
+            <div id="l140"
+               class="code sev- "><tt><i>140</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l141"
+               class="code sev- "><tt><i>141</i> <span class="sd">    # Gibbs Variable Rank</span></tt>
+            </div>
+            <div id="l142"
+               class="code sev- "><tt><i>142</i> <span class="sd">    Y: (m, n), U: (m, r), D: (r, ), VT: (r, n)</span></tt>
+            </div>
+            <div id="l143"
+               class="code sev- "><tt><i>143</i> <span class="sd">    phi, mu, psi: scalar</span></tt>
+            </div>
+            <div id="l144"
+               class="code sev- "><tt><i>144</i> <span class="sd">    nsamp = effective value of r</span></tt>
+            </div>
+            <div id="l145"
+               class="code sev- "><tt><i>145</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l146"
+               class="code sev- "><tt><i>146</i>     <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span></tt>
+            </div>
+            <div id="l147"
+               class="code sev- "><tt><i>147</i>     <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">nsamp</span><span class="p">)</span>  <span class="c1"># (nsamp, )</span></tt>
+            </div>
+            <div id="l148"
+               class="code sev- "><tt><i>148</i>     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span></tt>
+            </div>
+            <div id="l149"
+               class="code sev- "><tt><i>149</i>         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span></tt>
+            </div>
+            <div id="l150"
+               class="code sev- "><tt><i>150</i>             <span class="n">Nu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">m</span><span class="p">)</span></tt>
+            </div>
+            <div id="l151"
+               class="code sev- "><tt><i>151</i>             <span class="n">Nv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></tt>
+            </div>
+            <div id="l152"
+               class="code sev- "><tt><i>152</i>         <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l153"
+               class="code sev- "><tt><i>153</i>             <span class="n">Nu</span> <span class="o">=</span> <span class="n">null_space</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># Null((r-1, m)) -&gt; (m, m-r+1)</span></tt>
+            </div>
+            <div id="l154"
+               class="code sev- "><tt><i>154</i>             <span class="n">Nv</span> <span class="o">=</span> <span class="n">null_space</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">VT</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># Null((r-1, n)) -&gt; (n, n-r+1)</span></tt>
+            </div>
+            <div id="l155"
+               class="code sev- "><tt><i>155</i> &nbsp;</tt>
+            </div>
+            <div id="l156"
+               class="code sev- "><tt><i>156</i>         <span class="n">E</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">VT</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></tt>
+            </div>
+            <div id="l157"
+               class="code sev- "><tt><i>157</i> &nbsp;</tt>
+            </div>
+            <div id="l158"
+               class="code sev- "><tt><i>158</i>         <span class="c1"># log odds ratio</span></tt>
+            </div>
+            <div id="l159"
+               class="code sev- "><tt><i>159</i>         <span class="n">nonzero_d</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">D</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span></tt>
+            </div>
+            <div id="l160"
+               class="code sev- "><tt><i>160</i>         <span class="n">lor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="n">nonzero_d</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">nonzero_d</span><span class="p">))</span></tt>
+            </div>
+            <div id="l161"
+               class="code sev- "><tt><i>161</i>         <span class="n">D</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">tmpu</span><span class="p">,</span> <span class="n">tmpv</span> <span class="o">=</span> <span class="n">_gibbs_sample</span><span class="p">(</span></tt>
+            </div>
+            <div id="l162"
+               class="code sev- "><tt><i>162</i>             <span class="n">E</span><span class="p">,</span> <span class="n">Nu</span><span class="p">,</span> <span class="n">Nv</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">lor</span></tt>
+            </div>
+            <div id="l163"
+               class="code sev- "><tt><i>163</i>         <span class="p">)</span>  <span class="c1"># scalar, (m-r+1, ), (n-r+1,)</span></tt>
+            </div>
+            <div id="l164"
+               class="code sev- "><tt><i>164</i>         <span class="n">U</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">Nu</span> <span class="o">@</span> <span class="n">tmpu</span>  <span class="c1"># (m, m-r+1) x (m-r+1) -&gt; (m, )</span></tt>
+            </div>
+            <div id="l165"
+               class="code sev- "><tt><i>165</i>         <span class="n">VT</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Nv</span> <span class="o">@</span> <span class="n">tmpv</span>  <span class="c1"># (n, n-r+1) x (n-r+1) -&gt; (n, )</span></tt>
+            </div>
+            <div id="l166"
+               class="code sev- "><tt><i>166</i>     <span class="k">return</span> <span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">VT</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span></tt>
+            </div>
+            <div id="l167"
+               class="code sev- "><tt><i>167</i> &nbsp;</tt>
+            </div>
+            <div id="l168"
+               class="code sev- "><tt><i>168</i> &nbsp;</tt>
+            </div>
+            <div id="l169"
+               class="code sev- "><tt><i>169</i> <span class="k">def</span> <span class="nf">rank_hoffbayes</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">svdfunc</span><span class="p">,</span> <span class="n">gibbstype</span><span class="o">=</span><span class="s2">&quot;fixed&quot;</span><span class="p">,</span> <span class="n">kmax</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span></tt>
+            </div>
+            <div id="l170"
+               class="code sev- "><tt><i>170</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l171"
+               class="code sev- "><tt><i>171</i> <span class="sd">    Rank estimation using Bayesian method</span></tt>
+            </div>
+            <div id="l172"
+               class="code sev- "><tt><i>172</i> <span class="sd">    - Reference: https://www.jstor.org/stable/27639896</span></tt>
+            </div>
+            <div id="l173"
+               class="code sev- "><tt><i>173</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l174"
+               class="code sev- "><tt><i>174</i>     <span class="k">assert</span> <span class="n">gibbstype</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;fixed&quot;</span><span class="p">,</span> <span class="s2">&quot;var&quot;</span><span class="p">],</span> <span class="s2">&quot;Invalid gibbs type&quot;</span></tt>
+            </div>
+            <div id="l175"
+               class="code sev- "><tt><i>175</i> &nbsp;</tt>
+            </div>
+            <div id="l176"
+               class="code sev- "><tt><i>176</i>     <span class="c1"># set up the hyperparameters</span></tt>
+            </div>
+            <div id="l177"
+               class="code sev- "><tt><i>177</i>     <span class="n">sY</span> <span class="o">=</span> <span class="n">svdfunc</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span></tt>
+            </div>
+            <div id="l178"
+               class="code sev- "><tt><i>178</i>     <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span></tt>
+            </div>
+            <div id="l179"
+               class="code sev- "><tt><i>179</i>     <span class="n">kmax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">kmax</span><span class="p">)</span></tt>
+            </div>
+            <div id="l180"
+               class="code sev- "><tt><i>180</i>     <span class="n">s20est</span><span class="p">,</span> <span class="n">t20est</span><span class="p">,</span> <span class="n">mu0est</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></tt>
+            </div>
+            <div id="l181"
+               class="code sev- "><tt><i>181</i>     <span class="n">s20est</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t20est</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu0est</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">Y</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l182"
+               class="code sev- "><tt><i>182</i>     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span></tt>
+            </div>
+            <div id="l183"
+               class="code sev- "><tt><i>183</i>         <span class="n">s20est</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">sY</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span> <span class="p">:</span><span class="n">k</span><span class="p">]</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sY</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="n">k</span><span class="p">])</span> <span class="o">@</span> <span class="n">sY</span><span class="p">[</span><span class="mi">2</span><span class="p">][:</span><span class="n">k</span><span class="p">,</span> <span class="p">:])</span></tt>
+            </div>
+            <div id="l184"
+               class="code sev- "><tt><i>184</i>         <span class="n">t20est</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">sY</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="n">k</span><span class="p">])</span></tt>
+            </div>
+            <div id="l185"
+               class="code sev- "><tt><i>185</i>         <span class="n">mu0est</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sY</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="n">k</span><span class="p">])</span></tt>
+            </div>
+            <div id="l186"
+               class="code sev- "><tt><i>186</i> &nbsp;</tt>
+            </div>
+            <div id="l187"
+               class="code sev- "><tt><i>187</i>     <span class="n">nu0</span><span class="p">,</span> <span class="n">s20</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">s20est</span><span class="p">)</span>  <span class="c1"># prior for phi</span></tt>
+            </div>
+            <div id="l188"
+               class="code sev- "><tt><i>188</i>     <span class="n">eta0</span><span class="p">,</span> <span class="n">t20</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">t20est</span><span class="p">)</span>  <span class="c1"># prior for psi</span></tt>
+            </div>
+            <div id="l189"
+               class="code sev- "><tt><i>189</i>     <span class="n">mu0</span><span class="p">,</span> <span class="n">premu0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mu0est</span><span class="p">),</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">mu0est</span><span class="p">)</span>  <span class="c1"># prior for mu</span></tt>
+            </div>
+            <div id="l190"
+               class="code sev- "><tt><i>190</i> &nbsp;</tt>
+            </div>
+            <div id="l191"
+               class="code sev- "><tt><i>191</i>     <span class="c1"># MCMC parameters</span></tt>
+            </div>
+            <div id="l192"
+               class="code sev- "><tt><i>192</i>     <span class="n">nburnin</span> <span class="o">=</span> <span class="mi">100</span></tt>
+            </div>
+            <div id="l193"
+               class="code sev- "><tt><i>193</i>     <span class="n">nsamp</span> <span class="o">=</span> <span class="mi">100</span></tt>
+            </div>
+            <div id="l194"
+               class="code sev- "><tt><i>194</i>     <span class="n">nthin</span> <span class="o">=</span> <span class="mi">10</span></tt>
+            </div>
+            <div id="l195"
+               class="code sev- "><tt><i>195</i>     <span class="n">dvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nsamp</span><span class="p">,</span> <span class="n">kmax</span><span class="p">))</span></tt>
+            </div>
+            <div id="l196"
+               class="code sev- "><tt><i>196</i>     <span class="n">niter</span> <span class="o">=</span> <span class="n">nburnin</span> <span class="o">+</span> <span class="p">(</span><span class="n">nsamp</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">nthin</span></tt>
+            </div>
+            <div id="l197"
+               class="code sev- "><tt><i>197</i> &nbsp;</tt>
+            </div>
+            <div id="l198"
+               class="code sev- "><tt><i>198</i>     <span class="c1"># set up the initial values</span></tt>
+            </div>
+            <div id="l199"
+               class="code sev- "><tt><i>199</i>     <span class="n">mu</span> <span class="o">=</span> <span class="n">mu0</span></tt>
+            </div>
+            <div id="l200"
+               class="code sev- "><tt><i>200</i>     <span class="n">phi</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">s20</span></tt>
+            </div>
+            <div id="l201"
+               class="code sev- "><tt><i>201</i>     <span class="n">psi</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">t20</span></tt>
+            </div>
+            <div id="l202"
+               class="code sev- "><tt><i>202</i> &nbsp;</tt>
+            </div>
+            <div id="l203"
+               class="code sev- "><tt><i>203</i>     <span class="k">if</span> <span class="n">gibbstype</span> <span class="o">==</span> <span class="s2">&quot;fixed&quot;</span><span class="p">:</span></tt>
+            </div>
+            <div id="l204"
+               class="code sev- "><tt><i>204</i>         <span class="n">U</span> <span class="o">=</span> <span class="n">sY</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span> <span class="p">:</span><span class="n">kmax</span><span class="p">]</span></tt>
+            </div>
+            <div id="l205"
+               class="code sev- "><tt><i>205</i>         <span class="n">D</span> <span class="o">=</span> <span class="n">sY</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="n">kmax</span><span class="p">]</span></tt>
+            </div>
+            <div id="l206"
+               class="code sev- "><tt><i>206</i>         <span class="n">VT</span> <span class="o">=</span> <span class="n">sY</span><span class="p">[</span><span class="mi">2</span><span class="p">][:</span><span class="n">kmax</span><span class="p">,</span> <span class="p">:]</span></tt>
+            </div>
+            <div id="l207"
+               class="code sev- "><tt><i>207</i>     <span class="k">elif</span> <span class="n">gibbstype</span> <span class="o">==</span> <span class="s2">&quot;var&quot;</span><span class="p">:</span></tt>
+            </div>
+            <div id="l208"
+               class="code sev- "><tt><i>208</i>         <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></tt>
+            </div>
+            <div id="l209"
+               class="code sev- "><tt><i>209</i>         <span class="n">VT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></tt>
+            </div>
+            <div id="l210"
+               class="code sev- "><tt><i>210</i>         <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></tt>
+            </div>
+            <div id="l211"
+               class="code sev- "><tt><i>211</i>         <span class="n">U</span><span class="p">[:,</span> <span class="p">:</span><span class="n">kmax</span><span class="p">]</span> <span class="o">=</span> <span class="n">sY</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span> <span class="p">:</span><span class="n">kmax</span><span class="p">]</span></tt>
+            </div>
+            <div id="l212"
+               class="code sev- "><tt><i>212</i>         <span class="n">D</span><span class="p">[:</span><span class="n">kmax</span><span class="p">]</span> <span class="o">=</span> <span class="n">sY</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="n">kmax</span><span class="p">]</span></tt>
+            </div>
+            <div id="l213"
+               class="code sev- "><tt><i>213</i>         <span class="n">VT</span><span class="p">[:</span><span class="n">kmax</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">sY</span><span class="p">[</span><span class="mi">2</span><span class="p">][:</span><span class="n">kmax</span><span class="p">,</span> <span class="p">:]</span></tt>
+            </div>
+            <div id="l214"
+               class="code sev- "><tt><i>214</i> &nbsp;</tt>
+            </div>
+            <div id="l215"
+               class="code sev- "><tt><i>215</i>     <span class="n">ncount</span> <span class="o">=</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l216"
+               class="code sev- "><tt><i>216</i>     <span class="n">iterrange</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">niter</span><span class="p">))</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="nb">range</span><span class="p">(</span><span class="n">niter</span><span class="p">)</span></tt>
+            </div>
+            <div id="l217"
+               class="code sev- "><tt><i>217</i>     <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">iterrange</span><span class="p">:</span></tt>
+            </div>
+            <div id="l218"
+               class="code sev- "><tt><i>218</i>         <span class="k">if</span> <span class="n">gibbstype</span> <span class="o">==</span> <span class="s2">&quot;var&quot;</span><span class="p">:</span></tt>
+            </div>
+            <div id="l219"
+               class="code sev- "><tt><i>219</i>             <span class="n">U</span><span class="p">,</span> <span class="n">VT</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">_gibbs_varrank</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">VT</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">kmax</span><span class="p">)</span></tt>
+            </div>
+            <div id="l220"
+               class="code sev- "><tt><i>220</i>         <span class="n">U</span><span class="p">,</span> <span class="n">VT</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">_gibbs_fixedrank</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">VT</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span></tt>
+            </div>
+            <div id="l221"
+               class="code sev- "><tt><i>221</i>         <span class="k">if</span> <span class="n">it</span> <span class="o">&gt;</span> <span class="n">nburnin</span> <span class="ow">and</span> <span class="n">it</span> <span class="o">%</span> <span class="n">nthin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span></tt>
+            </div>
+            <div id="l222"
+               class="code sev- "><tt><i>222</i>             <span class="n">dvals</span><span class="p">[</span><span class="n">ncount</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">D</span></tt>
+            </div>
+            <div id="l223"
+               class="code sev- "><tt><i>223</i>             <span class="n">ncount</span> <span class="o">+=</span> <span class="mi">1</span></tt>
+            </div>
+            <div id="l224"
+               class="code sev- "><tt><i>224</i> &nbsp;</tt>
+            </div>
+            <div id="l225"
+               class="code sev- "><tt><i>225</i>         <span class="n">currank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">D</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span></tt>
+            </div>
+            <div id="l226"
+               class="code sev- "><tt><i>226</i>         <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span></tt>
+            </div>
+            <div id="l227"
+               class="code sev- "><tt><i>227</i>             <span class="p">(</span><span class="n">nu0</span> <span class="o">+</span> <span class="n">m</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span></tt>
+            </div>
+            <div id="l228"
+               class="code sev- "><tt><i>228</i>             <span class="n">scale</span><span class="o">=</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">nu0</span> <span class="o">*</span> <span class="n">s20</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">Y</span> <span class="o">-</span> <span class="n">U</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">D</span><span class="p">)</span> <span class="o">@</span> <span class="n">VT</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)),</span></tt>
+            </div>
+            <div id="l229"
+               class="code sev- "><tt><i>229</i>         <span class="p">)</span>  <span class="c1"># update phi</span></tt>
+            </div>
+            <div id="l230"
+               class="code sev- "><tt><i>230</i>         <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">()</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">premu0</span> <span class="o">+</span> <span class="n">psi</span> <span class="o">*</span> <span class="n">currank</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span></tt>
+            </div>
+            <div id="l231"
+               class="code sev- "><tt><i>231</i>             <span class="n">premu0</span> <span class="o">*</span> <span class="n">mu0</span> <span class="o">+</span> <span class="n">psi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">D</span><span class="p">)</span></tt>
+            </div>
+            <div id="l232"
+               class="code sev- "><tt><i>232</i>         <span class="p">)</span> <span class="o">/</span> <span class="p">(</span></tt>
+            </div>
+            <div id="l233"
+               class="code sev- "><tt><i>233</i>             <span class="n">premu0</span> <span class="o">+</span> <span class="n">psi</span> <span class="o">*</span> <span class="n">currank</span></tt>
+            </div>
+            <div id="l234"
+               class="code sev- "><tt><i>234</i>         <span class="p">)</span>  <span class="c1"># update mu</span></tt>
+            </div>
+            <div id="l235"
+               class="code sev- "><tt><i>235</i>         <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span></tt>
+            </div>
+            <div id="l236"
+               class="code sev- "><tt><i>236</i>             <span class="p">(</span><span class="n">eta0</span> <span class="o">+</span> <span class="n">currank</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">eta0</span> <span class="o">*</span> <span class="n">t20</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">D</span><span class="p">[</span><span class="n">D</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span></tt>
+            </div>
+            <div id="l237"
+               class="code sev- "><tt><i>237</i>         <span class="p">)</span>  <span class="c1"># update psi</span></tt>
+            </div>
+            <div id="l238"
+               class="code sev- "><tt><i>238</i> &nbsp;</tt>
+            </div>
+            <div id="l239"
+               class="code sev- "><tt><i>239</i>     <span class="c1"># finally look at the zeros</span></tt>
+            </div>
+            <div id="l240"
+               class="code sev- "><tt><i>240</i>     <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-5</span></tt>
+            </div>
+            <div id="l241"
+               class="code sev- "><tt><i>241</i>     <span class="k">if</span> <span class="n">gibbstype</span> <span class="o">==</span> <span class="s2">&quot;fixed&quot;</span><span class="p">:</span></tt>
+            </div>
+            <div id="l242"
+               class="code sev- "><tt><i>242</i>         <span class="n">quants</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">dvals</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="p">[</span><span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.975</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></tt>
+            </div>
+            <div id="l243"
+               class="code sev- "><tt><i>243</i>         <span class="n">rank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">quants</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">quants</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span></tt>
+            </div>
+            <div id="l244"
+               class="code sev- "><tt><i>244</i>     <span class="k">elif</span> <span class="n">gibbstype</span> <span class="o">==</span> <span class="s2">&quot;var&quot;</span><span class="p">:</span></tt>
+            </div>
+            <div id="l245"
+               class="code sev- "><tt><i>245</i>         <span class="n">rank</span> <span class="o">=</span> <span class="n">mode</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dvals</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">tol</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></tt>
+            </div>
+            <div id="l246"
+               class="code sev- "><tt><i>246</i>     <span class="k">return</span> <span class="n">kmax</span> <span class="o">-</span> <span class="n">rank</span></tt>
+            </div>
+            
+         </div>
+      </div>
+   </body>
+</html>

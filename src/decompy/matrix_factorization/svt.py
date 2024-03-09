@@ -3,9 +3,10 @@ import numpy as np
 
 from ..interfaces import LSNResult
 
+
 class SingularValueThresholding:
-    """ Implements the Singular Value Thresholding (SVT) algorithm for 
-        Robust PCA.
+    """Implements the Singular Value Thresholding (SVT) algorithm for
+    Robust PCA.
     """
 
     def __init__(self, **kwargs):
@@ -26,7 +27,13 @@ class SingularValueThresholding:
         self.maxiter = kwargs.get("maxiter", 25e3)
         self.epsilon = kwargs.get("epsilon", 5e-4)
 
-    def decompose(self, M: np.ndarray, lambdaval: float, tau: Union[float, None] = None, delta: Union[float, None] = None):
+    def decompose(
+        self,
+        M: np.ndarray,
+        lambdaval: float,
+        tau: Union[float, None] = None,
+        delta: Union[float, None] = None,
+    ):
         """Decompose a matrix M into low-rank (L) and sparse (S) components.
 
         Parameters
@@ -43,7 +50,7 @@ class SingularValueThresholding:
         Returns
         -------
         LSNResult
-            Named tuple containing low-rank matrix L, sparse matrix S, 
+            Named tuple containing low-rank matrix L, sparse matrix S,
             noise matrix N, and convergence info
         """
         X = np.copy(M)
@@ -59,7 +66,7 @@ class SingularValueThresholding:
 
         niter = 0
         rankA = 0
-        converged = False 
+        converged = False
 
         while not converged:
             niter += 1
@@ -72,26 +79,24 @@ class SingularValueThresholding:
             M2 = M - A - E
 
             rankA = np.sum(s > tau)  # approx rank of A
-            cardE = np.sum(np.abs(E) > 0)  # approx number of nonzero entries in sparse component
+            cardE = np.sum(
+                np.abs(E) > 0
+            )  # approx number of nonzero entries in sparse component
 
             Y = Y + delta * M2
 
-            if np.linalg.norm(M2) / np.linalg.norm(M) < self.epsilon or niter >= self.maxiter:
+            if (
+                np.linalg.norm(M2) / np.linalg.norm(M) < self.epsilon
+                or niter >= self.maxiter
+            ):
                 converged = True
 
         if niter >= self.maxiter and self.verbose:
-            print(f"Maximum number of iterations reached")
+            print("Maximum number of iterations reached")
 
         return LSNResult(
-            L = A,
-            S = E,
-            N = None,
-            convergence = {
-                'converged': (niter < self.maxiter),
-                'iterations': niter
-            }
-        )     
-
-
-
-
+            L=A,
+            S=E,
+            N=None,
+            convergence={"converged": (niter < self.maxiter), "iterations": niter},
+        )

@@ -5,6 +5,7 @@ import warnings
 from ..utils.validations import check_real_matrix
 from ..interfaces import SVDResult
 
+
 class PrincipalComponentPursuit:
     """
     Robust PCA using Principal Component Pursuit Method
@@ -34,7 +35,7 @@ class PrincipalComponentPursuit:
 
     def _threshold_l1(self, x: np.ndarray, threshold: float):
         """Apply L1 thresholding to array x.
-        
+
         Parameters
         ----------
         x : ndarray
@@ -42,14 +43,14 @@ class PrincipalComponentPursuit:
         threshold : float
             Threshold value. Values with absolute value less than
             threshold are set to 0.
-        
+
         Returns
         -------
         ndarray
             Thresholded array.
         """
         return np.sign(x) * np.maximum(np.abs(x) - threshold, 0)
-    
+
     def _threshold_nuclear(self, M: np.ndarray, threshold: float):
         """Perform nuclear norm thresholding on matrix M.
 
@@ -82,8 +83,12 @@ class PrincipalComponentPursuit:
         L = U @ np.diag(s) @ V.T
         return (s, U, V, L)
 
-
-    def decompose(self, M: np.ndarray, lambdaval: Union[float, None] = None, muval: Union[float, None] = None):
+    def decompose(
+        self,
+        M: np.ndarray,
+        lambdaval: Union[float, None] = None,
+        muval: Union[float, None] = None,
+    ):
         """Decompose a matrix into low-rank and sparse components using Principal Component Pursuit (PCP).
 
         Parameters
@@ -93,28 +98,28 @@ class PrincipalComponentPursuit:
         lambdaval : float or None, optional
             Regularization parameter for the nuclear norm. Default is 1/sqrt(max(n, p))
             where n, p are dimensions of M.
-        muval : float or None, optional  
+        muval : float or None, optional
             Regularization parameter for the l1 norm. Default is (n*p)/(4 * abs(X).sum())
             where n, p are dimensions of M.
 
         Returns
         -------
         SVDResult
-            A named tuple containing the low-rank component U, singular values s, 
+            A named tuple containing the low-rank component U, singular values s,
             orthogonal matrix V and convergence metrics.
 
         """
         check_real_matrix(M)
         X = np.copy(M)  # to ensure that original matrix is not modified
         n, p = X.shape
-        lambdaval = lambdaval if lambdaval is not None else 1/np.sqrt(max(n, p))
-        muval = muval if muval is not None else (n*p)/(4 * np.abs(X).sum())
+        lambdaval = lambdaval if lambdaval is not None else 1 / np.sqrt(max(n, p))
+        muval = muval if muval is not None else (n * p) / (4 * np.abs(X).sum())
         termnorm = self.delta * np.linalg.norm(X)
 
         S = np.zeros_like(X)
         Yimu = np.zeros_like(X)
 
-        imu = 1/muval
+        imu = 1 / muval
         limu = lambdaval / muval
 
         niter = 0
@@ -132,19 +137,21 @@ class PrincipalComponentPursuit:
             stats.append(residnorm)
             if self.verbose:
                 print(f"Iteration: {niter}, Residual Norm: {residnorm}")
-        
+
             converged = (residnorm < termnorm) or (niter > self.maxiter)
 
             Yimu += MLS
-        
+
         finaldelta = residnorm * self.delta / termnorm
         if niter >= self.maxiter:
-            warnings.warn(f"RPCA using PCP approach did not converged after {niter} iterations.\nFinal delta: {finaldelta}\nPlease consider increasing maxiter.")
+            warnings.warn(
+                f"RPCA using PCP approach did not converged after {niter} iterations.\nFinal delta: {finaldelta}\nPlease consider increasing maxiter."
+            )
 
         convergence_metrics = {
-            'converged': converged,
-            'iterations': niter,
-            'finaldelta': finaldelta,
-            'alldelta': np.array(stats) * (self.delta / termnorm)
+            "converged": converged,
+            "iterations": niter,
+            "finaldelta": finaldelta,
+            "alldelta": np.array(stats) * (self.delta / termnorm),
         }
-        return SVDResult(U, s, V, convergence = convergence_metrics)
+        return SVDResult(U, s, V, convergence=convergence_metrics)

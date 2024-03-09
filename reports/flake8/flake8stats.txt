@@ -1,0 +1,38 @@
+3     E125 continuation line with same indent as next logical line
+17    E201 whitespace after '('
+38    E202 whitespace before ')'
+2     E221 multiple spaces before operator
+1     E222 multiple spaces after operator
+12    E225 missing whitespace around operator
+43    E231 missing whitespace after ','
+356   E251 unexpected spaces around keyword / parameter equals
+6     E261 at least two spaces before inline comment
+1     E272 multiple spaces before keyword
+39    E302 expected 2 blank lines, found 1
+26    E303 too many blank lines (2)
+481   E501 line too long (166 > 79 characters)
+4     E741 ambiguous variable name 'l'
+4     F401 'scipy.stats.t' imported but unused
+1     F541 f-string is missing placeholders
+3     F821 undefined name 'k'
+4     F841 local variable 'obj_v' is assigned to but never used
+138   W291 trailing whitespace
+11    W292 no newline at end of file
+247   W293 blank line contains whitespace
+11    W391 blank line at end of file
+2     W605 invalid escape sequence '\l'
+4     E201 whitespace after '('
+7     E202 whitespace before ')'
+2     E225 missing whitespace around operator
+2     E231 missing whitespace after ','
+70    E251 unexpected spaces around keyword / parameter equals
+4     E261 at least two spaces before inline comment
+9     E302 expected 2 blank lines, found 1
+2     E303 too many blank lines (2)
+3     E741 ambiguous variable name 'l'
+2     F821 undefined name 'sigma'
+3     F841 local variable 'alpha' is assigned to but never used
+9     W291 trailing whitespace
+3     W292 no newline at end of file
+54    W293 blank line contains whitespace
+2     W391 blank line at end of file

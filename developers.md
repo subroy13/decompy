@@ -28,6 +28,8 @@ To generate documentation, use
     * `pytest --cov-report term-missing --cov=decompy --junitxml=reports/junit/junit.xml tests/`
     * `genbadge tests`
     * `coverage-badge -o coverage.svg`
+    * `flake8 ./src/decompy --exit-zero --htmldir ./reports/flake8 --output-file ./reports/flake8/flake8stats.txt`
+    * `genbadge flake8`
 
 
 

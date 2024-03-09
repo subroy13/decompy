@@ -4,6 +4,7 @@ from scipy.special import psi, logsumexp
 from ..utils.validations import check_real_matrix
 from ..interfaces.lsnresult import LSNResult
 
+
 class LRPrior:
     """LRPrior class.
 
@@ -16,9 +17,10 @@ class LRPrior:
 
     """
 
-    def __init__(self, a0 = None, b0 = None):
+    def __init__(self, a0=None, b0=None):
         self.a0 = a0 or 1e-6
         self.b0 = b0 or 1e-6
+
 
 class MOGPrior:
     """
@@ -29,31 +31,32 @@ class MOGPrior:
     mu0 : float, optional
         Mean of Gaussian prior on mu (default 0)
     c0 : float, optional
-        Precision of Gaussian prior on mu (default 1e-6) 
+        Precision of Gaussian prior on mu (default 1e-6)
     d0 : float, optional
         Shape parameter of Gamma prior on sigma2 (default 1e-6)
     alpha0 : float, optional
         Scale parameter of Gamma prior on sigma2 (default 1e-6)
-    beta0 : float, optional 
+    beta0 : float, optional
         Shape parameter of Gamma prior on pi (default 1e-6)
 
     """
 
-    def __init__(self, mu0 = None, c0 = None, d0 = None, alpha0 = None, beta0 = None):
+    def __init__(self, mu0=None, c0=None, d0=None, alpha0=None, beta0=None):
         self.mu0 = mu0 or 0
         self.c0 = c0 or 1e-6
         self.d0 = d0 or 1e-6
         self.alpha0 = alpha0 or 1e-6
         self.beta0 = beta0 or 1e-6
 
+
 class LRModel:
     """LRModel class for matrix factorization.
-    
+
     Attributes
     ----------
     U : ndarray
         Left factor matrix.
-    V : ndarray 
+    V : ndarray
         Right factor matrix.
     sigma_U : ndarray
         Noise variance for U.
@@ -61,19 +64,27 @@ class LRModel:
         Noise variance for V.
     gammas : ndarray
         Observation noise variance.
-        
+
     """
 
-    def __init__(self, U: np.ndarray, V: np.ndarray, Sigma_U: np.ndarray, Sigma_V: np.ndarray, gammas: np.ndarray):
+    def __init__(
+        self,
+        U: np.ndarray,
+        V: np.ndarray,
+        Sigma_U: np.ndarray,
+        Sigma_V: np.ndarray,
+        gammas: np.ndarray,
+    ):
         self.U = U
         self.V = V
         self.sigma_U = Sigma_U
         self.sigma_V = Sigma_V
         self.gammas = gammas
 
+
 class MOGModel:
     """MOG (Mixture of Gaussian) Model class for matrix factorization.
-    
+
     Parameters
     ----------
     R : ndarray
@@ -86,26 +97,32 @@ class MOGModel:
         The user biases. (rowwise biases)
     mu : ndarray
         The item biases. (column wise biases)
-    
+
     """
 
-    def __init__(self, R: np.ndarray, c: np.ndarray, beta: np.ndarray, d: np.ndarray, mu: np.ndarray):
+    def __init__(
+        self,
+        R: np.ndarray,
+        c: np.ndarray,
+        beta: np.ndarray,
+        d: np.ndarray,
+        mu: np.ndarray,
+    ):
         self.R = R
         self.c = c
         self.beta = beta
         self.d = d
         self.mu = mu
-        
 
 
 class MixtureOfGaussianRobustPCA:
     """
-        Original Author:
-        Written by Qian Zhao (if you have any questions/comments/suggestions, please contact me: timmy.zhaoqian@gmail.com)
+    Original Author:
+    Written by Qian Zhao (if you have any questions/comments/suggestions, please contact me: timmy.zhaoqian@gmail.com)
 
-        References
-        ----------
-        [1] "Qian Zhao, Deyu Meng, Zongben Xu, Wangmeng Zuo, Lei Zhang. Robust Principal Component Analysis with Complex Noise. ICML, 2014."
+    References
+    ----------
+    [1] "Qian Zhao, Deyu Meng, Zongben Xu, Wangmeng Zuo, Lei Zhang. Robust Principal Component Analysis with Complex Noise. ICML, 2014."
     """
 
     def __init__(self, **kwargs):
@@ -116,7 +133,7 @@ class MixtureOfGaussianRobustPCA:
         maxiter : int, optional
             Maximum number of iterations. Default is 100.
         tol : float, optional
-            Tolerance for stopping criteria. Default is 1e-4. 
+            Tolerance for stopping criteria. Default is 1e-4.
         mog_k : int, optional
             Number of Gaussians per factor. Default is 3.
         init_method : {'SVD', 'random'}, optional
@@ -127,7 +144,10 @@ class MixtureOfGaussianRobustPCA:
         self.tol = kwargs.get("tol", 1e-4)
         self.mog_k = kwargs.get("mog_k", 3)
         self.init_method = kwargs.get("init_method", "SVD")
-        assert self.init_method in ["SVD", "random"], "init_method must be either SVD or random"
+        assert self.init_method in [
+            "SVD",
+            "random",
+        ], "init_method must be either SVD or random"
 
     def __R_initialization(self, X: np.ndarray, k):
         """Initialize membership matrix R with random initialization.
@@ -135,7 +155,7 @@ class MixtureOfGaussianRobustPCA:
         Parameters
         ----------
         X : ndarray
-            The data matrix with shape (n, d). 
+            The data matrix with shape (n, d).
 
         k : int
             The number of clusters.
@@ -143,11 +163,11 @@ class MixtureOfGaussianRobustPCA:
         Returns
         -------
         R : ndarray
-            The membership matrix with shape (n, k). R[i, j] is 1 if 
+            The membership matrix with shape (n, k). R[i, j] is 1 if
             data point i belongs to cluster j, and 0 otherwise.
 
         Notes
-        ----- 
+        -----
         The initialization is done by randomly selecting k data points to be
         the initial cluster centers. The remaining points are assigned to the
         closest cluster center based on Euclidean distance. This is repeated
@@ -168,8 +188,15 @@ class MixtureOfGaussianRobustPCA:
         R = np.zeros((n, k))
         R[np.arange(n), label] = 1  # (n, k)
         return R
-    
-    def __lr_update(self, Y: np.ndarray, lr_model: LRModel, mog_model: MOGModel, r: int, lr_prior: LRPrior):
+
+    def __lr_update(
+        self,
+        Y: np.ndarray,
+        lr_model: LRModel,
+        mog_model: MOGModel,
+        r: int,
+        lr_prior: LRPrior,
+    ):
         """Update the low-rank model using Mixture of Gaussians.
 
         Parameters
@@ -192,13 +219,13 @@ class MixtureOfGaussianRobustPCA:
         r : int
             Updated rank after pruning.
         E_YminusUV : ndarray of shape (m, n)
-            Residuals after updating low-rank. 
+            Residuals after updating low-rank.
         E_YminusUV2 : ndarray of shape (m, n)
             Elementwise squared residuals.
 
         Notes
         -----
-        The low-rank matrices U, V and their standard deviations Sigma_U, Sigma_V 
+        The low-rank matrices U, V and their standard deviations Sigma_U, Sigma_V
         are updated based on the Mixture of Gaussians parameters.
         Redundant dimensions are pruned based on the gamma threshold.
 
@@ -223,8 +250,8 @@ class MixtureOfGaussianRobustPCA:
 
         tau = c / d  # (k, )
         Gam = np.diag(gammas)
-        Rtau = (R.reshape(m*n, k) @ tau).reshape(m, n)  # (m, n)
-        Rtaumu = (R.reshape(m*n, k) @ (tau * mu)).reshape(m, n)  # (m, n)
+        Rtau = (R.reshape(m * n, k) @ tau).reshape(m, n)  # (m, n)
+        Rtaumu = (R.reshape(m * n, k) @ (tau * mu)).reshape(m, n)  # (m, n)
         RtauYmu = Rtau * Y - Rtaumu  # (m, n)
 
         # update U
@@ -233,10 +260,10 @@ class MixtureOfGaussianRobustPCA:
         for i in range(m):
             s1inv = (Sigma_V.reshape(r * r, n) @ Rtau[i, :]).reshape(r, r)
             s2inv = (V.T * Rtau[i, :]) @ V + Gam
-            Sigma_U[:,:,i] = np.linalg.inv(s1inv + s2inv)
-            U[i, :] = RtauYmu[i,:] @ V + Sigma_U[:,:,i]
-            diagsU = diagsU + np.diag(Sigma_U[:,:,i])
-            tempU[:, :, i] = Sigma_U[:,:,i] + U[i, :].T @ U[i, :]
+            Sigma_U[:, :, i] = np.linalg.inv(s1inv + s2inv)
+            U[i, :] = RtauYmu[i, :] @ V + Sigma_U[:, :, i]
+            diagsU = diagsU + np.diag(Sigma_U[:, :, i])
+            tempU[:, :, i] = Sigma_U[:, :, i] + U[i, :].T @ U[i, :]
 
         # update V
         diagsV = np.zeros(r)
@@ -244,13 +271,15 @@ class MixtureOfGaussianRobustPCA:
         for j in range(n):
             s1inv = (Sigma_U.reshape(r * r, m) @ Rtau[:, j]).reshape(r, r)
             s2inv = (U.T * Rtau[:, j].T) @ U + Gam
-            Sigma_V[:,:,j] = np.linalg.inv(s1inv + s2inv)
-            V[j, :] = RtauYmu[:, j] @ U + Sigma_V[:,:,j]
-            diagsV = diagsV + np.diag(Sigma_V[:,:,j])
-            tempV[:, :, j] = Sigma_V[:,:,j] + V[j, :].T @ V[j, :]
+            Sigma_V[:, :, j] = np.linalg.inv(s1inv + s2inv)
+            V[j, :] = RtauYmu[:, j] @ U + Sigma_V[:, :, j]
+            diagsV = diagsV + np.diag(Sigma_V[:, :, j])
+            tempV[:, :, j] = Sigma_V[:, :, j] + V[j, :].T @ V[j, :]
 
         # update gammas
-        gammas = (2 * a0 + m + n) / (2 * b0 + np.sum(U**2, axis = 0) + diagsU + np.sum(V**2, axis = 0) + diagsV)
+        gammas = (2 * a0 + m + n) / (
+            2 * b0 + np.sum(U**2, axis=0) + diagsU + np.sum(V**2, axis=0) + diagsV
+        )
 
         # prune redundant dimensions
         dim_thr = 1e2
@@ -268,35 +297,36 @@ class MixtureOfGaussianRobustPCA:
 
         lr_model = LRModel(U, V, Sigma_U, Sigma_V, gammas)  # create new LR model
         E_YminusUV = Y - U @ V.T  # (m, n)
-        tempmat = tempU.reshape(r*r, m).T @ tempV.reshape(r*r, n)
+        tempmat = tempU.reshape(r * r, m).T @ tempV.reshape(r * r, n)
         E_YminusUV2 = Y**2 - 2 * Y * (U @ V.T) + tempmat
-        return (
-            lr_model,
-            r,
-            E_YminusUV,
-            E_YminusUV2
-        )
+        return (lr_model, r, E_YminusUV, E_YminusUV2)
 
-    def __mog_vmax(self, mog_model: MOGModel, mog_prior: MOGPrior, E_YminusUV: np.ndarray, E_YminusUV2: np.ndarray):
+    def __mog_vmax(
+        self,
+        mog_model: MOGModel,
+        mog_prior: MOGPrior,
+        E_YminusUV: np.ndarray,
+        E_YminusUV2: np.ndarray,
+    ):
         """Estimate the parameters of the MOG prior from the data.
 
         Parameters
         ------------
-        mog_model : MOGModel 
+        mog_model : MOGModel
             The MOG model object containing the responsibility matrix R.
-            
-        mog_prior : MOGPrior 
+
+        mog_prior : MOGPrior
             The prior MOG model parameters.
-            
-        E_YminusUV : ndarray 
+
+        E_YminusUV : ndarray
             The residual matrix (Y - UV).
-        
-        E_YminusUV2 : ndarray 
+
+        E_YminusUV2 : ndarray
             The elementwise squared residual matrix.
 
         Returns
         --------
-        mog_model : MOGModel 
+        mog_model : MOGModel
             The updated MOG model with new parameters estimated from data.
 
         """
@@ -310,18 +340,24 @@ class MixtureOfGaussianRobustPCA:
         m, n = E_YminusUV.shape
         k = R.shape[2]
 
-        nxbar = R.reshape(m*n, k) @ E_YminusUV.reshape(-1)  # (k, )
-        nk = np.sum(R.reshape(m*n, k), axis = 0)
+        nxbar = R.reshape(m * n, k) @ E_YminusUV.reshape(-1)  # (k, )
+        nk = np.sum(R.reshape(m * n, k), axis=0)
         alpha = alpha0 + nk
         beta = beta0 + nk
         c = c0 + nk / 2
         mu = (beta0 * mu0 + nxbar) / beta
-        d = d0 + 0.5 * (R.reshape(m*n, k) @ E_YminusUV2.reshape(-1) + beta0 * mu0**2 - (nxbar + beta0 * mu0)**2 / beta)
+        d = d0 + 0.5 * (
+            R.reshape(m * n, k) @ E_YminusUV2.reshape(-1)
+            + beta0 * mu0**2
+            - (nxbar + beta0 * mu0) ** 2 / beta
+        )
 
         mog_model = MOGModel(R, c, beta, d, mu)  # create new mog model
         return mog_model
 
-    def __mog_vexp(self, mog_model: MOGModel, E_YminusUV: np.ndarray, E_YminusUV2: np.ndarray):
+    def __mog_vexp(
+        self, mog_model: MOGModel, E_YminusUV: np.ndarray, E_YminusUV2: np.ndarray
+    ):
         """Update responsibilities in MOG model using variational expectation.
 
         Parameters
@@ -330,7 +366,7 @@ class MixtureOfGaussianRobustPCA:
             The MOG model containing parameters alpha, beta, mu, c, d.
         E_YminusUV : ndarray
             Residual matrix E[Y-UV].
-        E_YminusUV2 : ndarray 
+        E_YminusUV2 : ndarray
             Elementwise square of E_YminusUV.
 
         Returns
@@ -353,19 +389,30 @@ class MixtureOfGaussianRobustPCA:
         tau = c / d
         EQ = np.zeros(m * n, k)
         for i in range(k):
-            EQ[:, i] = 1/beta[i] + tau[i] * mu[i]**2 + tau[i] * Ex2 - 2 * tau[i] * Ex * mu[i]
+            EQ[:, i] = (
+                1 / beta[i]
+                + tau[i] * mu[i] ** 2
+                + tau[i] * Ex2
+                - 2 * tau[i] * Ex * mu[i]
+            )
 
         Elogtau = psi(c) - np.log(d)
         Elogpi = psi(alpha) - psi(np.sum(alpha))
 
-        logRho = (EQ - 2 * Elogpi+Elogtau - np.log(2*np.pi)) / (-2)
+        logRho = (EQ - 2 * Elogpi + Elogtau - np.log(2 * np.pi)) / (-2)
         logR = logRho - logsumexp(logRho, axis=1)
         R = np.exp(logR)
 
         mog_model.R = R.reshape(m, n, k)
         return mog_model
 
-    def decompose(self, M: np.ndarray, rank =  None, lr_prior: LRPrior = None, mog_prior: MOGPrior = None):
+    def decompose(
+        self,
+        M: np.ndarray,
+        rank=None,
+        lr_prior: LRPrior = None,
+        mog_prior: MOGPrior = None,
+    ):
         """Decompose a matrix M into low rank (L) and sparse noise (S) components using MOG prior.
 
         Parameters
@@ -395,7 +442,7 @@ class MixtureOfGaussianRobustPCA:
 
         """
         check_real_matrix(M)
-        Y = M.copy()   # make a copy of the matrix to avoid side effects
+        Y = M.copy()  # make a copy of the matrix to avoid side effects
 
         m, n = Y.shape
         mn = m * n
@@ -427,8 +474,8 @@ class MixtureOfGaussianRobustPCA:
             r = rank
             U = np.random.randn(m, r) * scale**0.5
             V = np.random.randn(n, r) * scale**0.5
-        Sigma_U = np.tile(scale * np.eye(r), (1, 1, m) )
-        Sigma_V = np.tile(scale * np.eye(r), (1, 1, n) )
+        Sigma_U = np.tile(scale * np.eye(r), (1, 1, m))
+        Sigma_V = np.tile(scale * np.eye(r), (1, 1, n))
         gammas = scale * np.ones(r)
 
         lr_model = LRModel(U, V, Sigma_U, Sigma_V, gammas)
@@ -437,47 +484,51 @@ class MixtureOfGaussianRobustPCA:
         # Mog model initialization
         E = Y - L  # (m, n)
         mog_model = MOGModel(None, None, None, None, None)  # initialize blank mog model
-        R = self.__R_initialization(E.reshape(-1), k)   # (mn, k)
-        nk = np.sum(R, axis = 0)   # (k,)
+        R = self.__R_initialization(E.reshape(-1), k)  # (mn, k)
+        nk = np.sum(R, axis=0)  # (k,)
         nxbar = R @ E.reshape(-1)  # (k, )
-        mog_model.c = mog_prior.c0 + nk/2   # (k, )
-        mog_model.beta = mog_prior.beta0 + nk   # (k, )
-        mog_model.d = mog_prior.d0 + 0.5 * (R @ (E.reshape(-1) ** 2)) + mog_prior.beta0 * mog_prior.mu0**2 - 1/mog_model.beta * (nxbar + mog_prior.beta0 * mog_prior.mu0)**2   # (k, )
+        mog_model.c = mog_prior.c0 + nk / 2  # (k, )
+        mog_model.beta = mog_prior.beta0 + nk  # (k, )
+        mog_model.d = (
+            mog_prior.d0
+            + 0.5 * (R @ (E.reshape(-1) ** 2))
+            + mog_prior.beta0 * mog_prior.mu0**2
+            - 1 / mog_model.beta * (nxbar + mog_prior.beta0 * mog_prior.mu0) ** 2
+        )  # (k, )
         mog_model.R = R.reshape(m, n, k)
-        mog_model.mu = 1/mog_model.beta * (mog_prior.beta0 * mog_prior.mu0 + nxbar)   # (k, )
+        mog_model.mu = (
+            1 / mog_model.beta * (mog_prior.beta0 * mog_prior.mu0 + nxbar)
+        )  # (k, )
 
         # main loop
         for niter in range(self.maxiter):
             L_old = L
 
             # LR update
-            lr_model, r, E_minusUV, E_minusUV2 = self.__lr_update(Y, lr_model, mog_model, r, lr_prior)
+            lr_model, r, E_minusUV, E_minusUV2 = self.__lr_update(
+                Y, lr_model, mog_model, r, lr_prior
+            )
             L = lr_model.U @ lr_model.V.T
 
             # mog update
             mog_model = self.__mog_vmax(mog_model, mog_prior, E_minusUV, E_minusUV2)
             mog_model = self.__mog_vexp(mog_model, E_minusUV, E_minusUV2)
-            
 
             # convergence check
-            if np.linalg.norm(L - L_old, 'fro') / np.linalg.norm(L_old, 'fro') < self.tol:
+            if (
+                np.linalg.norm(L - L_old, "fro") / np.linalg.norm(L_old, "fro")
+                < self.tol
+            ):
                 break
 
         return LSNResult(
-            L = L,
-            S = (Y - L),
-            N = None,
-            convergence = {
-                'converged': niter < self.maxiter,
-                'niter': niter,
+            L=L,
+            S=(Y - L),
+            N=None,
+            convergence={
+                "converged": niter < self.maxiter,
+                "niter": niter,
             },
-            lr_model = lr_model,    # additional parameters
-            mog_model = mog_model,
+            lr_model=lr_model,  # additional parameters
+            mog_model=mog_model,
         )
-
-
-
-
-
-
-

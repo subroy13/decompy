@@ -1,6 +1,5 @@
 import numpy as np
-import pytest
-from decompy.interfaces import SVDResult, PCAResult
+from decompy.interfaces import SVDResult, PCAResult, LSNResult
 
 
 class TestSVDResultInterface:
@@ -28,7 +27,7 @@ class TestSVDResultInterface:
 
     def test_convergence_metrics(self, sample_svdresult: SVDResult):
         convergence = sample_svdresult.convergence_metrics()
-        assert convergence == {'iterations': 100, 'error': 1e-2 }
+        assert convergence == {'iterations': 100, 'error': 1e-2}
 
     def test_cumulative_variance_identity(self, sample_svdresult: SVDResult):
         cumulative_variance = sample_svdresult.cumulative_variance(type="identity")
@@ -68,7 +67,7 @@ class TestPCAResultInterface:
 
     def test_convergence_metrics(self, sample_pcaresult: PCAResult):
         convergence = sample_pcaresult.convergence_metrics()
-        assert convergence == {'iterations': 100, 'error': 1e-2 }
+        assert convergence == {'iterations': 100, 'error': 1e-2}
 
     def test_cumulative_variance_identity(self, sample_pcaresult: PCAResult):
         cumulative_variance = sample_pcaresult.cumulative_variance(type="identity")
@@ -83,3 +82,55 @@ class TestPCAResultInterface:
     def test_estimated_rank(self, sample_pcaresult: PCAResult):
         estimated_rank = sample_pcaresult.estimated_rank()
         assert estimated_rank == 3
+
+
+class TestLSNResultInterface:
+
+    def test_singular_values_as_matrix(self, sample_lsnresult: LSNResult):
+        s = sample_lsnresult.singular_values(as_matrix=True)
+        sexp = np.diag(np.linalg.svd(sample_lsnresult.L, compute_uv=False))
+        assert np.allclose(s, sexp)
+
+    def test_singular_values_as_array(self, sample_lsnresult: LSNResult):
+        s = sample_lsnresult.singular_values(as_matrix=False)
+        sexp = np.linalg.svd(sample_lsnresult.L, compute_uv=False)
+        assert np.allclose(s, sexp)
+
+    def test_singular_vectors_left(self, sample_lsnresult: LSNResult):
+        U = sample_lsnresult.singular_vectors(type="left")
+        Uexp, _, _ = np.linalg.svd(sample_lsnresult.L)
+        assert np.allclose(U, Uexp)
+
+    def test_singular_vectors_right(self, sample_lsnresult: LSNResult):
+        V = sample_lsnresult.singular_vectors(type="right")
+        _, _, Vexp = np.linalg.svd(sample_lsnresult.L)
+        assert np.allclose(V, Vexp)
+
+    def test_singular_vectors_both(self, sample_lsnresult: LSNResult):
+        U, V = sample_lsnresult.singular_vectors(type="both")
+        Uexp, _, Vexp = np.linalg.svd(sample_lsnresult.L)
+        assert np.allclose(U, Uexp) and np.allclose(V, Vexp)
+
+    def test_convergence_metrics(self, sample_lsnresult: LSNResult):
+        convergence = sample_lsnresult.convergence_metrics()
+        assert convergence == {'iterations': 100, 'error': 1e-2}
+
+    def test_cumulative_variance_identity(self):
+        L = np.random.rand(10, 5)
+        lsn = LSNResult(L=L)
+        s = lsn.singular_values(as_matrix=False)
+        cvar_id = lsn.cumulative_variance(type="identity")
+        assert np.allclose(cvar_id, np.cumsum(s))
+
+    def test_cumulative_variance_proportion(self):
+        L = np.random.rand(10, 5)
+        lsn = LSNResult(L=L)
+        s = lsn.singular_values(as_matrix=False)
+        cvar_prop = lsn.cumulative_variance(type="proportion")
+        assert np.allclose(cvar_prop, np.cumsum(s) / np.sum(s))
+
+    def test_estimated_rank(self):
+        L = np.diag([1, 1, 1, 0.5, 0.1])
+        lsn = LSNResult(L=L)
+        rank = lsn.estimated_rank(threshold=0.51)
+        assert rank == 3

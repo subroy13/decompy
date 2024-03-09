@@ -8,7 +8,7 @@
 
 ![](https://img.shields.io/pypi/pyversions/decompy) [![](https://img.shields.io/pypi/v/decompy)](https://pypi.org/project/decompy/) [![](https://img.shields.io/badge/license-BSD3_Clause-green)](https://github.com/subroy13/decompy/blob/master/LICENSE)
 
-![PyPI - Downloads](https://img.shields.io/pypi/dm/decompy) ![](https://img.shields.io/pepy/dt/decompy) [![decompy](https://snyk.io/advisor/python/decompy/badge.svg)](https://snyk.io/advisor/python/decompy) [![Tests Status](tests-badge.svg?dummy=8484744)](./reports/junit/junit.xml) [![Test Coverage](coverage.svg?dummy=4345432)](.)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/decompy) ![](https://img.shields.io/pepy/dt/decompy) [![decompy](https://snyk.io/advisor/python/decompy/badge.svg)](https://snyk.io/advisor/python/decompy) [![Tests Status](tests-badge.svg?dummy=8484744)](./reports/junit/junit.xml) [![Test Coverage](coverage.svg?dummy=4345432)](.) [![Flake8](flake8-badge.svg?dummy=3436543)](./reports/flake8/index.html)
 
 ## Features
 

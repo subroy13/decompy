@@ -35,5 +35,5 @@ __all__ = [
     "SingularValueThresholding",
     "SymmetricAlternatingDirectionALM",
     "GrassmannAverage",
-    "RegulaizedL1AugmentedLagrangianMethod"
+    "RegulaizedL1AugmentedLagrangianMethod",
 ]
