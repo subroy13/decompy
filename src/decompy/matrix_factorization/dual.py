@@ -104,7 +104,7 @@ class DualRobustPCA:
         # initialize
         Y = np.sign(D)
         norm_two = np.linalg.norm(Y, ord=2)
-        norm_inf = np.linalg.norm(Y, ord="inf") / lambd
+        norm_inf = np.linalg.norm(Y, ord=np.inf) / lambd
         dual_norm = max(norm_two, norm_inf)
         Y /= dual_norm
         norm_two /= dual_norm
@@ -129,7 +129,7 @@ class DualRobustPCA:
             niter += 1
 
             if norm_two < norm_inf - self.eps and niter < self.maxiter:
-                threshold = np.linalg.norm(Y, "inf") * (1 - self.eps_proj)
+                threshold = np.linalg.norm(Y, np.inf) * (1 - self.eps_proj)
                 Z = np.maximum(D * (Y > threshold), 0) + np.minimum(
                     D * (Y < -threshold), 0
                 )
@@ -148,7 +148,7 @@ class DualRobustPCA:
                     A_dual = np.zeros((m, n))
                     E_dual = np.zeros((m, n))
                     proj = 0
-                    threshold = np.linalg.norm(Y, "inf") * (1 - self.eps_proj)
+                    threshold = np.linalg.norm(Y, np.inf) * (1 - self.eps_proj)
                     while not convergedProjection:
                         Z = D - A_dual
                         Z = np.maximum(Z * (Y > threshold), 0) + np.minimum(
@@ -189,7 +189,7 @@ class DualRobustPCA:
                     while not converged_line_search_like:
                         X = Y + stepsize * Z
                         norm_two = np.linalg.norm(X, 2)
-                        norm_inf = np.linalg.norm(X, "inf") / lambd
+                        norm_inf = np.linalg.norm(X, np.inf) / lambd
                         dual_norm = max(norm_two, norm_inf)
                         tempv = (a + b * stepsize) / dual_norm
                         diff = tempv - a - stepsize / 2 * c
@@ -229,7 +229,7 @@ class DualRobustPCA:
                         else:
                             X = Y + next_position * Z
                             norm_two = np.linalg.norm(X, 2)
-                            norm_inf = np.linalg.norm(X, "inf") / lambd
+                            norm_inf = np.linalg.norm(X, np.inf) / lambd
                             dual_norm = max(norm_two, norm_inf)
                             next_value = (a + b * next_position) / dual_norm
                             position_trace = np.append(position_trace, next_position)
@@ -251,7 +251,7 @@ class DualRobustPCA:
                             delta, _ = current_position, current_value
                             Y += delta * Z
                             norm_two = np.linalg.norm(Y, 2)
-                            norm_inf = np.linalg.norm(Y, "inf") / lambd
+                            norm_inf = np.linalg.norm(Y, np.inf) / lambd
                             dual_norm = max(norm_two, norm_inf)
                             Y /= dual_norm
                             norm_two /= dual_norm

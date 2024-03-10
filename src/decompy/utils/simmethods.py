@@ -1,9 +1,10 @@
 import numpy as np
 
-def generate_LSN(n, p, r, noise = None, outlier = None):
-    '''The `generate_LSN` function generates a matrix `X` by multiplying two low rank random matrices `A`
+
+def generate_LSN(n, p, r, noise=None, outlier=None):
+    """The `generate_LSN` function generates a matrix `X` by multiplying two low rank random matrices `A`
     and `B`, and adding noise and outliers to the result.
-    
+
     Parameters
     ----------
     n
@@ -22,25 +23,25 @@ def generate_LSN(n, p, r, noise = None, outlier = None):
         The "outlier" parameter controls the presence of outliers in the generated data. It is a value
     between 0 and 1 that represents the probability of an outlier being present in each element of the
     data matrix. If the value is 0, no outliers will be present.
-    
+
     Returns
     -------
         The function `generate_LSN` returns a matrix `X` which is the sum of three components: `L`, `S`,
     and `N`.
-    
-    '''
+
+    """
     A = np.random.randn(n, r)
     B = np.random.randn(r, p)
     L = A @ B
-    Lnorm = np.linalg.norm(L)   # we have ||L||^2 = E(||Z||^2) = np*var(Z)
+    Lnorm = np.linalg.norm(L)  # we have ||L||^2 = E(||Z||^2) = np*var(Z)
     Lmax = np.abs(L).max()
     if noise:
-        N = np.random.randn(n, p) * noise * Lnorm / np.sqrt(n*p)
+        N = np.random.randn(n, p) * noise * Lnorm / np.sqrt(n * p)
     else:
-        N = np.zeros((n,p))
+        N = np.zeros((n, p))
     if outlier:
-        S = np.random.binomial(1, outlier, size = n*p) * 5 * Lmax  # the outlier mask
-        S = S.reshape(n,p)
+        S = np.random.binomial(1, outlier, size=n * p) * 5 * Lmax  # the outlier mask
+        S = S.reshape(n, p)
     else:
         S = np.zeros((n, p))
     X = L + S + N

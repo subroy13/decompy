@@ -1,5 +1,5 @@
 import numpy as np
-from decompy.interfaces import SVDResult, PCAResult, LSNResult
+from decompy.interfaces import SVDResult, PCAResult, LSNResult, RankFactorizationResult
 
 
 class TestSVDResultInterface:
@@ -27,16 +27,20 @@ class TestSVDResultInterface:
 
     def test_convergence_metrics(self, sample_svdresult: SVDResult):
         convergence = sample_svdresult.convergence_metrics()
-        assert convergence == {'iterations': 100, 'error': 1e-2}
+        assert convergence == {"iterations": 100, "error": 1e-2}
 
     def test_cumulative_variance_identity(self, sample_svdresult: SVDResult):
         cumulative_variance = sample_svdresult.cumulative_variance(type="identity")
         assert np.array_equal(cumulative_variance, np.array([5, 8, 10]))
 
     def test_cumulative_variance_proportion(self, sample_svdresult: SVDResult):
-        cumulative_variance_proportion = sample_svdresult.cumulative_variance(type="proportion")
+        cumulative_variance_proportion = sample_svdresult.cumulative_variance(
+            type="proportion"
+        )
         expected_variance_proportion = np.array([0.5, 0.8, 1])
-        assert np.array_equal(cumulative_variance_proportion, expected_variance_proportion)
+        assert np.array_equal(
+            cumulative_variance_proportion, expected_variance_proportion
+        )
 
     def test_estimated_rank(self, sample_svdresult: SVDResult):
         estimated_rank = sample_svdresult.estimated_rank()
@@ -67,7 +71,7 @@ class TestPCAResultInterface:
 
     def test_convergence_metrics(self, sample_pcaresult: PCAResult):
         convergence = sample_pcaresult.convergence_metrics()
-        assert convergence == {'iterations': 100, 'error': 1e-2}
+        assert convergence == {"iterations": 100, "error": 1e-2}
 
     def test_cumulative_variance_identity(self, sample_pcaresult: PCAResult):
         cumulative_variance = sample_pcaresult.cumulative_variance(type="identity")
@@ -75,7 +79,9 @@ class TestPCAResultInterface:
         assert np.array_equal(cumulative_variance, expected_variance)
 
     def test_cumulative_variance_proportion(self, sample_pcaresult: PCAResult):
-        cumulative_variance_proportion = sample_pcaresult.cumulative_variance(type="proportion")
+        cumulative_variance_proportion = sample_pcaresult.cumulative_variance(
+            type="proportion"
+        )
         expected_variance_proportion = np.array([0.5, 0.82, 1])
         assert np.allclose(cumulative_variance_proportion, expected_variance_proportion)
 
@@ -113,7 +119,7 @@ class TestLSNResultInterface:
 
     def test_convergence_metrics(self, sample_lsnresult: LSNResult):
         convergence = sample_lsnresult.convergence_metrics()
-        assert convergence == {'iterations': 100, 'error': 1e-2}
+        assert convergence == {"iterations": 100, "error": 1e-2}
 
     def test_cumulative_variance_identity(self):
         L = np.random.rand(10, 5)
@@ -133,4 +139,58 @@ class TestLSNResultInterface:
         L = np.diag([1, 1, 1, 0.5, 0.1])
         lsn = LSNResult(L=L)
         rank = lsn.estimated_rank(threshold=0.51)
+        assert rank == 3
+
+
+class TestRankFactorizationResultInterface:
+
+    def test_singular_values_as_matrix(
+        self, sample_rankfactor: RankFactorizationResult
+    ):
+        s = sample_rankfactor.singular_values(as_matrix=True)
+        L = sample_rankfactor.A @ sample_rankfactor.B.T
+        sexp = np.diag(np.linalg.svd(L, compute_uv=False))
+        assert np.allclose(s, sexp[:3, :3])
+
+    def test_singular_values_as_array(self, sample_rankfactor: RankFactorizationResult):
+        s = sample_rankfactor.singular_values(as_matrix=False)
+        L = sample_rankfactor.A @ sample_rankfactor.B.T
+        sexp = np.linalg.svd(L, compute_uv=False)
+        assert np.allclose(s, sexp[:3])
+
+    def test_singular_vectors_left(self, sample_rankfactor: RankFactorizationResult):
+        U = sample_rankfactor.singular_vectors(type="left")
+        Uexp, _, _ = np.linalg.svd(sample_rankfactor.A @ sample_rankfactor.B.T)
+        assert np.allclose(U, Uexp[:, :3])
+
+    def test_singular_vectors_right(self, sample_rankfactor: RankFactorizationResult):
+        V = sample_rankfactor.singular_vectors(type="right")
+        _, _, Vexp = np.linalg.svd(sample_rankfactor.A @ sample_rankfactor.B.T)
+        assert np.allclose(V, Vexp[:3, :])
+
+    def test_singular_vectors_both(self, sample_rankfactor: RankFactorizationResult):
+        U, V = sample_rankfactor.singular_vectors(type="both")
+        Uexp, _, Vexp = np.linalg.svd(sample_rankfactor.A @ sample_rankfactor.B.T)
+        assert np.allclose(U, Uexp[:, :3]) and np.allclose(V, Vexp[:3, :])
+
+    def test_convergence_metrics(self, sample_rankfactor: RankFactorizationResult):
+        convergence = sample_rankfactor.convergence_metrics()
+        assert convergence == {"iterations": 100, "error": 1e-2}
+
+    def test_cumulative_variance_identity(
+        self, sample_rankfactor: RankFactorizationResult
+    ):
+        s = sample_rankfactor.singular_values(as_matrix=False)
+        cvar_id = sample_rankfactor.cumulative_variance(type="identity")
+        assert np.allclose(cvar_id, np.cumsum(s))
+
+    def test_cumulative_variance_proportion(
+        self, sample_rankfactor: RankFactorizationResult
+    ):
+        s = sample_rankfactor.singular_values(as_matrix=False)
+        cvar_prop = sample_rankfactor.cumulative_variance(type="proportion")
+        assert np.allclose(cvar_prop, np.cumsum(s) / np.sum(s))
+
+    def test_estimated_rank(self, sample_rankfactor: RankFactorizationResult):
+        rank = sample_rankfactor.estimated_rank()
         assert rank == 3

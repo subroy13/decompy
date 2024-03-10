@@ -76,9 +76,9 @@ def _gibbs_sample(E, Nu, Nv, phi, mu, psi, lor, llb=50, lub=750):
         lpd = la + lb + lc  # (lmax + 1, )
         pdl = np.exp(lpd - np.max(lpd))  # (lmax + 1, )
         pdl /= np.sum(pdl)  # make it probability
-        l = np.random.choice(lseq, p=pdl)  # index between 1 to lmax + 1
-        if l > 0:
-            delta = rXL(mu * psi / (psi + phi), np.sqrt(1 / (phi + psi)), l)  # scalar
+        ell = np.random.choice(lseq, p=pdl)  # index between 1 to lmax + 1
+        if ell > 0:
+            delta = rXL(mu * psi / (psi + phi), np.sqrt(1 / (phi + psi)), ell)  # scalar
         else:
             delta = np.random.randn(1) / np.sqrt(phi + psi) + mu * psi / (phi + psi)
 

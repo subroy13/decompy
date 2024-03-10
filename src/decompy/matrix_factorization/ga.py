@@ -44,7 +44,7 @@ class GrassmannAverage:
         self.em_iter = kwargs.get("em_iter", 3)
         self.trim_percent = kwargs.get("trim_percent", 0)
         assert (
-            self.trim_percent > 0 and self.trim_percent < 0.5
+            self.trim_percent >= 0 and self.trim_percent <= 0.5
         ), "trim_percent must be in (0, 0.5)"
 
     def _reorth(

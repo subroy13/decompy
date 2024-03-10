@@ -6,14 +6,13 @@ from ..interfaces import RankFactorizationResult
 
 
 class VariationalBayes:
-
     """
     Robust PCA using Variational Bayesian method
-    
+
     Notes
     -----
     [1] S. D. Babacan, M. Luessi, R. Molina and A. K. Katsaggelos, "Sparse Bayesian Methods for Low-Rank Matrix Estimation," in IEEE Transactions on Signal Processing, vol. 60, no. 8, pp. 3964-3977, Aug. 2012, doi: 10.1109/TSP.2012.2197748.
-    
+
     """
 
     def __init__(self, **kwargs):
@@ -24,8 +23,8 @@ class VariationalBayes:
         verbose : bool, optional
             Whether to print progress updates. Default is False.
         initmethod : {'ml', 'rand'}, optional
-            Initialization method for factors A and B. 
-            'ml' uses SVD on Y, 'rand' uses random initialization. 
+            Initialization method for factors A and B.
+            'ml' uses SVD on Y, 'rand' uses random initialization.
             Default is 'ml'.
         a_gamma0 : float, optional
             Initial value for precision of A. Default is 1e-6.
@@ -40,7 +39,7 @@ class VariationalBayes:
         b_beta0 : float, optional
             Initial value for precision of noise in B. Default is 0.
         inference_flag : {'standard', 'fixed point'}, optional
-            Inference method. 'standard' or 'fixed point'. 
+            Inference method. 'standard' or 'fixed point'.
             Default is 'standard'.
         maxiter : int, optional
             Maximum number of iterations. Default is 100.
@@ -51,7 +50,7 @@ class VariationalBayes:
         dim_red : bool, optional
             Whether to reduce dimensions. Default is True.
         dim_red_thr : float, optional
-            Threshold to use for dimension reduction. Default is 1e4.  
+            Threshold to use for dimension reduction. Default is 1e4.
         mode : {'VB', 'VB_app', 'MAP'}, optional
             Estimation mode. 'VB', 'VB_app' or 'MAP'.
             Default is 'VB'.
@@ -59,13 +58,16 @@ class VariationalBayes:
             Tolerance for convergence. Default is 1e-5.
 
         """
-        self.verbose = kwargs.get("verbose", False)   # output the progress
-        
-        # initialization method: 
+        self.verbose = kwargs.get("verbose", False)  # output the progress
+
+        # initialization method:
         #   'rand': initialize A and B with random matrices
         #   'ml': Apply SVD to Y and initialize A and B using its factors.
         self.initmethod = kwargs.get("init", "ml")
-        assert self.initmethod in ["ml", "rand"], "Initialization method must be either 'rand' or 'ml'"
+        assert self.initmethod in [
+            "ml",
+            "rand",
+        ], "Initialization method must be either 'rand' or 'ml'"
 
         self.a_gamma0 = kwargs.get("a_gamma0", 1e-6)
         self.b_gamma0 = kwargs.get("b_gamma0", 1e-6)
@@ -76,23 +78,35 @@ class VariationalBayes:
         self.a_beta0 = kwargs.get("a_beta0", 0)
         self.b_beta0 = kwargs.get("b_beta0", 0)
 
-        # Flag for inference of component of E. 
+        # Flag for inference of component of E.
         #   "standard"
         #   "fixed point"
         self.inference_flag = kwargs.get("inference_flag", "standard")
-        assert self.inference_flag in ["standard", "fixed point"], "Inference flag must be either 'standard' or 'fixed point'"
+        assert self.inference_flag in [
+            "standard",
+            "fixed point",
+        ], "Inference flag must be either 'standard' or 'fixed point'"
 
         self.maxiter = kwargs.get("maxiter", 100)
-        self.update_beta = kwargs.get("update_beta", True) # whether to update noise variance
+        self.update_beta = kwargs.get(
+            "update_beta", True
+        )  # whether to update noise variance
         self.beta = kwargs.get("beta", None)
-        self.dim_red = kwargs.get("dim_red", True)  # whether to prune irrelevant dimensions during the iterations
-        self.dim_red_thr = kwargs.get("dim_red_thr", 1e4)   # the threshold to use to prune irrelevant dimensions
-        self.mode = kwargs.get("mode", "VB")   # there are 3 modes, VB, VB_app, and MAP
-        assert self.mode in ["VB", "VB_app", "MAP"], "Mode must be one of following: 'VB', 'VB_app' and 'MAP'"
+        self.dim_red = kwargs.get(
+            "dim_red", True
+        )  # whether to prune irrelevant dimensions during the iterations
+        self.dim_red_thr = kwargs.get(
+            "dim_red_thr", 1e4
+        )  # the threshold to use to prune irrelevant dimensions
+        self.mode = kwargs.get("mode", "VB")  # there are 3 modes, VB, VB_app, and MAP
+        assert self.mode in [
+            "VB",
+            "VB_app",
+            "MAP",
+        ], "Mode must be one of following: 'VB', 'VB_app' and 'MAP'"
 
         self.tol = kwargs.get("tol", 1e-5)  # the tolerance level for convergence
 
-        
     def decompose(self, M: np.ndarray, rank: int = None):
         """Decompose a matrix M into low rank and sparse components.
 
@@ -128,9 +142,9 @@ class VariationalBayes:
             U, s, Vh = np.linalg.svd(Y, full_matrices=False)
             V = Vh.T
             r = min(m, n) if rank is None else rank
-            A = U[:, :r] @ np.diag(s[:r]**0.5)
-            B = np.diag(s[:r]**0.5) @ V[:r, :].T
-            
+            A = U[:, :r] @ np.diag(s[:r] ** 0.5)
+            B = np.diag(s[:r] ** 0.5) @ V[:r, :].T
+
             Sigma_A = scale * np.eye(r)
             Sigma_B = scale * np.eye(r)
             gammas = scale * np.ones(r)
@@ -138,7 +152,7 @@ class VariationalBayes:
 
             if not self.update_beta and self.beta is not None:
                 beta = self.beta
-            
+
             Sigma_E = scale * np.ones((r, r))
             alphas = np.ones((m, n)) * scale
         elif self.initmethod == "rand":
@@ -155,15 +169,10 @@ class VariationalBayes:
             alphas = np.ones((m, n)) * scale
         else:
             raise ValueError("Invalid initialization method")
-    
+
         X = A @ B.T
         E = Y - X
-        metrics = {
-            'niter': 0,
-            'Econv': [],
-            'Xconv': [],
-            'converged': True
-        }
+        metrics = {"niter": 0, "Econv": [], "Xconv": [], "converged": True}
 
         # Iterations
         for it in range(1, self.maxiter + 1):
@@ -180,7 +189,7 @@ class VariationalBayes:
             elif self.mode == "VB_app":
                 Sigma_A = beta * B.T @ B + W + beta * n * Sigma_B
                 A = np.linalg.solve(Sigma_A, beta * (Y - E) @ B)
-                Sigma_A = np.diag(1/np.diag(Sigma_A))
+                Sigma_A = np.diag(1 / np.diag(Sigma_A))
             elif self.mode == "MAP":
                 Sigma_A = beta * B.T @ B + W + beta * n * Sigma_B
                 A = np.linalg.solve(Sigma_A, beta * (Y - E) @ B)
@@ -193,7 +202,7 @@ class VariationalBayes:
             elif self.mode == "VB_app":
                 Sigma_B = beta * A.T @ A + W + beta * m * Sigma_A
                 B = np.linalg.solve(Sigma_B, beta * (Y - E).T @ A)
-                Sigma_B = np.diag(1/np.diag(Sigma_B))
+                Sigma_B = np.diag(1 / np.diag(Sigma_B))
             elif self.mode == "MAP":
                 Sigma_B = beta * A.T @ A + W + beta * m * Sigma_A
                 B = np.linalg.solve(Sigma_B, beta * (Y - E).T @ A)
@@ -202,7 +211,7 @@ class VariationalBayes:
             X = A @ B.T
 
             # E Step
-            Sigma_E = 1/(alphas + beta)
+            Sigma_E = 1 / (alphas + beta)
             E = beta * (Y - X) * Sigma_E
 
             # Estimate alphas
@@ -210,18 +219,34 @@ class VariationalBayes:
                 alphas = 1 / (E**2 + Sigma_E)
             elif self.inference_flag == "fixed point":
                 # MacKay fixed point method
-                alphas = (1 - alphas * Sigma_E + self.a_alpha0 ) / (E**2 + EPS + self.b_alpha0)
+                alphas = (1 - alphas * Sigma_E + self.a_alpha0) / (
+                    E**2 + EPS + self.b_alpha0
+                )
 
             # Estimate gammas
             if self.inference_flag == "standard":
-                gammas = (m + n + self.a_gamma0) / (np.diag(B.T @ B) + np.diag(A.T @ A) + m * np.diag(Sigma_A) + n * np.diag(Sigma_B) + self.b_gamma0)
+                gammas = (m + n + self.a_gamma0) / (
+                    np.diag(B.T @ B)
+                    + np.diag(A.T @ A)
+                    + m * np.diag(Sigma_A)
+                    + n * np.diag(Sigma_B)
+                    + self.b_gamma0
+                )
             elif self.inference_flag == "fixed point":
                 # MacKay fixed point method
-                gammas = ( m + n - m * np.diag(Sigma_A) - n*np.diag(Sigma_B) + self.a_gamma0) / (np.diag(B.T @ B) + np.diag(A.T @ A) + self.b_gamma0)
-            
+                gammas = (
+                    m + n - m * np.diag(Sigma_A) - n * np.diag(Sigma_B) + self.a_gamma0
+                ) / (np.diag(B.T @ B) + np.diag(A.T @ A) + self.b_gamma0)
+
             # Estimate beta
             if self.update_beta:
-                err = np.sum((Y - X - E)**2) + n * np.trace(A.T @ A @ Sigma_B) + m * np.trace(B.T @ B @ Sigma_A) + mn * np.trace(Sigma_A @ Sigma_B) + np.sum(Sigma_E)
+                err = (
+                    np.sum((Y - X - E) ** 2)
+                    + n * np.trace(A.T @ A @ Sigma_B)
+                    + m * np.trace(B.T @ B @ Sigma_A)
+                    + mn * np.trace(Sigma_A @ Sigma_B)
+                    + np.sum(Sigma_E)
+                )
                 beta = (mn + self.a_beta0) / (err + self.b_beta0)
 
             # Prune irrelevant dimension
@@ -239,40 +264,32 @@ class VariationalBayes:
 
                     m, r = A.shape
                     n, r = B.shape
-            
+
             # Check for convergence and display progress
-            Xconv = np.linalg.norm(old_X - X, 'fro') / np.linalg.norm(old_X, 'fro')
+            Xconv = np.linalg.norm(old_X - X, "fro") / np.linalg.norm(old_X, "fro")
 
             if self.verbose:
-                Econv = np.linalg.norm(old_E - E, 'fro') / np.linalg.norm(old_E, 'fro')
-                metrics['Econv'].append(Econv)
-                metrics['Xconv'].append(Xconv)
+                Econv = np.linalg.norm(old_E - E, "fro") / np.linalg.norm(old_E, "fro")
+                metrics["Econv"].append(Econv)
+                metrics["Xconv"].append(Xconv)
 
             if it > 5 and Xconv < self.tol:
                 break
 
-        metrics['niter'] = it
-        metrics['converged'] = (it < self.maxiter)   # whether maxit reach or converged
+        metrics["niter"] = it
+        metrics["converged"] = it < self.maxiter  # whether maxit reach or converged
 
         # return result
         if self.verbose:
             return RankFactorizationResult(
-                A = A,
-                B = B,
-                convergence = metrics,
-                gamma = gammas,
-                alpha = alphas,
-                beta = betas,
-                Sigma_A = Sigma_A,
-                Sigma_B = Sigma_B
+                A=A,
+                B=B,
+                convergence=metrics,
+                gamma=gammas,
+                alpha=alphas,
+                beta=beta,
+                Sigma_A=Sigma_A,
+                Sigma_B=Sigma_B,
             )
         else:
-            return RankFactorizationResult(
-                A = A,
-                B = B,
-                convergence = metrics
-            )
-                
-
-        
-
+            return RankFactorizationResult(A=A, B=B, convergence=metrics)

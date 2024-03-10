@@ -163,7 +163,7 @@ class RegulaizedL1AugmentedLagrangianMethod:
 
         return RankFactorizationResult(
             A=U_est,
-            B=V_est,
+            B=V_est.T,
             convergence={
                 "niter": niter_out,
                 "stop_c": stop_c,

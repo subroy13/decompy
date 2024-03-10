@@ -30,7 +30,7 @@ class SingularValueThresholding:
     def decompose(
         self,
         M: np.ndarray,
-        lambdaval: float,
+        lambdaval: Union[float, None] = None,
         tau: Union[float, None] = None,
         delta: Union[float, None] = None,
     ):
@@ -57,6 +57,7 @@ class SingularValueThresholding:
         n, p = X.shape
 
         # set options
+        lambdaval = 1 / np.sqrt(min(n, p)) if lambdaval is None else lambdaval
         delta = 0.9 if delta is None else delta
         tau = 1e4 if tau is None else tau
 
@@ -70,7 +71,7 @@ class SingularValueThresholding:
 
         while not converged:
             niter += 1
-            U, s, Vt = np.linalg.svd(Y)
+            U, s, Vt = np.linalg.svd(Y, full_matrices=False)
             U = U[:, :rankA]
             Vt = Vt[:rankA, :]
 

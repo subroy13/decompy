@@ -2,7 +2,8 @@
 # it's not a bug that we aren't using all of hacking, ignore:
 # H501: Line too long
 # W605: invalid escape sequence
-extend-ignore = E501,W605
+# E203: whitespace before ':'
+extend-ignore = E501,W605,E203
 exclude = .git,__pycache__,build,dist
 format = html
 statistics = True

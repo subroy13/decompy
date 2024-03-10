@@ -36,3 +36,42 @@
 3     W292 no newline at end of file
 54    W293 blank line contains whitespace
 2     W391 blank line at end of file
+4     E201 whitespace after '('
+7     E202 whitespace before ')'
+2     E225 missing whitespace around operator
+2     E231 missing whitespace after ','
+70    E251 unexpected spaces around keyword / parameter equals
+4     E261 at least two spaces before inline comment
+7     E302 expected 2 blank lines, found 1
+2     E303 too many blank lines (2)
+3     E741 ambiguous variable name 'l'
+2     F821 undefined name 'sigma'
+3     F841 local variable 'alpha' is assigned to but never used
+8     W291 trailing whitespace
+3     W292 no newline at end of file
+44    W293 blank line contains whitespace
+2     W391 blank line at end of file
+1     E201 whitespace after '('
+1     E202 whitespace before ')'
+22    E251 unexpected spaces around keyword / parameter equals
+1     E261 at least two spaces before inline comment
+1     E303 too many blank lines (2)
+1     E741 ambiguous variable name 'l'
+2     F821 undefined name 'sigma'
+3     F841 local variable 'alpha' is assigned to but never used
+6     W291 trailing whitespace
+1     W292 no newline at end of file
+11    W293 blank line contains whitespace
+1     W391 blank line at end of file
+1     E201 whitespace after '('
+1     E202 whitespace before ')'
+22    E251 unexpected spaces around keyword / parameter equals
+1     E261 at least two spaces before inline comment
+1     E303 too many blank lines (2)
+2     F821 undefined name 'sigma'
+3     F841 local variable 'alpha' is assigned to but never used
+6     W291 trailing whitespace
+11    W293 blank line contains whitespace
+1     W391 blank line at end of file
+1     F821 undefined name 'sigma'
+3     F841 local variable 'alpha' is assigned to but never used

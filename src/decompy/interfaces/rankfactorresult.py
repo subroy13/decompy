@@ -89,10 +89,10 @@ class RankFactorizationResult:
 
         """
         L = self.A @ self.B.T
-        U, s, V = np.linalg.svd(L)
-        U = U[:, self.rank]
-        s = s[:, self.rank]
-        V = V[:, self.rank]
+        U, s, Vt = np.linalg.svd(L, full_matrices=False)
+        U = U[:, : self.rank]
+        s = s[: self.rank]
+        V = Vt[: self.rank, :]
         if type == "left":
             return U
         elif type == "right":
