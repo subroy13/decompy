@@ -108,7 +108,7 @@ class InexactAugmentedLagrangianMethod:
             U, diagS, VT = np.linalg.svd(D - E_hat + (1 / mu) * Y, full_matrices=False)
             svp = (diagS > 1 / mu).sum()
             sv = min(svp + 1, n) if svp < sv else min(svp + np.round(0.05 * n), n)
-            A_hat = U[:, :svp] * np.diag(diagS[:svp] - 1 / mu) * VT[:svp, :]
+            A_hat = U[:, :svp] @ np.diag(diagS[:svp] - 1 / mu) @ VT[:svp, :]
 
             total_svd += 1
             Z = D - A_hat - E_hat

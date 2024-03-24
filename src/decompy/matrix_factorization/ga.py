@@ -91,7 +91,6 @@ class GrassmannAverage:
         [3] B. N. Parlett, ``The Symmetric Eigenvalue Problem'', Prentice-Hall, Englewood Cliffs, NJ, 1980. pp. 105-109
         [4] Rasmus Munk Larsen, DAIMI, 1998.
         """
-
         # initialize the parameters
         n, k1 = Q.shape
         if normr is None:
@@ -119,15 +118,15 @@ class GrassmannAverage:
         while (normr < alpha * normr_old) or (nre == 0):
             if method == 1:
                 if simple:
-                    t = Q.T @ r
-                    r -= Q @ t
+                    t = Q.T @ r  # (k1, )
+                    r -= Q @ t   # (n, 1)
                 else:
                     t = Q[:, index].T @ r
                     r -= Q[:, index] @ t
             else:
                 for i in index.tolist():
-                    t = Q[:, i].T @ r
-                    r -= Q[:, i] @ t
+                    t = Q[:, i].T @ r  # (1, n) x (n,) -> 1
+                    r -= Q[:, i] * t   # (n, )
             s += t
             normr_old = normr
             normr = np.linalg.norm(r)
@@ -187,13 +186,13 @@ class GrassmannAverage:
         for k in range(K):
             # compute the k-th principal component
             mu = np.random.random(size=d).reshape(-1) - 0.5
-            mu = mu / np.linalg.norm(mu)
+            mu = mu / np.linalg.norm(mu)   # (D, )
 
             # initialize using a few EM iterations
             for _ in range(self.em_iter):
                 dots = X @ mu  # (N,)
                 mu = X.T @ dots  # (D,)
-                mu /= np.linalg.norm(mu)
+                mu /= np.linalg.norm(mu)  # (D, )
 
             # now the grassmann average
             for iter in range(n):
@@ -226,14 +225,14 @@ class GrassmannAverage:
             # and possibly subtract it from data, and perform reorthonomralisation
             if k == 0:
                 vectors[:, k] = mu
-                X -= X @ mu @ mu.T
+                X -= X @ np.outer(mu, mu)
             else:
-                mu = self._reorth(vectors[:k], mu, 1)
+                mu, _, _, _ = self._reorth(vectors[:, :k], mu, 1)
                 mu /= np.linalg.norm(mu)
                 vectors[:, k] = mu
 
                 if k < (K - 1):
-                    X -= X @ mu @ mu.T  # otherwise, no need to take difference
+                    X -= X @ np.outer(mu, mu)  # otherwise, no need to take difference
 
         return RankFactorizationResult(
             A=X @ vectors,

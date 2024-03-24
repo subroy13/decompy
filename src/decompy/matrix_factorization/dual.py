@@ -135,7 +135,7 @@ class DualRobustPCA:
                 )
             else:
                 t = max(np.round(t * 1.1), t + 1)
-                u, s, vt = np.linalg.svd(Y)
+                u, s, vt = np.linalg.svd(Y, full_matrices = False)
                 t = np.max(np.where(s >= s[0] * (1 - 1e-2)))
 
                 if norm_two > norm_inf + self.eps and niter < self.maxiter:
@@ -202,7 +202,7 @@ class DualRobustPCA:
                         else:
                             stepsize *= self.beta
                         num_trial_point += 1
-                    memo_step_size[int(niter / K)] = delta
+                    memo_step_size[niter % K] = delta
 
                 else:
                     # exact linesearch
@@ -258,7 +258,7 @@ class DualRobustPCA:
                             norm_inf /= dual_norm
                             converged_line_search = True
 
-                    memo_step_size[int(niter / K)] = delta
+                    memo_step_size[niter % K] = delta
 
                 # stop criterion
                 stop_criterion = np.linalg.norm(D - A_dual - E_dual, "fro")

@@ -96,7 +96,7 @@ class FastPrincipalComponentPursuit:
 
         # First outer loop
         rank = rank0
-        Ulan, Slan, Vtlan = np.linalg.svd(X)
+        Ulan, Slan, Vtlan = np.linalg.svd(X, full_matrices = False)
         Ulan = Ulan[:, :rank]
         Slan = Slan[:rank]
         Vtlan = Vtlan[:rank, :]
@@ -116,11 +116,12 @@ class FastPrincipalComponentPursuit:
                 rank += 1
 
             # get the current rank estimate
-            Ulan, Slan, Vtlan = np.linalg.svd(X - S1)
+            Ulan, Slan, Vtlan = np.linalg.svd(X - S1, full_matrices = False)
             Ulan = Ulan[:, :rank]
             Slan = Slan[:rank]
             Vtlan = Vtlan[:rank, :]
 
+            print(rank, Slan)
             # simple rule to keep or increase the current rank's value
             rho = Slan[rank - 1] / np.sum(Slan[: (rank - 1)])
             inc_rank = rho > rank_threshold

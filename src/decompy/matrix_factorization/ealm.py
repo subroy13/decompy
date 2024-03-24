@@ -104,7 +104,7 @@ class ExactAugmentedLagrangianMethod:
                 )
                 svp = (diagS > 1 / mu).sum()
                 sv = min(svp + 1, n) if svp < sv else min(svp + np.round(0.05 * n), n)
-                temp_A = U[:, :svp] * np.diag(diagS[:svp] - 1 / mu) * VT[:svp, :]
+                temp_A = U[:, :svp] @ np.diag(diagS[:svp] - 1 / mu) @ VT[:svp, :]
 
                 if (
                     np.linalg.norm(A_hat - temp_A, "fro") < tol_proj

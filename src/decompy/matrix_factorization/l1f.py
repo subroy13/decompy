@@ -73,13 +73,13 @@ class L1Filtering:
 
         m, n = D.shape
 
-        dr = np.ceil(m / sr)
-        dc = np.ceil(n / sc)
+        dr = np.ceil(m / sr).astype('int')
+        dc = np.ceil(n / sc).astype('int')
 
         row_seed = np.random.permutation(m)[:dr]
         column_seed = np.random.permutation(n)[:dc]
 
-        D_seed = D[row_seed, column_seed]
+        D_seed = D[row_seed, :][:, column_seed]
         _, s, _ = np.linalg.svd(D_seed, full_matrices=False)
         rA = np.sum(s > thres * s[0])  # get the approximate low rank
 
@@ -91,7 +91,7 @@ class L1Filtering:
             row_seed = np.random.permutation(m)[:dr]
             column_seed = np.random.permutation(n)[:dc]
 
-            D_seed = D[row_seed, column_seed]
+            D_seed = D[row_seed, :][:,column_seed]
             _, s, _ = np.linalg.svd(D_seed, full_matrices=False)
             rA = np.sum(s > thres * s[0])  # get the approximate low rank
 
@@ -103,7 +103,7 @@ class L1Filtering:
         row_seed = np.random.permutation(m)[:dr]
         column_seed = np.random.permutation(n)[:dc]
 
-        D_seed = D[row_seed, column_seed]
+        D_seed = D[row_seed, :][:, column_seed]
         U, s, Vt = np.linalg.svd(D_seed, full_matrices=False)
         rA = np.sum(s > thres * s[0])  # get the approximate low rank
         A_seed = U[:, :rA] @ np.diag(s[:rA]) @ Vt[:rA, :]
@@ -157,7 +157,7 @@ class L1Filtering:
             niter += 1
 
             # update E
-            temp_T = D - A @ alpha + (1 / mu) * Y
+            temp_T = D - A @ alpha + (1 / mu) * Y   # (n, s)
             E = np.maximum(temp_T - 1 / mu, 0) + np.minimum(temp_T + 1 / mu, 0)
 
             # update alpha
@@ -232,14 +232,14 @@ class L1Filtering:
 
         column_comp = [i for i in range(n) if i not in column_seed.tolist()]
         _, Ac_row, niterrow, stopc_row = self._solve_ml1(
-            D[row_seed, column_comp], Ur, Ur.T
+            D[row_seed, :][:, column_comp], Ur, Ur.T
         )
         A_row[:, np.array(column_comp)] = Ac_row
         A_row[:, column_seed] = AS_row
 
         row_comp = [i for i in range(m) if i not in row_seed.tolist()]
         _, Ac_column, nitercol, stopc_col = self._solve_ml1(
-            D[row_comp, column_seed], Vtr.T, Vtr
+            D[row_comp, :][:, column_seed].T, Vtr.T, Vtr
         )
         A_column[:, np.array(row_comp)] = Ac_column
         A_column[:, row_seed] = AS_column.T
