@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>src\decompy\matrix_factorization\asrpca.py - flake8 annotated source</title>
+      <meta http-equiv="Content-Type" value="text/html; charset=UTF-8">
+      <link rel="stylesheet" href="styles.css">
+   </head>
+   <body>
+      <div id="masthead" class="sev-2"></div>
+      <div id="page">
+         <h1>
+            <a href="src.decompy.matrix_factorization.asrpca.report.html">
+               <img src="back.svg" alt="&#x2B05;">
+               src\decompy\matrix_factorization\asrpca.py source
+            </a>
+         </h1>
+
+         <div id="doc">
+            <div id="l1"
+               class="code sev- "><tt><i>1</i> <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span></tt>
+            </div>
+            <div id="l2"
+               class="code sev- "><tt><i>2</i> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span></tt>
+            </div>
+            <div id="l3"
+               class="code sev- "><tt><i>3</i> &nbsp;</tt>
+            </div>
+            <div id="l4"
+               class="code sev- "><tt><i>4</i> <span class="kn">from</span> <span class="nn">..utils.validations</span> <span class="kn">import</span> <span class="n">check_real_matrix</span></tt>
+            </div>
+            <div id="l5"
+               class="code sev- "><tt><i>5</i> <span class="kn">from</span> <span class="nn">..interfaces</span> <span class="kn">import</span> <span class="n">LSNResult</span></tt>
+            </div>
+            <div id="l6"
+               class="code sev- "><tt><i>6</i> &nbsp;</tt>
+            </div>
+            <div id="l7"
+               class="code sev- "><tt><i>7</i> &nbsp;</tt>
+            </div>
+            <div id="l8"
+               class="code sev- "><tt><i>8</i> <span class="k">class</span> <span class="nc">ActiveSubspaceRobustPCA</span><span class="p">:</span></tt>
+            </div>
+            <div id="l9"
+               class="code sev- "><tt><i>9</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l10"
+               class="code sev- "><tt><i>10</i> <span class="sd">    AS-RPCA: Active Subspace: Towards Scalable Low-Rank Learning</span></tt>
+            </div>
+            <div id="l11"
+               class="code sev- "><tt><i>11</i> &nbsp;</tt>
+            </div>
+            <div id="l12"
+               class="code sev- "><tt><i>12</i> <span class="sd">    Notes</span></tt>
+            </div>
+            <div id="l13"
+               class="code sev- "><tt><i>13</i> <span class="sd">    -----</span></tt>
+            </div>
+            <div id="l14"
+               class="code sev- "><tt><i>14</i> <span class="sd">    [1] Guangcan Liu and Shuicheng Yan. 2012. Active subspace: Toward scalable low-rank learning. Neural Comput. 24, 12 (December 2012), 3371-3394. https://doi.org/10.1162/NECO_a_00369</span></tt>
+            </div>
+            <div id="l15"
+               class="code sev- "><tt><i>15</i> &nbsp;</tt>
+            </div>
+            <div id="l16"
+               class="code sev- "><tt><i>16</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l17"
+               class="code sev- "><tt><i>17</i> &nbsp;</tt>
+            </div>
+            <div id="l18"
+               class="code sev- "><tt><i>18</i>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span></tt>
+            </div>
+            <div id="l19"
+               class="code sev- "><tt><i>19</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize Active Subspace Robust PCA object.</span></tt>
+            </div>
+            <div id="l20"
+               class="code sev- "><tt><i>20</i> &nbsp;</tt>
+            </div>
+            <div id="l21"
+               class="code sev- "><tt><i>21</i> <span class="sd">        Parameters</span></tt>
+            </div>
+            <div id="l22"
+               class="code sev- "><tt><i>22</i> <span class="sd">        ----------</span></tt>
+            </div>
+            <div id="l23"
+               class="code sev- "><tt><i>23</i> <span class="sd">        maxiter : float, optional</span></tt>
+            </div>
+            <div id="l24"
+               class="code sev- "><tt><i>24</i> <span class="sd">            Maximum number of iterations. Default is 1e3.</span></tt>
+            </div>
+            <div id="l25"
+               class="code sev- "><tt><i>25</i> <span class="sd">        max_mu : float, optional</span></tt>
+            </div>
+            <div id="l26"
+               class="code sev- "><tt><i>26</i> <span class="sd">            Maximum value for mu. Default is 1e10.</span></tt>
+            </div>
+            <div id="l27"
+               class="code sev- "><tt><i>27</i> <span class="sd">        tol : float, optional</span></tt>
+            </div>
+            <div id="l28"
+               class="code sev- "><tt><i>28</i> <span class="sd">            Tolerance for stopping criteria. Default is 1e-8.</span></tt>
+            </div>
+            <div id="l29"
+               class="code sev- "><tt><i>29</i> <span class="sd">        rho : float, optional</span></tt>
+            </div>
+            <div id="l30"
+               class="code sev- "><tt><i>30</i> <span class="sd">            Factor for increasing mu. Default is 1.1.</span></tt>
+            </div>
+            <div id="l31"
+               class="code sev- "><tt><i>31</i> <span class="sd">        &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l32"
+               class="code sev- "><tt><i>32</i>         <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;maxiter&quot;</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">)</span></tt>
+            </div>
+            <div id="l33"
+               class="code sev- "><tt><i>33</i>         <span class="bp">self</span><span class="o">.</span><span class="n">max_mu</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_mu&quot;</span><span class="p">,</span> <span class="mf">1e10</span><span class="p">)</span></tt>
+            </div>
+            <div id="l34"
+               class="code sev- "><tt><i>34</i>         <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tol&quot;</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span></tt>
+            </div>
+            <div id="l35"
+               class="code sev- "><tt><i>35</i>         <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rho&quot;</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span></tt>
+            </div>
+            <div id="l36"
+               class="code sev- "><tt><i>36</i> &nbsp;</tt>
+            </div>
+            <div id="l37"
+               class="code sev- "><tt><i>37</i>     <span class="k">def</span> <span class="nf">decompose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">M</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">lambd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span></tt>
+            </div>
+            <div id="l38"
+               class="code sev- "><tt><i>38</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Decompose a matrix into low rank and sparse components.</span></tt>
+            </div>
+            <div id="l39"
+               class="code sev- "><tt><i>39</i> &nbsp;</tt>
+            </div>
+            <div id="l40"
+               class="code sev- "><tt><i>40</i> <span class="sd">        Decomposes the input matrix `M` into the sum of</span></tt>
+            </div>
+            <div id="l41"
+               class="code sev- "><tt><i>41</i> <span class="sd">        a low-rank matrix `L` and a sparse matrix `S`,</span></tt>
+            </div>
+            <div id="l42"
+               class="code sev- "><tt><i>42</i> <span class="sd">        by solving the optimization problem:</span></tt>
+            </div>
+            <div id="l43"
+               class="code sev- "><tt><i>43</i> &nbsp;</tt>
+            </div>
+            <div id="l44"
+               class="code sev- "><tt><i>44</i> <span class="sd">        min |L|_* + lambda |S|_1</span></tt>
+            </div>
+            <div id="l45"
+               class="code sev- "><tt><i>45</i> <span class="sd">        s.t. M = L + S</span></tt>
+            </div>
+            <div id="l46"
+               class="code sev- "><tt><i>46</i> &nbsp;</tt>
+            </div>
+            <div id="l47"
+               class="code sev- "><tt><i>47</i> <span class="sd">        Parameters</span></tt>
+            </div>
+            <div id="l48"
+               class="code sev- "><tt><i>48</i> <span class="sd">        ----------</span></tt>
+            </div>
+            <div id="l49"
+               class="code sev- "><tt><i>49</i> <span class="sd">        M : ndarray</span></tt>
+            </div>
+            <div id="l50"
+               class="code sev- "><tt><i>50</i> <span class="sd">            Input matrix to decompose</span></tt>
+            </div>
+            <div id="l51"
+               class="code sev- "><tt><i>51</i> &nbsp;</tt>
+            </div>
+            <div id="l52"
+               class="code sev- "><tt><i>52</i> <span class="sd">        k : int or None, optional</span></tt>
+            </div>
+            <div id="l53"
+               class="code sev- "><tt><i>53</i> <span class="sd">            Rank of the low-rank component.</span></tt>
+            </div>
+            <div id="l54"
+               class="code sev- "><tt><i>54</i> <span class="sd">            If None, default is max(1, round(min(M.shape)/10))</span></tt>
+            </div>
+            <div id="l55"
+               class="code sev- "><tt><i>55</i> &nbsp;</tt>
+            </div>
+            <div id="l56"
+               class="code sev- "><tt><i>56</i> <span class="sd">        lambd : float, optional</span></tt>
+            </div>
+            <div id="l57"
+               class="code sev- "><tt><i>57</i> <span class="sd">            Regularization parameter for the sparsity term.</span></tt>
+            </div>
+            <div id="l58"
+               class="code sev- "><tt><i>58</i> <span class="sd">            If None, default is 1/sqrt(min(M.shape))</span></tt>
+            </div>
+            <div id="l59"
+               class="code sev- "><tt><i>59</i> &nbsp;</tt>
+            </div>
+            <div id="l60"
+               class="code sev- "><tt><i>60</i> <span class="sd">        Returns</span></tt>
+            </div>
+            <div id="l61"
+               class="code sev- "><tt><i>61</i> <span class="sd">        -------</span></tt>
+            </div>
+            <div id="l62"
+               class="code sev- "><tt><i>62</i> <span class="sd">        LSNResult</span></tt>
+            </div>
+            <div id="l63"
+               class="code sev- "><tt><i>63</i> <span class="sd">            Named tuple containing:</span></tt>
+            </div>
+            <div id="l64"
+               class="code sev- "><tt><i>64</i> &nbsp;</tt>
+            </div>
+            <div id="l65"
+               class="code sev- "><tt><i>65</i> <span class="sd">            L : Low-rank component</span></tt>
+            </div>
+            <div id="l66"
+               class="code sev- "><tt><i>66</i> &nbsp;</tt>
+            </div>
+            <div id="l67"
+               class="code sev- "><tt><i>67</i> <span class="sd">            S : Sparse component</span></tt>
+            </div>
+            <div id="l68"
+               class="code sev- "><tt><i>68</i> &nbsp;</tt>
+            </div>
+            <div id="l69"
+               class="code sev- "><tt><i>69</i> <span class="sd">            N : Null component (all zeros)</span></tt>
+            </div>
+            <div id="l70"
+               class="code sev- "><tt><i>70</i> &nbsp;</tt>
+            </div>
+            <div id="l71"
+               class="code sev- "><tt><i>71</i> <span class="sd">            convergence : Dictionary with keys:</span></tt>
+            </div>
+            <div id="l72"
+               class="code sev- "><tt><i>72</i> <span class="sd">                &#39;niter&#39; : Number of iterations</span></tt>
+            </div>
+            <div id="l73"
+               class="code sev- "><tt><i>73</i> <span class="sd">                &#39;converged&#39; : Whether converged within max iterations</span></tt>
+            </div>
+            <div id="l74"
+               class="code sev- "><tt><i>74</i> <span class="sd">                &#39;final_error&#39; : Final reconstruction error</span></tt>
+            </div>
+            <div id="l75"
+               class="code sev- "><tt><i>75</i> &nbsp;</tt>
+            </div>
+            <div id="l76"
+               class="code sev- "><tt><i>76</i> <span class="sd">        &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l77"
+               class="code sev- "><tt><i>77</i>         <span class="n">check_real_matrix</span><span class="p">(</span><span class="n">M</span><span class="p">)</span></tt>
+            </div>
+            <div id="l78"
+               class="code sev- "><tt><i>78</i>         <span class="n">X</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># create a copy to avoid modifying true matrix</span></tt>
+            </div>
+            <div id="l79"
+               class="code sev- "><tt><i>79</i> &nbsp;</tt>
+            </div>
+            <div id="l80"
+               class="code sev- "><tt><i>80</i>         <span class="n">d</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span></tt>
+            </div>
+            <div id="l81"
+               class="code sev- "><tt><i>81</i>         <span class="k">if</span> <span class="n">lambd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l82"
+               class="code sev- "><tt><i>82</i>             <span class="n">lambd</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></tt>
+            </div>
+            <div id="l83"
+               class="code sev- "><tt><i>83</i>         <span class="k">if</span> <span class="n">k</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l84"
+               class="code sev- "><tt><i>84</i>             <span class="n">k</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span><span class="p">))</span></tt>
+            </div>
+            <div id="l85"
+               class="code sev- "><tt><i>85</i> &nbsp;</tt>
+            </div>
+            <div id="l86"
+               class="code sev- "><tt><i>86</i>         <span class="n">tol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="s2">&quot;fro&quot;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l87"
+               class="code sev- "><tt><i>87</i>         <span class="n">mu</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></tt>
+            </div>
+            <div id="l88"
+               class="code sev- "><tt><i>88</i> &nbsp;</tt>
+            </div>
+            <div id="l89"
+               class="code sev- "><tt><i>89</i>         <span class="c1"># initialize optimization variables</span></tt>
+            </div>
+            <div id="l90"
+               class="code sev- "><tt><i>90</i>         <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></tt>
+            </div>
+            <div id="l91"
+               class="code sev- "><tt><i>91</i>         <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">d</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></tt>
+            </div>
+            <div id="l92"
+               class="code sev- "><tt><i>92</i>         <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">d</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></tt>
+            </div>
+            <div id="l93"
+               class="code sev- "><tt><i>93</i> &nbsp;</tt>
+            </div>
+            <div id="l94"
+               class="code sev- "><tt><i>94</i>         <span class="c1"># start the main loop</span></tt>
+            </div>
+            <div id="l95"
+               class="code sev- "><tt><i>95</i>         <span class="n">niter</span> <span class="o">=</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l96"
+               class="code sev- "><tt><i>96</i>         <span class="k">while</span> <span class="n">niter</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span><span class="p">:</span></tt>
+            </div>
+            <div id="l97"
+               class="code sev- "><tt><i>97</i>             <span class="n">niter</span> <span class="o">+=</span> <span class="mi">1</span></tt>
+            </div>
+            <div id="l98"
+               class="code sev- "><tt><i>98</i>             <span class="n">dey</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">E</span> <span class="o">+</span> <span class="n">Y</span> <span class="o">/</span> <span class="n">mu</span>  <span class="c1"># (d, n)</span></tt>
+            </div>
+            <div id="l99"
+               class="code sev- "><tt><i>99</i>             <span class="n">temp</span> <span class="o">=</span> <span class="n">dey</span> <span class="o">@</span> <span class="n">J</span><span class="o">.</span><span class="n">T</span>   <span class="c1"># (d, k)</span></tt>
+            </div>
+            <div id="l100"
+               class="code sev- "><tt><i>100</i> &nbsp;</tt>
+            </div>
+            <div id="l101"
+               class="code sev- "><tt><i>101</i>             <span class="c1"># update Q</span></tt>
+            </div>
+            <div id="l102"
+               class="code sev-2  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-2">
+                        E251
+                     </span>
+                     Unexpected spaces around keyword / parameter equals (in 2 places)</li>
+               
+               </ul><tt><i>102</i>             <span class="n">U</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">full_matrices</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>  <span class="c1"># (d, r), (r,), (r, k)</span></tt>
+            </div>
+            <div id="l103"
+               class="code sev- "><tt><i>103</i>             <span class="n">Q</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">Vt</span>   <span class="c1"># (d, k)</span></tt>
+            </div>
+            <div id="l104"
+               class="code sev- "><tt><i>104</i> &nbsp;</tt>
+            </div>
+            <div id="l105"
+               class="code sev- "><tt><i>105</i>             <span class="c1"># update J</span></tt>
+            </div>
+            <div id="l106"
+               class="code sev- "><tt><i>106</i>             <span class="n">temp</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">dey</span>  <span class="c1"># (k, n)</span></tt>
+            </div>
+            <div id="l107"
+               class="code sev-2  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-2">
+                        E251
+                     </span>
+                     Unexpected spaces around keyword / parameter equals (in 2 places)</li>
+               
+               </ul><tt><i>107</i>             <span class="n">U</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">full_matrices</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span></tt>
+            </div>
+            <div id="l108"
+               class="code sev- "><tt><i>108</i>             <span class="n">svp</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">mu</span><span class="p">)</span>  <span class="c1"># this is boolean array</span></tt>
+            </div>
+            <div id="l109"
+               class="code sev- "><tt><i>109</i>             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">svp</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span></tt>
+            </div>
+            <div id="l110"
+               class="code sev- "><tt><i>110</i>                 <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">[</span><span class="n">svp</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">mu</span></tt>
+            </div>
+            <div id="l111"
+               class="code sev- "><tt><i>111</i>                 <span class="n">J</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="n">svp</span><span class="p">]</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">@</span> <span class="n">Vt</span><span class="p">[</span><span class="n">svp</span><span class="p">,</span> <span class="p">:]</span></tt>
+            </div>
+            <div id="l112"
+               class="code sev- "><tt><i>112</i>             <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l113"
+               class="code sev- "><tt><i>113</i>                 <span class="n">svp</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l114"
+               class="code sev- "><tt><i>114</i>                 <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></tt>
+            </div>
+            <div id="l115"
+               class="code sev- "><tt><i>115</i> &nbsp;</tt>
+            </div>
+            <div id="l116"
+               class="code sev- "><tt><i>116</i>             <span class="c1"># update E</span></tt>
+            </div>
+            <div id="l117"
+               class="code sev- "><tt><i>117</i>             <span class="n">A</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">@</span> <span class="n">J</span>       <span class="c1"># (d, n)</span></tt>
+            </div>
+            <div id="l118"
+               class="code sev- "><tt><i>118</i>             <span class="n">temp</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">A</span> <span class="o">+</span> <span class="n">Y</span> <span class="o">/</span> <span class="n">mu</span></tt>
+            </div>
+            <div id="l119"
+               class="code sev- "><tt><i>119</i>             <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">temp</span> <span class="o">-</span> <span class="n">lambd</span> <span class="o">/</span> <span class="n">mu</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">temp</span> <span class="o">+</span> <span class="n">lambd</span> <span class="o">/</span> <span class="n">mu</span><span class="p">)</span></tt>
+            </div>
+            <div id="l120"
+               class="code sev- "><tt><i>120</i> &nbsp;</tt>
+            </div>
+            <div id="l121"
+               class="code sev- "><tt><i>121</i>             <span class="n">leq</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">A</span> <span class="o">-</span> <span class="n">E</span>  <span class="c1"># the left out part</span></tt>
+            </div>
+            <div id="l122"
+               class="code sev- "><tt><i>122</i> &nbsp;</tt>
+            </div>
+            <div id="l123"
+               class="code sev- "><tt><i>123</i>             <span class="n">stop_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">leq</span><span class="p">,</span> <span class="s2">&quot;fro&quot;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l124"
+               class="code sev- "><tt><i>124</i>             <span class="k">if</span> <span class="n">stop_c</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span></tt>
+            </div>
+            <div id="l125"
+               class="code sev- "><tt><i>125</i>                 <span class="k">break</span></tt>
+            </div>
+            <div id="l126"
+               class="code sev- "><tt><i>126</i>             <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l127"
+               class="code sev- "><tt><i>127</i>                 <span class="n">Y</span> <span class="o">+=</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">leq</span></tt>
+            </div>
+            <div id="l128"
+               class="code sev- "><tt><i>128</i>                 <span class="n">mu</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_mu</span><span class="p">,</span> <span class="n">mu</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">)</span></tt>
+            </div>
+            <div id="l129"
+               class="code sev- "><tt><i>129</i> &nbsp;</tt>
+            </div>
+            <div id="l130"
+               class="code sev- "><tt><i>130</i>         <span class="k">return</span> <span class="n">LSNResult</span><span class="p">(</span></tt>
+            </div>
+            <div id="l131"
+               class="code sev- "><tt><i>131</i>             <span class="n">L</span><span class="o">=</span><span class="n">A</span><span class="p">,</span></tt>
+            </div>
+            <div id="l132"
+               class="code sev- "><tt><i>132</i>             <span class="n">S</span><span class="o">=</span><span class="n">E</span><span class="p">,</span></tt>
+            </div>
+            <div id="l133"
+               class="code sev- "><tt><i>133</i>             <span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l134"
+               class="code sev- "><tt><i>134</i>             <span class="n">convergence</span><span class="o">=</span><span class="p">{</span></tt>
+            </div>
+            <div id="l135"
+               class="code sev- "><tt><i>135</i>                 <span class="s2">&quot;niter&quot;</span><span class="p">:</span> <span class="n">niter</span><span class="p">,</span></tt>
+            </div>
+            <div id="l136"
+               class="code sev- "><tt><i>136</i>                 <span class="s2">&quot;converged&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">niter</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span><span class="p">),</span></tt>
+            </div>
+            <div id="l137"
+               class="code sev- "><tt><i>137</i>                 <span class="s2">&quot;final_error&quot;</span><span class="p">:</span> <span class="n">stop_c</span><span class="p">,</span></tt>
+            </div>
+            <div id="l138"
+               class="code sev- "><tt><i>138</i>             <span class="p">},</span></tt>
+            </div>
+            <div id="l139"
+               class="code sev- "><tt><i>139</i>         <span class="p">)</span></tt>
+            </div>
+            
+         </div>
+      </div>
+   </body>
+</html>

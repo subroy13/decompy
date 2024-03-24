@@ -93,6 +93,8 @@ class MOGModel:
         The user latent factors (rowwise factors).
     beta : ndarray
         The item latent factors (column wise factors).
+    alpha: ndarray
+        The counts of each Gaussian distribution.
     d : ndarray
         The user biases. (rowwise biases)
     mu : ndarray
@@ -105,6 +107,7 @@ class MOGModel:
         R: np.ndarray,
         c: np.ndarray,
         beta: np.ndarray,
+        alpha: np.ndarray,
         d: np.ndarray,
         mu: np.ndarray,
     ):
@@ -113,6 +116,7 @@ class MOGModel:
         self.beta = beta
         self.d = d
         self.mu = mu
+        self.alpha = alpha
 
 
 class MixtureOfGaussianRobustPCA:
@@ -155,7 +159,7 @@ class MixtureOfGaussianRobustPCA:
         Parameters
         ----------
         X : ndarray
-            The data matrix with shape (n, d).
+            The data matrix with shape (d, n).
 
         k : int
             The number of clusters.
@@ -173,9 +177,9 @@ class MixtureOfGaussianRobustPCA:
         closest cluster center based on Euclidean distance. This is repeated
         until all clusters have at least one member.
         """
-        n = X.shape[0]
+        n = X.shape[1]
         idx = np.random.choice(n, k, replace=False)
-        m = X[:, idx]
+        m = X[:, idx]  # (d, k)
         similarity = m.T @ X - np.sum(m**2, axis=0)[:, np.newaxis] / 2
         label = np.argmax(similarity, axis=0)
         _, label = np.unique(label, return_inverse=True)
@@ -261,7 +265,7 @@ class MixtureOfGaussianRobustPCA:
             s1inv = (Sigma_V.reshape(r * r, n) @ Rtau[i, :]).reshape(r, r)
             s2inv = (V.T * Rtau[i, :]) @ V + Gam
             Sigma_U[:, :, i] = np.linalg.inv(s1inv + s2inv)
-            U[i, :] = RtauYmu[i, :] @ V + Sigma_U[:, :, i]
+            U[i, :] = RtauYmu[i, :] @ V @ Sigma_U[:, :, i]
             diagsU = diagsU + np.diag(Sigma_U[:, :, i])
             tempU[:, :, i] = Sigma_U[:, :, i] + U[i, :].T @ U[i, :]
 
@@ -272,7 +276,7 @@ class MixtureOfGaussianRobustPCA:
             s1inv = (Sigma_U.reshape(r * r, m) @ Rtau[:, j]).reshape(r, r)
             s2inv = (U.T * Rtau[:, j].T) @ U + Gam
             Sigma_V[:, :, j] = np.linalg.inv(s1inv + s2inv)
-            V[j, :] = RtauYmu[:, j] @ U + Sigma_V[:, :, j]
+            V[j, :] = RtauYmu[:, j] @ U @ Sigma_V[:, :, j]
             diagsV = diagsV + np.diag(Sigma_V[:, :, j])
             tempV[:, :, j] = Sigma_V[:, :, j] + V[j, :].T @ V[j, :]
 
@@ -289,10 +293,10 @@ class MixtureOfGaussianRobustPCA:
             U = U[:, index]
             V = V[:, index]
             gammas = gammas[index]
-            Sigma_U = Sigma_U[index, index, :]
-            Sigma_V = Sigma_V[index, index, :]
-            tempU = tempU[index, index, :]
-            tempV = tempV[index, index, :]
+            Sigma_U = Sigma_U[np._ix(index, index), :]
+            Sigma_V = Sigma_V[np._ix(index, index), :]
+            tempU = tempU[np._ix(index, index), :]
+            tempV = tempV[np._ix(index, index), :]
             r = U.shape[1]
 
         lr_model = LRModel(U, V, Sigma_U, Sigma_V, gammas)  # create new LR model
@@ -340,19 +344,19 @@ class MixtureOfGaussianRobustPCA:
         m, n = E_YminusUV.shape
         k = R.shape[2]
 
-        nxbar = R.reshape(m * n, k) @ E_YminusUV.reshape(-1)  # (k, )
+        nxbar = R.reshape(m * n, k).T @ E_YminusUV.reshape(-1)  # (k, )
         nk = np.sum(R.reshape(m * n, k), axis=0)
         alpha = alpha0 + nk
         beta = beta0 + nk
         c = c0 + nk / 2
         mu = (beta0 * mu0 + nxbar) / beta
         d = d0 + 0.5 * (
-            R.reshape(m * n, k) @ E_YminusUV2.reshape(-1)
+            R.reshape(m * n, k).T @ E_YminusUV2.reshape(-1)
             + beta0 * mu0**2
             - (nxbar + beta0 * mu0) ** 2 / beta
         )
 
-        mog_model = MOGModel(R, c, beta, d, mu)  # create new mog model
+        mog_model = MOGModel(R, c, beta, alpha, d, mu)  # create new mog model
         return mog_model
 
     def __mog_vexp(
@@ -387,7 +391,7 @@ class MixtureOfGaussianRobustPCA:
         Ex2 = E_YminusUV2.reshape(-1)
 
         tau = c / d
-        EQ = np.zeros(m * n, k)
+        EQ = np.zeros((m * n, k))
         for i in range(k):
             EQ[:, i] = (
                 1 / beta[i]
@@ -400,7 +404,8 @@ class MixtureOfGaussianRobustPCA:
         Elogpi = psi(alpha) - psi(np.sum(alpha))
 
         logRho = (EQ - 2 * Elogpi + Elogtau - np.log(2 * np.pi)) / (-2)
-        logR = logRho - logsumexp(logRho, axis=1)
+
+        logR = logRho - logsumexp(logRho, axis=1)[:, np.newaxis]
         R = np.exp(logR)
 
         mog_model.R = R.reshape(m, n, k)
@@ -474,8 +479,8 @@ class MixtureOfGaussianRobustPCA:
             r = rank
             U = np.random.randn(m, r) * scale**0.5
             V = np.random.randn(n, r) * scale**0.5
-        Sigma_U = np.tile(scale * np.eye(r), (1, 1, m))
-        Sigma_V = np.tile(scale * np.eye(r), (1, 1, n))
+        Sigma_U = np.tile((scale * np.eye(r))[:, :, np.newaxis], m)  # (r, r, m)
+        Sigma_V = np.tile((scale * np.eye(r))[:, :, np.newaxis], n)  # (r, r, n)
         gammas = scale * np.ones(r)
 
         lr_model = LRModel(U, V, Sigma_U, Sigma_V, gammas)
@@ -483,15 +488,17 @@ class MixtureOfGaussianRobustPCA:
 
         # Mog model initialization
         E = Y - L  # (m, n)
-        mog_model = MOGModel(None, None, None, None, None)  # initialize blank mog model
-        R = self.__R_initialization(E.reshape(-1), k)  # (mn, k)
+        mog_model = MOGModel(
+            None, None, None, None, None, None
+        )  # initialize blank mog model
+        R = self.__R_initialization(E.reshape(1, -1), k)  # (mn, k)
         nk = np.sum(R, axis=0)  # (k,)
-        nxbar = R @ E.reshape(-1)  # (k, )
+        nxbar = R.T @ E.reshape(-1)  # (k, )
         mog_model.c = mog_prior.c0 + nk / 2  # (k, )
         mog_model.beta = mog_prior.beta0 + nk  # (k, )
         mog_model.d = (
             mog_prior.d0
-            + 0.5 * (R @ (E.reshape(-1) ** 2))
+            + 0.5 * (R.T @ (E.reshape(-1) ** 2))
             + mog_prior.beta0 * mog_prior.mu0**2
             - 1 / mog_model.beta * (nxbar + mog_prior.beta0 * mog_prior.mu0) ** 2
         )  # (k, )

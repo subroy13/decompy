@@ -17,7 +17,7 @@ Finally, upload to `pypi` using `twine upload dist/*`
 To generate documentation, use 
 1. Use the `mintlify AI doc generator` to generate docstring from code using explainer AI. Use `numpy` type documentation.
 2. `sphinx-apidoc -o docs/ -d 3 ./src` to generate the rst files.
-3. Run the makefile `make.bat` with `html` argument, i.e., `make clean && make html` inside `./src/docs` folder.
+3. Run the makefile `make.bat` with `html` argument, i.e., `make clean && make html` inside `./docs` folder.
 4. The generated html files will be present inside `_build` folder.
 
 

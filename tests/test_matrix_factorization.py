@@ -1,4 +1,3 @@
-import numpy as np
 import pytest
 from decompy.interfaces import SVDResult, LSNResult, RankFactorizationResult, PCAResult
 from decompy.matrix_factorization import (
@@ -13,21 +12,14 @@ from decompy.matrix_factorization import (
     InexactAugmentedLagrangianMethod,
     L1Filtering,
     LinearizedADMAdaptivePenalty,
-    MEstimation,
     MixtureOfGaussianRobustPCA,
     OutlierPursuit,
     PrincipalComponentPursuit,
     RegulaizedL1AugmentedLagrangianMethod,
     SingularValueThresholding,
     SymmetricAlternatingDirectionALM,
-    VariationalBayes
+    VariationalBayes,
 )
-
-
-@pytest.fixture
-def sample_matrix():
-    n, p = 5, 4
-    return np.random.random(n * p).reshape((n, p)).astype("float64")
 
 
 class TestMatrixFactorization:
@@ -127,13 +119,6 @@ class TestMatrixFactorization:
         mod = LinearizedADMAdaptivePenalty()
         res = mod.decompose(X)
         self.check_lsnresult_sanity(res, n, p)
-
-    def test_mest(self, sample_matrix):
-        X = sample_matrix.copy()
-        n, p = X.shape
-        mod = MEstimation()
-        res = mod.decompose(X)
-        self.check_pcaresult_sanity(res, n, p)
 
     def test_mog(self, sample_matrix):
         X = sample_matrix.copy()

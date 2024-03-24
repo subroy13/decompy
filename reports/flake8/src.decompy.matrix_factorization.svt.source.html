@@ -95,7 +95,7 @@
                class="code sev- "><tt><i>26</i>         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;verbose&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></tt>
             </div>
             <div id="l27"
-               class="code sev- "><tt><i>27</i>         <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;maxiter&quot;</span><span class="p">,</span> <span class="mf">25e3</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>27</i>         <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;maxiter&quot;</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">)</span></tt>
             </div>
             <div id="l28"
                class="code sev- "><tt><i>28</i>         <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;epsilon&quot;</span><span class="p">,</span> <span class="mf">5e-4</span><span class="p">)</span></tt>
@@ -221,46 +221,46 @@
                class="code sev- "><tt><i>68</i>         <span class="n">niter</span> <span class="o">=</span> <span class="mi">0</span></tt>
             </div>
             <div id="l69"
-               class="code sev- "><tt><i>69</i>         <span class="n">rankA</span> <span class="o">=</span> <span class="mi">0</span></tt>
+               class="code sev- "><tt><i>69</i>         <span class="n">rankA</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span></tt>
             </div>
             <div id="l70"
-               class="code sev- "><tt><i>70</i>         <span class="n">converged</span> <span class="o">=</span> <span class="kc">False</span></tt>
+               class="code sev- "><tt><i>70</i>         <span class="n">oldS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span></tt>
             </div>
             <div id="l71"
-               class="code sev- "><tt><i>71</i> &nbsp;</tt>
+               class="code sev- "><tt><i>71</i>         <span class="n">converged</span> <span class="o">=</span> <span class="kc">False</span></tt>
             </div>
             <div id="l72"
-               class="code sev- "><tt><i>72</i>         <span class="k">while</span> <span class="ow">not</span> <span class="n">converged</span><span class="p">:</span></tt>
+               class="code sev- "><tt><i>72</i> &nbsp;</tt>
             </div>
             <div id="l73"
-               class="code sev- "><tt><i>73</i>             <span class="n">niter</span> <span class="o">+=</span> <span class="mi">1</span></tt>
+               class="code sev- "><tt><i>73</i>         <span class="k">while</span> <span class="ow">not</span> <span class="n">converged</span><span class="p">:</span></tt>
             </div>
             <div id="l74"
-               class="code sev- "><tt><i>74</i>             <span class="n">U</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>74</i>             <span class="n">niter</span> <span class="o">+=</span> <span class="mi">1</span></tt>
             </div>
             <div id="l75"
-               class="code sev- "><tt><i>75</i>             <span class="n">U</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="p">:</span><span class="n">rankA</span><span class="p">]</span></tt>
+               class="code sev- "><tt><i>75</i>             <span class="n">U</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></tt>
             </div>
             <div id="l76"
-               class="code sev- "><tt><i>76</i>             <span class="n">Vt</span> <span class="o">=</span> <span class="n">Vt</span><span class="p">[:</span><span class="n">rankA</span><span class="p">,</span> <span class="p">:]</span></tt>
+               class="code sev- "><tt><i>76</i> &nbsp;</tt>
             </div>
             <div id="l77"
-               class="code sev- "><tt><i>77</i> &nbsp;</tt>
+               class="code sev- "><tt><i>77</i>             <span class="nb">print</span><span class="p">(</span><span class="n">niter</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></tt>
             </div>
             <div id="l78"
-               class="code sev- "><tt><i>78</i>             <span class="n">A</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">tau</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">@</span> <span class="n">Vt</span></tt>
+               class="code sev- "><tt><i>78</i> &nbsp;</tt>
             </div>
             <div id="l79"
-               class="code sev- "><tt><i>79</i>             <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="o">-</span> <span class="n">lambdaval</span> <span class="o">*</span> <span class="n">tau</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>79</i>             <span class="n">A</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">tau</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">@</span> <span class="n">Vt</span></tt>
             </div>
             <div id="l80"
-               class="code sev- "><tt><i>80</i>             <span class="n">M2</span> <span class="o">=</span> <span class="n">M</span> <span class="o">-</span> <span class="n">A</span> <span class="o">-</span> <span class="n">E</span></tt>
+               class="code sev- "><tt><i>80</i>             <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="o">-</span> <span class="n">lambdaval</span> <span class="o">*</span> <span class="n">tau</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></tt>
             </div>
             <div id="l81"
-               class="code sev- "><tt><i>81</i> &nbsp;</tt>
+               class="code sev- "><tt><i>81</i>             <span class="n">M2</span> <span class="o">=</span> <span class="n">M</span> <span class="o">-</span> <span class="n">A</span> <span class="o">-</span> <span class="n">E</span></tt>
             </div>
             <div id="l82"
-               class="code sev- "><tt><i>82</i>             <span class="n">rankA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;</span> <span class="n">tau</span><span class="p">)</span>  <span class="c1"># approx rank of A</span></tt>
+               class="code sev- "><tt><i>82</i> &nbsp;</tt>
             </div>
             <div id="l83"
                class="code sev-1  le">
@@ -270,69 +270,90 @@
                      <span class="count sev-1">
                         F841
                      </span>
-                     Local variable 'cardE' is assigned to but never used</li>
+                     Local variable 'rankA' is assigned to but never used</li>
                
-               </ul><tt><i>83</i>             <span class="n">cardE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span></tt>
+               </ul><tt><i>83</i>             <span class="n">rankA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;</span> <span class="n">tau</span><span class="p">)</span>  <span class="c1"># approx rank of A</span></tt>
             </div>
             <div id="l84"
-               class="code sev- "><tt><i>84</i>                 <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">E</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></tt>
+               class="code sev-1  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-1">
+                        F841
+                     </span>
+                     Local variable 'cardE' is assigned to but never used</li>
+               
+               </ul><tt><i>84</i>             <span class="n">cardE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span></tt>
             </div>
             <div id="l85"
-               class="code sev- "><tt><i>85</i>             <span class="p">)</span>  <span class="c1"># approx number of nonzero entries in sparse component</span></tt>
+               class="code sev- "><tt><i>85</i>                 <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">E</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></tt>
             </div>
             <div id="l86"
-               class="code sev- "><tt><i>86</i> &nbsp;</tt>
+               class="code sev- "><tt><i>86</i>             <span class="p">)</span>  <span class="c1"># approx number of nonzero entries in sparse component</span></tt>
             </div>
             <div id="l87"
-               class="code sev- "><tt><i>87</i>             <span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">+</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">M2</span></tt>
+               class="code sev- "><tt><i>87</i> &nbsp;</tt>
             </div>
             <div id="l88"
-               class="code sev- "><tt><i>88</i> &nbsp;</tt>
+               class="code sev- "><tt><i>88</i>             <span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">+</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">M2</span></tt>
             </div>
             <div id="l89"
-               class="code sev- "><tt><i>89</i>             <span class="k">if</span> <span class="p">(</span></tt>
+               class="code sev- "><tt><i>89</i> &nbsp;</tt>
             </div>
             <div id="l90"
-               class="code sev- "><tt><i>90</i>                 <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">M2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span></tt>
+               class="code sev- "><tt><i>90</i>             <span class="k">if</span> <span class="p">(</span></tt>
             </div>
             <div id="l91"
-               class="code sev- "><tt><i>91</i>                 <span class="ow">or</span> <span class="n">niter</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span></tt>
+               class="code sev- "><tt><i>91</i>                 <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">M2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span></tt>
             </div>
             <div id="l92"
-               class="code sev- "><tt><i>92</i>             <span class="p">):</span></tt>
+               class="code sev- "><tt><i>92</i>                 <span class="ow">or</span> <span class="n">niter</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span></tt>
             </div>
             <div id="l93"
-               class="code sev- "><tt><i>93</i>                 <span class="n">converged</span> <span class="o">=</span> <span class="kc">True</span></tt>
+               class="code sev- "><tt><i>93</i>                 <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">oldS</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">oldS</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span></tt>
             </div>
             <div id="l94"
-               class="code sev- "><tt><i>94</i> &nbsp;</tt>
+               class="code sev- "><tt><i>94</i>             <span class="p">):</span></tt>
             </div>
             <div id="l95"
-               class="code sev- "><tt><i>95</i>         <span class="k">if</span> <span class="n">niter</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span></tt>
+               class="code sev- "><tt><i>95</i>                 <span class="n">converged</span> <span class="o">=</span> <span class="kc">True</span></tt>
             </div>
             <div id="l96"
-               class="code sev- "><tt><i>96</i>             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum number of iterations reached&quot;</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>96</i>             <span class="k">else</span><span class="p">:</span></tt>
             </div>
             <div id="l97"
-               class="code sev- "><tt><i>97</i> &nbsp;</tt>
+               class="code sev- "><tt><i>97</i>                 <span class="n">oldS</span> <span class="o">=</span> <span class="n">s</span></tt>
             </div>
             <div id="l98"
-               class="code sev- "><tt><i>98</i>         <span class="k">return</span> <span class="n">LSNResult</span><span class="p">(</span></tt>
+               class="code sev- "><tt><i>98</i> &nbsp;</tt>
             </div>
             <div id="l99"
-               class="code sev- "><tt><i>99</i>             <span class="n">L</span><span class="o">=</span><span class="n">A</span><span class="p">,</span></tt>
+               class="code sev- "><tt><i>99</i>         <span class="k">if</span> <span class="n">niter</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span></tt>
             </div>
             <div id="l100"
-               class="code sev- "><tt><i>100</i>             <span class="n">S</span><span class="o">=</span><span class="n">E</span><span class="p">,</span></tt>
+               class="code sev- "><tt><i>100</i>             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum number of iterations reached&quot;</span><span class="p">)</span></tt>
             </div>
             <div id="l101"
-               class="code sev- "><tt><i>101</i>             <span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span></tt>
+               class="code sev- "><tt><i>101</i> &nbsp;</tt>
             </div>
             <div id="l102"
-               class="code sev- "><tt><i>102</i>             <span class="n">convergence</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;converged&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">niter</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span><span class="p">),</span> <span class="s2">&quot;iterations&quot;</span><span class="p">:</span> <span class="n">niter</span><span class="p">},</span></tt>
+               class="code sev- "><tt><i>102</i>         <span class="k">return</span> <span class="n">LSNResult</span><span class="p">(</span></tt>
             </div>
             <div id="l103"
-               class="code sev- "><tt><i>103</i>         <span class="p">)</span></tt>
+               class="code sev- "><tt><i>103</i>             <span class="n">L</span><span class="o">=</span><span class="n">A</span><span class="p">,</span></tt>
+            </div>
+            <div id="l104"
+               class="code sev- "><tt><i>104</i>             <span class="n">S</span><span class="o">=</span><span class="n">E</span><span class="p">,</span></tt>
+            </div>
+            <div id="l105"
+               class="code sev- "><tt><i>105</i>             <span class="n">N</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l106"
+               class="code sev- "><tt><i>106</i>             <span class="n">convergence</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;converged&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">niter</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span><span class="p">),</span> <span class="s2">&quot;iterations&quot;</span><span class="p">:</span> <span class="n">niter</span><span class="p">},</span></tt>
+            </div>
+            <div id="l107"
+               class="code sev- "><tt><i>107</i>         <span class="p">)</span></tt>
             </div>
             
          </div>

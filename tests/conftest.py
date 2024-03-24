@@ -6,11 +6,9 @@ from decompy.interfaces import SVDResult, PCAResult, LSNResult, RankFactorizatio
 @pytest.fixture
 def sample_matrix():
     n, p = 5, 4
-    return [
-        np.arange(n * p)
-        .reshape((n, p))
-        .astype("float64")  # TODO: need to able to remove typecasting
-    ]
+    return (
+        np.arange(n * p).reshape((n, p)).astype("float64")
+    )  # TODO: need to able to remove typecasting
 
 
 @pytest.fixture

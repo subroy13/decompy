@@ -8,7 +8,6 @@ from .ga import GrassmannAverage
 from .ialm import InexactAugmentedLagrangianMethod
 from .l1f import L1Filtering
 from .ladmap import LinearizedADMAdaptivePenalty
-from .mest import MEstimation
 from .mog import MixtureOfGaussianRobustPCA
 from .op import OutlierPursuit
 from .pcp import PrincipalComponentPursuit
@@ -29,7 +28,6 @@ __all__ = [
     "LinearizedADMAdaptivePenalty",
     "FastPrincipalComponentPursuit",
     "PrincipalComponentPursuit",
-    "MEstimation",
     "MixtureOfGaussianRobustPCA",
     "OutlierPursuit",
     "VariationalBayes",

@@ -81,7 +81,7 @@ This project is licensed under the [BSD 3-Clause License](LICENSE).
 
 ### Matrix Factorization Methods
 
-Currently, there are **20** matrix factorization methods available in `decompy`, as follows:
+Currently, there are **19** matrix factorization methods available in `decompy`, as follows:
 
 * Alternating Direction Method [(Yuan and Yang, 2009)](https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.400.8797) - `matrix_factorization/adm.py`
 
@@ -104,8 +104,6 @@ Currently, there are **20** matrix factorization methods available in `decompy`,
 * L1 Filtering [(Liu et al. 2011)](http://arxiv.org/abs/1108.5359) - `matrix_factorization/l1f.py`
 
 * Linearized ADM with Adaptive Penalty [(Lin et al. 2011)](http://arxiv.org/abs/1109.0367) - `matrix_factorization/ladmap.py`
-
-* Robust PCA using M-estimation [(De la Torre and Black, 2001)](https://ieeexplore.ieee.org/document/937541) [website](http://users.salleurl.edu/~ftorre/papers/rpca2.html) - `matrix_factorization/mest.py`
 
 * MoG-RPCA: Mixture of Gaussians RPCA [(Zhao et al. 2014)](http://jmlr.org/proceedings/papers/v32/zhao14.pdf) [website](http://www.cs.cmu.edu/~deyum/index.htm) - `matrix_factorization/mog.py`
 
@@ -162,4 +160,30 @@ In `rankmethods/bayes.py` -
 
 * Bayesian rank estimation method by Hoffman - https://www.jstor.org/stable/27639896
 
+
+## News
+
+### v1.1.1
+
+- Release of unit test cases using `pytest` library.
+
+### v1.1.0
+
+- Bug fixes.
+- Release Documentation
+
+### v1.0.0
+
+- Major refactorization.
+- Added 15 more matrix factorization methods.
+- Added rank estimation methods. 
+
+
+### v0.2.0
+
+- Added 4 matrix factorization methods.
+
+### v0.1.0
+
+- Initial release.
 

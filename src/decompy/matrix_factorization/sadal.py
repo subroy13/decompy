@@ -35,7 +35,6 @@ class SymmetricAlternatingDirectionALM:
             Update parameter for sigmaf. Default is 2/3.
         """
         self.maxiter = kwargs.get("maxiter", 1000)
-        self.sigma = kwargs.get("sigma", 1e-6)
         self.eps = kwargs.get("eps", 1e-7)
         self.muf = kwargs.get("muf", 1e-6)
         self.sigmaf = kwargs.get("sigmaf", 1e-6)
@@ -43,7 +42,12 @@ class SymmetricAlternatingDirectionALM:
         self.eta_sigma = kwargs.get("eta_sigma", 2 / 3)
 
     def decompose(
-        self, M: np.ndarray, sv: Union[int, None] = None, mu: float = 0, rho: float = 0
+        self,
+        M: np.ndarray,
+        sv: Union[int, None] = None,
+        mu: float = 0,
+        rho: float = 0,
+        sigma: float = 1e-6,
     ):
         """Decompose a matrix M into low-rank (L), sparse (S) and noise (N) components.
 
@@ -85,7 +89,7 @@ class SymmetricAlternatingDirectionALM:
 
         for niter in range(self.maxiter):
             U, gamma, Vt = np.linalg.svd(mu * lambd - Y + D, full_matrices=False)
-            gamma_new = gamma - mu * gamma / np.maximum(gamma, mu + self.sigma)
+            gamma_new = gamma - mu * gamma / np.maximum(gamma, mu + sigma)
             svp = (gamma > mu).sum()
             if svp < sv:
                 sv = min(svp + 1, n)
@@ -96,7 +100,7 @@ class SymmetricAlternatingDirectionALM:
             lambd = lambd - (X + Y - D) / mu
             muY = mu
             B = lambd - (X - D) / muY
-            Y = muY * B - muY * np.clip(muY * B / (self.sigma + muY), -rho, rho)
+            Y = muY * B - muY * np.clip(muY * B / (sigma + muY), -rho, rho)
             lambd -= (X + Y - D) / muY
 
             # check stopping criterion
