@@ -14,10 +14,13 @@ from decompy.matrix_factorization import (
     L1Filtering,
     LinearizedADMAdaptivePenalty,
     MEstimation,
+    MixtureOfGaussianRobustPCA,
     OutlierPursuit,
     PrincipalComponentPursuit,
     RegulaizedL1AugmentedLagrangianMethod,
     SingularValueThresholding,
+    SymmetricAlternatingDirectionALM,
+    VariationalBayes
 )
 
 
@@ -132,6 +135,13 @@ class TestMatrixFactorization:
         res = mod.decompose(X)
         self.check_pcaresult_sanity(res, n, p)
 
+    def test_mog(self, sample_matrix):
+        X = sample_matrix
+        n, p = X.shape
+        mod = MixtureOfGaussianRobustPCA()
+        res = mod.decompose(X)
+        self.check_lsnresult_sanity(res, n, p)
+
     def test_op(self, sample_matrix):
         X = sample_matrix
         n, p = X.shape
@@ -153,13 +163,6 @@ class TestMatrixFactorization:
         res = mod.decompose(X, r=min(n, p))
         self.check_rankfactor_sanity(res, n, p)
 
-    def test_svt(self, sample_matrix):
-        X = sample_matrix
-        n, p = X.shape
-        mod = SingularValueThresholding()
-        res = mod.decompose(X)
-        self.check_lsnresult_sanity(res, n, p)
-
     def test_rsvddpd(self, sample_matrix):
         X = sample_matrix
         n, p = X.shape
@@ -173,3 +176,24 @@ class TestMatrixFactorization:
         mod = RobustSVDDensityPowerDivergence(method="v2")
         res = mod.decompose(X, n, p)
         self.check_svdresult_sanity(res, n, p)
+
+    def test_sadal(self, sample_matrix):
+        X = sample_matrix
+        n, p = X.shape
+        mod = SymmetricAlternatingDirectionALM()
+        res = mod.decompose(X)
+        self.check_lsnresult_sanity(res, n, p)
+
+    def test_svt(self, sample_matrix):
+        X = sample_matrix
+        n, p = X.shape
+        mod = SingularValueThresholding()
+        res = mod.decompose(X)
+        self.check_lsnresult_sanity(res, n, p)
+
+    def test_vprpca(self, sample_matrix):
+        X = sample_matrix
+        n, p = X.shape
+        mod = VariationalBayes()
+        res = mod.decompose(X)
+        self.check_rankfactor_sanity(res, n, p)

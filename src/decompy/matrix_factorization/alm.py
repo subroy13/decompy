@@ -101,6 +101,7 @@ class AugmentedLagrangianMethod:
         iter_out = 0
         err_out = 1
         sv = 10 if rank is None else rank
+        sv = max(1, min(n, p, sv))
         tol_iter = 0
 
         # main iteration loop (outer)
@@ -137,7 +138,7 @@ class AugmentedLagrangianMethod:
                     max_ratio = ratio[max_idx]
 
                     if max_ratio > 2:
-                        svp = min(svn, max_idx)
+                        svp = min(svn, max_idx + 1)  # here the index is 0-based index + 1 => to get rank
                     if svp < sv:
                         sv = min(svp + 1, n)
                     else:

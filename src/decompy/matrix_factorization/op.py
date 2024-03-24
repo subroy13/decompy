@@ -57,10 +57,10 @@ class OutlierPursuit:
             # U, S, V = lansvd(L, starting_K, 'T', epsilon, self.increaseK)
             # rank_out = min(S.shape)
         else:
-            U, S, Vh = np.linalg.svd(L)
+            U, s, Vh = np.linalg.svd(L, full_matrices = False)
             rank_out = 0
-        S = np.where(S > epsilon, S - epsilon, np.where(S < -epsilon, S + epsilon, 0))
-        output = U @ np.diag(S) @ Vh
+        s = np.where(s > epsilon, s - epsilon, np.where(s < -epsilon, s + epsilon, 0))
+        output = U @ np.diag(s) @ Vh
         return output, rank_out
 
     def _iterate_C(self, C: np.ndarray, epsilon: float):
