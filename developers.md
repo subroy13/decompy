@@ -17,8 +17,21 @@ Finally, upload to `pypi` using `twine upload dist/*`
 To generate documentation, use 
 1. Use the `mintlify AI doc generator` to generate docstring from code using explainer AI. Use `numpy` type documentation.
 2. `sphinx-apidoc -o docs/ -d 3 ./src` to generate the rst files.
-3. Run the makefile `make.bat` with `html` argument, i.e., `make clean && make html` inside `./src/docs` folder.
+3. Run the makefile `make.bat` with `html` argument, i.e., `make clean && make html` inside `./docs` folder.
 4. The generated html files will be present inside `_build` folder.
+
+
+## Testing
+
+1. Run `pytest --cov-report term-missing --cov=decompy tests/` for testing development.
+2. To generate test badges run the commands:
+    * `pytest --cov-report term-missing --cov=decompy --junitxml=reports/junit/junit.xml tests/`
+    * `genbadge tests`
+    * `coverage-badge -o coverage.svg`
+    * `flake8 ./src/decompy --exit-zero --htmldir ./reports/flake8 --output-file ./reports/flake8/flake8stats.txt`
+    * `genbadge flake8`
+
+
 
 
 ## Reference 

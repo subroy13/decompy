@@ -8,7 +8,7 @@
 
 ![](https://img.shields.io/pypi/pyversions/decompy) [![](https://img.shields.io/pypi/v/decompy)](https://pypi.org/project/decompy/) [![](https://img.shields.io/badge/license-BSD3_Clause-green)](https://github.com/subroy13/decompy/blob/master/LICENSE)
 
-![PyPI - Downloads](https://img.shields.io/pypi/dm/decompy) ![](https://img.shields.io/pepy/dt/decompy) [![decompy](https://snyk.io/advisor/python/decompy/badge.svg)](https://snyk.io/advisor/python/decompy)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/decompy) ![](https://img.shields.io/pepy/dt/decompy) [![decompy](https://snyk.io/advisor/python/decompy/badge.svg)](https://snyk.io/advisor/python/decompy) [![Tests Status](tests-badge.svg?dummy=8484744)](./reports/junit/junit.xml) [![Test Coverage](coverage.svg?dummy=4345432)](.) [![Flake8](flake8-badge.svg?dummy=3436543)](./reports/flake8/index.html)
 
 ## Features
 
@@ -81,7 +81,7 @@ This project is licensed under the [BSD 3-Clause License](LICENSE).
 
 ### Matrix Factorization Methods
 
-Currently, there are **20** matrix factorization methods available in `decompy`, as follows:
+Currently, there are **19** matrix factorization methods available in `decompy`, as follows:
 
 * Alternating Direction Method [(Yuan and Yang, 2009)](https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.400.8797) - `matrix_factorization/adm.py`
 
@@ -104,8 +104,6 @@ Currently, there are **20** matrix factorization methods available in `decompy`,
 * L1 Filtering [(Liu et al. 2011)](http://arxiv.org/abs/1108.5359) - `matrix_factorization/l1f.py`
 
 * Linearized ADM with Adaptive Penalty [(Lin et al. 2011)](http://arxiv.org/abs/1109.0367) - `matrix_factorization/ladmap.py`
-
-* Robust PCA using M-estimation [(De la Torre and Black, 2001)](https://ieeexplore.ieee.org/document/937541) [website](http://users.salleurl.edu/~ftorre/papers/rpca2.html) - `matrix_factorization/mest.py`
 
 * MoG-RPCA: Mixture of Gaussians RPCA [(Zhao et al. 2014)](http://jmlr.org/proceedings/papers/v32/zhao14.pdf) [website](http://www.cs.cmu.edu/~deyum/index.htm) - `matrix_factorization/mog.py`
 

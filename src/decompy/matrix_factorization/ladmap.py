@@ -6,24 +6,25 @@ from decompy.interfaces.lsnresult import LSNResult
 
 class LinearizedADMAdaptivePenalty:
     """
-        Linearized Alternating Direction Method with Adaptive Penalty
+    Linearized Alternating Direction Method with Adaptive Penalty
 
-        It aims to solve the LRR problem
-        min |Z|_*+lambda*|E|_2,1  s.t., X = XZ+E, where lambda is a penalty parameter.
+    It aims to solve the LRR problem
+    min |Z|_*+lambda*|E|_2,1  s.t., X = XZ+E, where lambda is a penalty parameter.
 
-        Notes
-        ------
-        [1] Linearized Alternating Direction Method with Adaptive Penalty for Low-Rank Representation, Lin et al., 2011 - http://arxiv.org/abs/1109.0367
-        [2] Original MATLAB code created by Risheng Liu on 05/02/2011, rsliu0705@gmail.com
+    Notes
+    ------
+    [1] Linearized Alternating Direction Method with Adaptive Penalty for Low-Rank Representation, Lin et al., 2011 - http://arxiv.org/abs/1109.0367
+    [2] Original MATLAB code created by Risheng Liu on 05/02/2011, rsliu0705@gmail.com
 
     """
+
     def __init__(self, **kwargs):
         """Initialize Linearized ADM with Adaptive Penalty solver.
 
         Parameters
         ----------
         tol1 : float, optional
-            Tolerance for primal residual (default is 1e-4). 
+            Tolerance for primal residual (default is 1e-4).
         tol2 : float, optional
             Tolerance for dual residual (default is 1e-5).
         maxiter : int, optional
@@ -33,23 +34,22 @@ class LinearizedADMAdaptivePenalty:
         verbose : bool, optional
             Print info if True (default is False).
         """
-        self.tol1 = kwargs.get('tol1', 1e-4)
-        self.tol2 = kwargs.get('tol2', 1e-5)
-        self.maxiter = kwargs.get('maxiter', 1e3)
-        self.max_mu = kwargs.get('max_mu', 1e10)
-        self.verbose = kwargs.get('verbose', False)
-
+        self.tol1 = kwargs.get("tol1", 1e-4)
+        self.tol2 = kwargs.get("tol2", 1e-5)
+        self.maxiter = kwargs.get("maxiter", 1e3)
+        self.max_mu = kwargs.get("max_mu", 1e10)
+        self.verbose = kwargs.get("verbose", False)
 
     def _solve_l2(self, W: np.ndarray, lambd: float):
         """Solve L2 regularized least squares with closed form solution.
-        
+
         Parameters
         ----------
         W : ndarray
             The matrix to solve for.
         lambd : float
             The L2 regularization parameter.
-            
+
         Returns
         -------
         E : ndarray
@@ -61,23 +61,22 @@ class LinearizedADMAdaptivePenalty:
             E[:, i] = self._solve_l2(W[:, i], lambd)
         return E
 
-
     def _solve_l1l2(self, w: np.ndarray, lambd: float):
         """Solve L1-L2 regularized least squares problem.
-    
+
         Solves the optimization problem:
-            
+
             min_x lambda * ||x||_2 + ||x - w||_2^2
-        
+
         Using the closed form solution.
-        
+
         Parameters
         ----------
         w : ndarray
             The target vector.
         lambd : float
             The L1 regularization parameter.
-        
+
         Returns
         -------
         x : ndarray
@@ -85,13 +84,17 @@ class LinearizedADMAdaptivePenalty:
         """
         nw = np.linalg.norm(w)
         if nw > lambd:
-            x = (nw - lambd) * w / nw   # a scaled version of w
+            x = (nw - lambd) * w / nw  # a scaled version of w
         else:
             x = np.zeros_like(w)
         return x
 
-
-    def decompose(self, M: np.ndarray, rho: Union[float, None] = None, lambd: Union[float, None] = None):
+    def decompose(
+        self,
+        M: np.ndarray,
+        rho: Union[float, None] = None,
+        lambd: Union[float, None] = None,
+    ):
         """Decompose a matrix M into low-rank (L), sparse (S) and noise (N) components.
 
         Parameters
@@ -106,7 +109,7 @@ class LinearizedADMAdaptivePenalty:
         Returns
         -------
         LSNResult
-            A named tuple containing the low-rank matrix L, sparse matrix S, 
+            A named tuple containing the low-rank matrix L, sparse matrix S,
             noise matrix N and convergence details.
         """
         rho = 1.9 if rho is None else rho
@@ -114,19 +117,21 @@ class LinearizedADMAdaptivePenalty:
 
         X = M.copy()  # make a copy of matrix so that we dont modify
         d, n = X.shape
-        
-        normfX = np.linalg.norm(X, 'fro')
+
+        normfX = np.linalg.norm(X, "fro")
         norm2X = np.linalg.norm(X, ord=2)
         mu = min(d, n) * self.tol2
 
-        eta = 1.02 * norm2X**2   # eta needs to be larger than ||X||_2^2, but need not be too large.
+        eta = (
+            1.02 * norm2X**2
+        )  # eta needs to be larger than ||X||_2^2, but need not be too large.
 
         # Initializing optimization variables
         E = np.zeros((d, n))
         Y = np.zeros((d, n))
         Z = np.zeros((n, n))
 
-        XZ = np.zeros((d, n))   # XZ is simply X * Z
+        XZ = np.zeros((d, n))  # XZ is simply X * Z
 
         sv = 5
         svp = sv
@@ -141,39 +146,41 @@ class LinearizedADMAdaptivePenalty:
             Ek = E.copy()
             Zk = Z.copy()  # copy E and Z to compute the change in the solutions
 
-            E = self._solve_l1l2(X - XZ + Y/mu, lambd / mu)
-            M = Z + X.T @ (X - XZ - E + Y/mu) / eta
+            E = self._solve_l1l2(X - XZ + Y / mu, lambd / mu)
+            M = Z + X.T @ (X - XZ - E + Y / mu) / eta
             U, S, V = np.linalg.svd(M, full_matrices=False)
             V = V.T  # we want V to be column oriented
 
-            svp = np.sum(S > 1/(mu * eta))
+            svp = np.sum(S > 1 / (mu * eta))
             if svp < sv:
                 sv = min(svp + 1, n)
             else:
                 sv = min(svp + round(0.05 * n), n)
-            
+
             if svp >= 1:
-                S = S[:svp] - 1/(mu * eta)
+                S = S[:svp] - 1 / (mu * eta)
             else:
                 svp = 1
                 S = np.zeros(1)
-            
+
             A_U = U[:, :svp]
             A_s = S
             A_V = V[:svp, :]
 
             Z = A_U @ np.diag(A_s) @ A_V
 
-            diffZ = np.linalg.norm(Zk - Z, 'fro')
+            diffZ = np.linalg.norm(Zk - Z, "fro")
             relChgZ = diffZ / normfX
-            relChgE = np.linalg.norm(E - Ek, 'fro') / normfX
-            relChg = max(relChgZ, relChgE) 
+            relChgE = np.linalg.norm(E - Ek, "fro") / normfX
+            relChg = max(relChgZ, relChgE)
 
-            XZ = X @ Z  # introducing XZ to avoid computing X*Z multiple times, which has O(n^3) complexity.
+            XZ = (
+                X @ Z
+            )  # introducing XZ to avoid computing X*Z multiple times, which has O(n^3) complexity.
             dY = X - XZ - E
-            recErr = np.linalg.norm(dY, 'fro') / normfX
+            recErr = np.linalg.norm(dY, "fro") / normfX
 
-            converged = recErr < self.tol1  and relChg < self.tol2
+            converged = recErr < self.tol1 and relChg < self.tol2
 
             if self.verbose:
                 if niter == 1 or niter % 50 == 0 or converged:
@@ -182,20 +189,20 @@ class LinearizedADMAdaptivePenalty:
                         f"relChg={max(relChgZ, relChgE)}, recErr={recErr}"
                     )
             if converged:
-                break 
+                break
             else:
-                Y += (mu * dY)
-                if mu*relChg < self.tol2:
-                    mu = min(self.max_mu, mu* rho)
-                
+                Y += mu * dY
+                if mu * relChg < self.tol2:
+                    mu = min(self.max_mu, mu * rho)
+
         return LSNResult(
-            L = X @ Z,
-            S = E,
-            N = None,
-            convergence = {
-                'iteration': niter,
-                'converged': converged,
-                'relative change': relChg,
-                'reconstruction error': recErr
-            }
+            L=X @ Z,
+            S=E,
+            N=None,
+            convergence={
+                "iteration": niter,
+                "converged": converged,
+                "relative change": relChg,
+                "reconstruction error": recErr,
+            },
         )

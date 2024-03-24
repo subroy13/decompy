@@ -10,5 +10,5 @@ __all__ = [
     "rank_gabriel",
     "rank_separate_rowcol",
     "rank_bcv",
-    "rank_hoffbayes"
+    "rank_hoffbayes",
 ]

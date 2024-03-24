@@ -3,14 +3,16 @@ import numpy as np
 from ..utils.validations import check_real_matrix
 from ..interfaces import LSNResult
 
+
 class InexactAugmentedLagrangianMethod:
     """
-        Inexact Augmented Lagrangian Method for Robust PCA
+    Inexact Augmented Lagrangian Method for Robust PCA
 
-        Reference: Augmented Lagrange multiplier method for Robust PCA - Inexact method
-            - Minming Chen, October 2009. Questions? v-minmch@microsoft.com
-            - Arvind Ganesh (abalasu2@illinois.edu)
+    Reference: Augmented Lagrange multiplier method for Robust PCA - Inexact method
+        - Minming Chen, October 2009. Questions? v-minmch@microsoft.com
+        - Arvind Ganesh (abalasu2@illinois.edu)
     """
+
     def __init__(self, **kwargs):
         """Initialize Inexact Augmented Lagrangian Method solver.
 
@@ -34,20 +36,16 @@ class InexactAugmentedLagrangianMethod:
         self.verbose = kwargs.get("verbose", False)
 
     def decompose(
-            self, 
-            M: np.ndarray, 
-            lambd: float = None,
-            mu: float = None,
-            rho: float = 1.5
-        ):
+        self, M: np.ndarray, lambd: float = None, mu: float = None, rho: float = 1.5
+    ):
         """Decompose a matrix M into a low rank L and sparse S using Inexact ALM.
-    
+
         Parameters
         ----------
         M : ndarray
             Input matrix to decompose
         lambd : float, optional
-            Weight on sparse error term in cost function. 
+            Weight on sparse error term in cost function.
             Default is 1/sqrt(m) where m is number of rows in M
         mu : float, optional
             Initial penalty parameter.
@@ -55,21 +53,21 @@ class InexactAugmentedLagrangianMethod:
         rho : float, optional
             Factor to increase mu by at each iteration.
             Default is 1.5
-            
+
         Returns
         -------
         LSNResult
             Named tuple containing low rank L, sparse S, and convergence info.
-        
+
         Notes
-        ----- 
-        The Inexact ALM algorithm decomposes M into L and S by 
+        -----
+        The Inexact ALM algorithm decomposes M into L and S by
         minimizing the objective:
-            
-            ||L||_* + lambd||S||_1  
+
+            ||L||_* + lambd||S||_1
             s.t. M = L + S
-            
-        where ||.||_* is nuclear norm (sum of singular values) and 
+
+        where ||.||_* is nuclear norm (sum of singular values) and
         ||.||_1 is L1 norm (sum of absolute values).
 
         """
@@ -77,7 +75,7 @@ class InexactAugmentedLagrangianMethod:
         D = M.copy()
         m, n = D.shape
         if lambd is None:
-            lambd = 1/np.sqrt(m)
+            lambd = 1 / np.sqrt(m)
 
         # initialize
         Y = D
@@ -91,46 +89,47 @@ class InexactAugmentedLagrangianMethod:
         if mu is None:
             mu = 1.25 / norm_two
         mu_bar = mu * 1e7
-        dnorm = np.linalg.norm(D, 'fro')
+        dnorm = np.linalg.norm(D, "fro")
 
         iter = 0
         total_svd = 0
         converged = False
         sv = 10
-        
+
         # main iteration loop
         while not converged:
             iter += 1
 
-            temp_T = D - A_hat + (1/mu) * Y
-            E_hat = np.maximum(temp_T - lambd/mu, 0) + np.minimum(temp_T + lambd/mu, 0)
+            temp_T = D - A_hat + (1 / mu) * Y
+            E_hat = np.maximum(temp_T - lambd / mu, 0) + np.minimum(
+                temp_T + lambd / mu, 0
+            )
 
-            U, diagS, VT = np.linalg.svd(D - E_hat + (1/mu) * Y, full_matrices=False)
-            svp = (diagS > 1/mu).sum()
+            U, diagS, VT = np.linalg.svd(D - E_hat + (1 / mu) * Y, full_matrices=False)
+            svp = (diagS > 1 / mu).sum()
             sv = min(svp + 1, n) if svp < sv else min(svp + np.round(0.05 * n), n)
-            A_hat = U[:, :svp] * np.diag(diagS[:svp] - 1/mu) * VT[:svp, :]
-    
+            A_hat = U[:, :svp] @ np.diag(diagS[:svp] - 1 / mu) @ VT[:svp, :]
+
             total_svd += 1
             Z = D - A_hat - E_hat
 
-            Y += (mu * Z)
-            mu = min(mu*rho, mu_bar)
+            Y += mu * Z
+            mu = min(mu * rho, mu_bar)
 
             # stopping criterion
-            if np.linalg.norm(Z, 'fro') / dnorm < self.tol:
+            if np.linalg.norm(Z, "fro") / dnorm < self.tol:
                 converged = True
 
             if self.verbose:
-                print(f"Iteration: {iter}, SVD: {total_svd}, Sparse Size: {(E_hat > 0).sum()}")
+                print(
+                    f"Iteration: {iter}, SVD: {total_svd}, Sparse Size: {(E_hat > 0).sum()}"
+                )
 
             if not converged and iter >= self.maxit:
                 converged = True
 
         return LSNResult(
-            L = A_hat,
-            S = E_hat,
-            convergence = {
-                'iteration': iter,
-                'converged': (iter < self.maxit)
-            }
+            L=A_hat,
+            S=E_hat,
+            convergence={"iteration": iter, "converged": (iter < self.maxit)},
         )

@@ -1,0 +1,5 @@
+1     F821 undefined name 'sigma'
+3     F841 local variable 'alpha' is assigned to but never used
+1     E231 missing whitespace after ','
+12    E251 unexpected spaces around keyword / parameter equals
+2     F841 local variable 'rankA' is assigned to but never used

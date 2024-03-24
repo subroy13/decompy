@@ -50,6 +50,11 @@
 <section id="module-decompy.utils.bayesmethods">
 <span id="decompy-utils-bayesmethods-module"></span><h2>decompy.utils.bayesmethods module<a class="headerlink" href="#module-decompy.utils.bayesmethods" title="Link to this heading">¶</a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="decompy.utils.bayesmethods.ldxl">
+<span class="sig-prename descclassname"><span class="pre">decompy.utils.bayesmethods.</span></span><span class="sig-name descname"><span class="pre">ldxl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ln2m</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.utils.bayesmethods.ldxl" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="decompy.utils.bayesmethods.ln2moment">
 <span class="sig-prename descclassname"><span class="pre">decompy.utils.bayesmethods.</span></span><span class="sig-name descname"><span class="pre">ln2moment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmax</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.utils.bayesmethods.ln2moment" title="Link to this definition">¶</a></dt>
 <dd><p>The <cite>ln2moment</cite> function calculates the logarithmic moments of a log-normal distribution given the
@@ -99,7 +104,7 @@ generates a random variable W with a specified shape parameter kappa and degrees
 
 <dl class="py function">
 <dt class="sig sig-object py" id="decompy.utils.bayesmethods.rXL">
-<span class="sig-prename descclassname"><span class="pre">decompy.utils.bayesmethods.</span></span><span class="sig-name descname"><span class="pre">rXL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.utils.bayesmethods.rXL" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">decompy.utils.bayesmethods.</span></span><span class="sig-name descname"><span class="pre">rXL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decompy.utils.bayesmethods.rXL" title="Link to this definition">¶</a></dt>
 <dd><p>The <cite>rXL</cite> function is used to simulate a random variable following the XL (Extreme Lognormal)
 distribution.</p>
 <dl class="field-list simple">
@@ -109,8 +114,8 @@ distribution.</p>
 <li><p><strong>distribution.</strong> (<em>spread</em><em> or </em><em>variability</em><em> of </em><em>the</em>) – </p></li>
 <li><p><strong>sigma</strong> – The parameter <cite>sigma</cite> represents the standard deviation of the XL random variable. It measures the</p></li>
 <li><p><strong>distribution.</strong> – </p></li>
-<li><p><strong>l</strong> – The parameter “l” represents the shape parameter of the XL random variable. It determines the shape</p></li>
-<li><p><strong>tails.</strong> (<em>of the distribution and affects the tail behavior. A higher value</em><em> of </em><em>&quot;l&quot; results in heavier</em>) – </p></li>
+<li><p><strong>ell</strong> – The parameter “ell” represents the shape parameter of the XL random variable. It determines the shape</p></li>
+<li><p><strong>tails.</strong> (<em>of the distribution and affects the tail behavior. A higher value</em><em> of </em><em>&quot;ell&quot; results in heavier</em>) – </p></li>
 <li><p><strong>nu</strong> – The parameter <cite>nu</cite> represents the degrees of freedom for the t-distribution. It determines the</p></li>
 <li><p><strong>optional</strong> – The parameter <cite>nu</cite> represents the degrees of freedom for the t-distribution. It determines the</p></li>
 <li><p><strong>in</strong> (<em>shape</em><em> of </em><em>the distribution and affects the tails</em><em> of </em><em>the distribution. Higher values</em><em> of </em><em>nu result</em>) – </p></li>
@@ -412,6 +417,7 @@ returns <cite>False</cite>.</p>
 <li><a class="reference internal" href="#">decompy.utils package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-decompy.utils.bayesmethods">decompy.utils.bayesmethods module</a><ul>
+<li><a class="reference internal" href="#decompy.utils.bayesmethods.ldxl"><code class="docutils literal notranslate"><span class="pre">ldxl()</span></code></a></li>
 <li><a class="reference internal" href="#decompy.utils.bayesmethods.ln2moment"><code class="docutils literal notranslate"><span class="pre">ln2moment()</span></code></a></li>
 <li><a class="reference internal" href="#decompy.utils.bayesmethods.rW"><code class="docutils literal notranslate"><span class="pre">rW()</span></code></a></li>
 <li><a class="reference internal" href="#decompy.utils.bayesmethods.rXL"><code class="docutils literal notranslate"><span class="pre">rXL()</span></code></a></li>

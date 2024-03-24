@@ -4,15 +4,16 @@ from typing import Union
 from ..utils.validations import check_real_matrix, check_binary_matrix
 from ..interfaces import RankFactorizationResult
 
+
 class RegulaizedL1AugmentedLagrangianMethod:
     """
-    Implements the Regularized L1 Augmented Lagrangian algorithm for low rank matrix factorization 
+    Implements the Regularized L1 Augmented Lagrangian algorithm for low rank matrix factorization
     with trace norm regularization.
 
     Robust low-rank matrix approximation with missing data and outliers
         min |W.*(M-E)|_1 + lambda*|V|_*
         s.t., E = UV, U'*U = I
-    
+
     Notes
     -----
     [1] Y. Zheng, G. Liu, S. Sugimoto, S. Yan and M. Okutomi, "Practical low-rank matrix approximation under robust L1-norm," 2012 IEEE Conference on Computer Vision and Pattern Recognition, Providence, RI, USA, 2012, pp. 1410-1417, doi: 10.1109/CVPR.2012.6247828. keywords: {Robustness;Optimization;Convergence;Computer vision;Approximation algorithms;Least squares approximation},
@@ -41,7 +42,13 @@ class RegulaizedL1AugmentedLagrangianMethod:
         self.max_mu = kwargs.get("max_mu", 1e20)
         self.tol = kwargs.get("tol", 1e-8)
 
-    def decompose(self, D: np.ndarray, W: Union[np.ndarray, None] = None, r = None, lambd: Union[float, None] = None):
+    def decompose(
+        self,
+        D: np.ndarray,
+        W: Union[np.ndarray, None] = None,
+        r=None,
+        lambd: Union[float, None] = None,
+    ):
         """Decompose a matrix D into low rank factors U and V.
 
         Parameters
@@ -49,7 +56,7 @@ class RegulaizedL1AugmentedLagrangianMethod:
         D : ndarray
             The m x n data matrix to decompose.
         W : ndarray or None, optional
-            The m x n indicator matrix, with 1 representing observed entries 
+            The m x n indicator matrix, with 1 representing observed entries
             and 0 representing missing entries. Default is None, which means
             all entries are observed.
         r : int or None, optional
@@ -60,7 +67,7 @@ class RegulaizedL1AugmentedLagrangianMethod:
         Returns
         -------
         res : RankFactorizationResult
-            A named tuple containing the low rank factors U and V, and convergence 
+            A named tuple containing the low rank factors U and V, and convergence
             info such as number of iterations, error, etc.
 
         """
@@ -81,14 +88,14 @@ class RegulaizedL1AugmentedLagrangianMethod:
 
         # initialization
         mu = 1e-6
-        M_norm = np.linalg.norm(M, 'fro')
+        M_norm = np.linalg.norm(M, "fro")
         tol = self.tol * M_norm
 
-        cW = np.ones_like(W) - W   # the complement of W
+        cW = np.ones_like(W) - W  # the complement of W
         E = np.zeros((m, n))
         U = np.zeros((m, r))
         V = np.zeros((r, n))
-        Y = np.zeros((m, n))    # lagrange multiplier
+        Y = np.zeros((m, n))  # lagrange multiplier
 
         # start main outer loop
         niter_out = 0
@@ -100,12 +107,12 @@ class RegulaizedL1AugmentedLagrangianMethod:
 
             while niter_in < self.maxiter_in:
                 # update U
-                temp = (E + Y/mu) @ V.T
+                temp = (E + Y / mu) @ V.T
                 Us, sigma, Udt = np.linalg.svd(temp, full_matrices=False)  # stable
                 U = Us @ Udt
 
                 # update V
-                temp = U.T @ (E + Y/mu)
+                temp = U.T @ (E + Y / mu)
                 Vs, sigma, Vdt = np.linalg.svd(temp, full_matrices=False)  # stable
                 svp = np.sum(sigma > lambd / mu)
                 if svp >= 1:
@@ -118,14 +125,19 @@ class RegulaizedL1AugmentedLagrangianMethod:
 
                 UV = U @ V
 
-                # update E 
-                temp1 = (UV - Y/mu)
+                # update E
+                temp1 = UV - Y / mu
                 temp = M - temp1
-                E = np.maximum(temp - 1/mu, 0) + np.minimum(temp + 1/mu, 0)
+                E = np.maximum(temp - 1 / mu, 0) + np.minimum(temp + 1 / mu, 0)
                 E = (M - E) * W + temp1 * cW
 
                 # evaluate current objective
-                obj_cur = np.sum(np.abs(W * (M - E))) + lambd * np.sum(sigma0) + np.sum(np.abs(Y * (E - UV))) + mu/2 * np.linalg.norm(E - UV, 'fro')**2
+                obj_cur = (
+                    np.sum(np.abs(W * (M - E)))
+                    + lambd * np.sum(sigma0)
+                    + np.sum(np.abs(Y * (E - UV)))
+                    + mu / 2 * np.linalg.norm(E - UV, "fro") ** 2
+                )
 
                 # check convergence of inner loop
                 if np.abs(obj_cur - obj_pre) < 1e-8 * np.abs(obj_pre):
@@ -135,7 +147,7 @@ class RegulaizedL1AugmentedLagrangianMethod:
                     niter_in += 1
 
             leq = E - UV
-            stop_c = np.linalg.norm(leq, 'fro')
+            stop_c = np.linalg.norm(leq, "fro")
             if stop_c < tol:
                 break
             else:
@@ -145,23 +157,17 @@ class RegulaizedL1AugmentedLagrangianMethod:
 
         # denormalization
         U_est = np.sqrt(scale) * U
-        V_est  = np.sqrt(scale) * V
+        V_est = np.sqrt(scale) * V
         M_est = U_est @ V_est
         l1_error = np.sum(np.abs(W * (scale * M - M_est)))
 
         return RankFactorizationResult(
-            A = U_est,
-            B = V_est,
-            convergence = {
-                'niter': niter_out,
-                'stop_c': stop_c,
-                'l1_error': l1_error,
-                'converged': (niter_out < self.maxiter_out)
-            }
+            A=U_est,
+            B=V_est.T,
+            convergence={
+                "niter": niter_out,
+                "stop_c": stop_c,
+                "l1_error": l1_error,
+                "converged": (niter_out < self.maxiter_out),
+            },
         )
-
-
-
-                
-
-
