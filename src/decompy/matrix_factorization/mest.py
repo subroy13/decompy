@@ -57,7 +57,7 @@ class MEstimation:
         mean_ls = np.mean(M, axis=0)
         U, _, VT = np.linalg.svd(M - mean_ls, full_matrices=False)
         if ini_rank is None:
-            ini_rank = np.ceil(M.shape[0] / 10)
+            ini_rank = np.ceil(M.shape[0] / 10).astype('int')
         U = U[:, :ini_rank]
         VT = VT[:ini_rank, :]
 
@@ -72,10 +72,10 @@ class MEstimation:
         for i in range(Nl + 1, sizeim[0] - Nl - 1):
             for j in range(Nl + 1, sizeim[1] - Nl - 1):
                 y, x = np.meshgrid(range(i - Nl, i + Nl + 1), range(j - Nl, j + Nl + 1))
-                ind = np.ravel_multi_index((y, x), sizeim)
+                ind = np.ravel_multi_index((y, x), sizeim) - 1  # because of 0 based indexing
                 errorlo = error[ind, :]
                 medianat = np.median(np.abs(errorlo))
-                error2 = error[ind, :] - medianat
+                error2 = error[ind, :] - medianat   
                 Sigmaf[i, j] = 2.3 * np.sqrt(3) * 1.4826 * np.median(np.abs(error2))
         Sigmaf = np.maximum(Sigmaf, Sigmaft * np.ones(Sigmaf.shape))
         Sigmai = 3 * Sigmaf
@@ -109,9 +109,11 @@ class MEstimation:
         """
         check_real_matrix(M)
         X = M.copy()
+        n, p = X.shape
 
         # Do initialization
         info = np.zeros((self.maxiter, 2))
+        rank = min(n, p) if rank is None else rank
         Sigma_end, Sigma_start, Bg = self._compute_scale_statistics(X, rank)
         rob_mean = np.median(X, axis=0)
         cg = np.linalg.pinv(Bg) @ (X - rob_mean)

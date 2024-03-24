@@ -95,18 +95,18 @@ class ActiveSubspaceRobustPCA:
         niter = 0
         while niter < self.maxiter:
             niter += 1
-            dey = X - E + Y / mu
-            temp = dey @ J.T
+            dey = X - E + Y / mu  # (d, n)
+            temp = dey @ J.T   # (d, k)
 
             # update Q
-            U, sigma, Vt = np.linalg.svd(temp)
-            Q = U @ Vt
+            U, sigma, Vt = np.linalg.svd(temp, full_matrices = False)  # (d, r), (r,), (r, k)
+            Q = U @ Vt   # (d, k)
 
             # update J
-            temp = Q.T @ dey
-            U, sigma, Vt = np.linalg.svd(temp)
-            svp = sigma > 1 / mu  # this is boolean array
-            if np.sum(svp) > 1:
+            temp = Q.T @ dey  # (k, n)
+            U, sigma, Vt = np.linalg.svd(temp, full_matrices = False)
+            svp = sigma > (1 / mu)  # this is boolean array
+            if np.sum(svp) >= 1:
                 sigma = sigma[svp] - 1 / mu
                 J = U[:, svp] @ np.diag(sigma) @ Vt[svp, :]
             else:
@@ -114,11 +114,12 @@ class ActiveSubspaceRobustPCA:
                 J = np.zeros((k, n))
 
             # update E
-            A = Q @ J.T
+            A = Q @ J       # (d, n)
             temp = X - A + Y / mu
             E = np.maximum(0, temp - lambd / mu) + np.minimum(0, temp + lambd / mu)
 
             leq = X - A - E  # the left out part
+
             stop_c = np.linalg.norm(leq, "fro")
             if stop_c < tol:
                 break
